@@ -1,0 +1,59 @@
+---
+title: "Radiocarbon Dating by Location, Chronology and Material Life Duration"
+author: "T. Huet"
+date: "11/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(kableExtra)
+library(dplyr)
+GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
+```
+
+# RShiny C14 dating interactive maps
+
+Today exists a lot of databases or database portals for C14 datings
+
+```{r dat.db}
+c14.db.url <- c("http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.archeometrie.mom.fr/banadora/","http://discovery.ucl.ac.uk/1469811")
+c14.db.names <- c("telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","BANADORA","EUROEVOL")
+c14.db.df <- data.frame(names=c14.db.names,
+                        url=c14.db.url,
+                        stringsAsFactors = F)
+kable(c14.db.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=7)
+```
+
+Online app also exist for C14 calibration: [OxCal](https://c14.arch.ox.ac.uk/oxcal/), [CalPal](http://www.calpal-online.de/), etc.
+
+But few solutions exist for data vizualisation. Since, the idea was to create an interactive web form map-based for selection of radiocarbon data.
+
+## EUROEVOL_R and NeoNet apps
+
+There is two RShiny apps with the more or less same options. Only the dataset changes:
+
+*[EUROEVOL_R](https://archaepigraph.shinyapps.io/EUROEVOL_R/) is based on the [EUROEVOL database] (http://discovery.ucl.ac.uk/1469811/) and covers the Central, Western and Northern Europe
+*[NeoNet](https://neolithic.shinyapps.io/NeoNet/) is based on a Google Sheet and covers the Central Mediterranean
+
+
+## Tutorial
+
+The apps are divided into 4 panels:
+
+* map
+* calib
+* data
+* credits
+
+![](D://Projet_FM//Epispat//schema.png)
+
+
+### **map** panel
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
