@@ -16,7 +16,7 @@ c14.db.url <- c("http://telearchaeology.org/c14-databses/","http://www.britarch.
 c14.db.names <- c("telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","BANADORA","EUROEVOL")
 ```
 
-# RShiny C14 dating interactive maps
+# Radiocarbon chronicles, databases and data visualization
 
 Today exists a lot of databases or database portals for C14 datings
 
@@ -25,14 +25,14 @@ c14.db.df <- data.frame(names=c14.db.names,
                         url=c14.db.url,
                         stringsAsFactors = F)
 kable(c14.db.df,"html") %>%
-  kable_styling(full_width = FALSE, position = "center", font_size=9)
+  kable_styling(full_width = FALSE, position = "center", font_size=11)
 ```
 
 Online app also exist for C14 calibration: [OxCal](https://c14.arch.ox.ac.uk/oxcal/), [CalPal](http://www.calpal-online.de/), etc.
 
 But few solutions exist for data vizualisation. Since, the idea was to create an interactive web form map-based for selection of radiocarbon data. R and Leaflet offer easy programming solutions to create such interactive maps.
 
-## EUROEVOL_R and NeoNet apps
+## RShiny C14 dating interactive maps: the **EUROEVOL_R** and **NeoNet** apps
 
 There is two RShiny apps with the more or less same options. Only the dataset changes:
 
@@ -41,6 +41,9 @@ There is two RShiny apps with the more or less same options. Only the dataset ch
 
 
 ## Tutorial
+For this tutorial, we will choose the [NeoNet](https://neolithic.shinyapps.io/NeoNet/) app.
+
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=100%}
 
 The apps are divided into 4 panels:
 
@@ -51,9 +54,9 @@ The apps are divided into 4 panels:
 
 
 ### **map** panel
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_idx.png)
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_idx.png){width=20%}
 
-The panel for Radiocarbon Dating by Location, Chronology and Material Life Duration.
+The panel **map** is used for Radiocarbon Dating by Location, Chronology and Material Life Duration.
 
 * The top-left button **group c14 on map** (<span style="color:red">red</span> box) allows to cluster datations by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html))
 * The bottom-left legend **periods** (<span style="color:orange">orange</span> box) is a dynamic list of periods which exist in the selection (see checkboxes  **periods**)
@@ -93,7 +96,17 @@ plot(map.group.c14)
 ```
 
 ### **calib** panel
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png)
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png){width=20%}
+
+The panel **calib** is used for datation calibration on-the-fly with the R packages Bchron and radiocarbon. Calibrations are done on the whole dataset of datations displayed in the **map** panel.
+
+* The top-center radio button **c14 group by...** (<span style="color:red">red</span> box) allows to plot datations:
+  + by datation: each datation is plot separeltly (by default)
+  + by site and period: datation coming from the same site and having the same period are cumulated
+  + by period: datation having the same period are cumulated
+  + all C14: all datation are cumulated together
+* The graph area (<span style="color:orange">orange</span> box) shows dynamically the SPD of the cabibrated datations seriated on their weighted means.
+* The top-right  button **Download.** (<span style="color:green">green</span> box) allows to export the last plot in a PNG image.
 
 ```{r panel.calib,echo=FALSE,message=FALSE, out.width = "200%"}
 # # A tibble: 1 x 7
@@ -102,13 +115,21 @@ plot(map.group.c14)
 # 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
 panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_calib.png")
 calib.group.c14 <- image_draw(panel.map)
+# > image_info(panel.map)
+# # A tibble: 1 x 7
+#   format width height colorspace matte filesize density
+#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+# 1 PNG     1518    702 sRGB       TRUE     63969 118x118
 # # xleft, ybottom, xright, ytop
-# # Group button
-# rect(20, 30, 200, 160,
-#      border = "red", lty = "dashed", lwd = 4)
-# # dynamic periods
-# rect(20, 750, 130, 600,
-#      border = "orange", lty = "dashed", lwd = 4)
+# Group button
+rect(1400, 0, 1500, 70,
+     border = "green", lty = "dashed", lwd = 4)
+# download
+rect(700, 0, 1300, 70,
+     border = "red", lty = "dashed", lwd = 4)
+# dynamic periods
+rect(20, 80, 1400, 700,
+     border = "orange", lty = "dashed", lwd = 4)
 # # slider
 # rect(150, 720, 800, 650,
 #      border = "blue", lty = "dashed", lwd = 4)
@@ -122,6 +143,6 @@ calib.group.c14 <- image_draw(panel.map)
 # rect(1450, 30, 1650, 550,
 #      border = "brown", lty = "dashed", lwd = 4)
 invisible(dev.off())
-plot(map.group.c14)
+plot(calib.group.c14)
 ```
 
