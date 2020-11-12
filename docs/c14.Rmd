@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(kableExtra)
 library(dplyr)
+library(knitr)
 GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
 ```
 
@@ -47,13 +48,15 @@ The apps are divided into 4 panels:
 * data
 * credits
 
-![](D://Projet_FM//Epispat//schema.png)
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels.png)
 
 
 ### **map** panel
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+The panel for Radiocarbon Dating by Location, Chronology and Material Life Duration.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r panel.map}
+library(magick)
+panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
+
+```
