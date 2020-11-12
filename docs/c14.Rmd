@@ -2,6 +2,9 @@
 title: "RShiny C14 dating interactive maps: the **NeoNet** and **EUROEVOL_R** apps"
 author: "Thomas Huet, Niccolo Mazzucco"
 date: "11/12/2020"
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}  #make every figure with capti
 output: html_document
 ---
 
@@ -25,47 +28,55 @@ c14.db.df <- data.frame(names=c14.db.names,
                         url=c14.db.url,
                         stringsAsFactors = F)
 kable(c14.db.df,"html") %>%
-  kable_styling(full_width = FALSE, position = "center", font_size=11)
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
 Online app also exist for C14 calibration: [OxCal](https://c14.arch.ox.ac.uk/oxcal/), [CalPal](http://www.calpal-online.de/), etc.
 
-But few solutions exist for data vizualisation, and specially selection of radiocarbon dating by location, chronology and material life duration. Since, the idea was to create an interactive web form map-based for selection of radiocarbon data. R and Leaflet offer easy programming solutions to create such interactive maps.
+But few solutions exist for data vizualisation, and specially selection of radiocarbon dating by location, chronology and material life duration. Since, the idea was to create an interactive web form map-based for selection of radiocarbon data. [R](https://www.r-project.org/) and [Leaflet](https://rstudio.github.io/leaflet/) offer easy programming solutions to create such interactive maps.
 
 ## The **NeoNet** and **EUROEVOL_R** apps
 
 There is two RShiny apps with the more or less same options. Only the dataset changes:
 
-* [EUROEVOL_R](https://neolithic.shinyapps.io/Euroevol_R/) is based on the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/) and covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC)
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=100%}
-* [NeoNet](https://neolithic.shinyapps.io/NeoNet/) is the based on a Google Sheet and covers the Central Mediterranean for the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC). The database is still at the development stage.
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=100%}
+* [EUROEVOL_R](https://neolithic.shinyapps.io/Euroevol_R/) is based on the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/) and covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC) with near to 13,000 C14 datations  
+
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=70%}
+* [NeoNet](https://neolithic.shinyapps.io/NeoNet/) is the based on a Google Sheet and covers the Central Mediterranean for the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC) with near to 13,000 C14 datations. The database is still at its development stage  
+
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=70%}
 
 
-## Tutorial
-For this tutorial, we will choose the [NeoNet](https://neolithic.shinyapps.io/NeoNet/) app.
+## How to use the apps
 
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=100%}
+For this short tutorial, we will choose the [NeoNet](https://neolithic.shinyapps.io/NeoNet/) app.  
+
+
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=80%}
 
 The apps are divided into 4 panels:
 
-* map
-* calib
-* data
-* credits
+* map: region of interest with different possibilities to subset datations
+* calib: calibration on-the-fly of the selected datations
+* data: the whole dataset with search tools
+* credits: data source, data gathering and IT credits
+
+The two main panels are **map** and **calib**
 
 
 ### **map** panel
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_idx.png){width=20%}
 
-The panel **map** is used for Radiocarbon Dating by Location, Chronology and Material Life Duration.
+
+The panel **map** is used for selection of radiocarbon dating by location, chronology and material life duration.
 
 * The top-left button **group c14 on map** (<span style="color:red">red</span> box) allows to cluster datations by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html))
 * The bottom-left legend **periods** (<span style="color:orange">orange</span> box) is a dynamic list of periods which exist in the selection (see checkboxes  **periods**)
-* The bottom-left slider  **tpq\taq** (<span style="color:blue">blue</span> box) allows to subset a range of dating between a tpq and a taq (in cal BC) 
-* The bottom-right checkboxes and slider  **material life duration...** (<span style="color:purple">purple</span> box) allow to subset a range of dating relatively to the duration of their material (short to long-life material) and/or to determine the maximum threshold for standard errors (SD) for the datations 
-* The top-right checkboxes  **periods** (<span style="color:brown">brown</span> box) allows to select dataions by periods 
+* The bottom-left slider  **tpq-taq** (<span style="color:blue">blue</span> box) allows to subset a range of dating between a tpq and a taq (in cal BC) 
+* The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple">purple</span> box) allow to subset a range of dating relatively to the duration of their material (short to long-life material) and/or to determine the maximum threshold for standard errors (SD, or delta) for the datations. An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
+* The top-right checkboxes  **periods** (<span style="color:brown">brown</span> box) allows to select dataions by periods. An hyperlink allows to understand the [abrevations of the periods](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/period_abrev.html)
 * The table at the bottom (<span style="color:green">green</span> box) is a dynamic table which list all the datations within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datations is dynamically done above this table.
+
 
 ```{r panel.map,echo=FALSE,message=FALSE, out.width = "200%"}
 # # A tibble: 1 x 7
@@ -99,10 +110,11 @@ plot(map.group.c14)
 
 ### **calib** panel
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png){width=20%}
-
+  
+  
 The panel **calib** is used for datation calibration on-the-fly with the R packages Bchron and radiocarbon. Calibrations are done on the whole dataset of datations displayed in the **map** panel.
 
-* The top-center radio button **c14 group by...** (<span style="color:red">red</span> box) allows to plot datations:
+* The top-center radio button **c14 group by site and/or period** (<span style="color:red">red</span> box) allows to plot datations:
   + by datation: each datation is plot separeltly (by default)
   + by site and period: datation coming from the same site and having the same period are cumulated
   + by period: datation having the same period are cumulated
