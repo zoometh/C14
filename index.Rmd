@@ -1,5 +1,5 @@
 ---
-title: "RShiny C14 dating interactive maps: the **NeoNet** and **EUROEVOL_R** apps"
+title: "**NeoNet** and **EUROEVOL_R** apps for radiocarbon interactive maps"
 author: "Thomas Huet"
 date: "11/12/2020"
 header-includes:
@@ -10,7 +10,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
-library(kableExtra)
+library(kableExtra) 
 library(dplyr)
 library(knitr)
 library(magick)
