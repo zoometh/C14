@@ -39,13 +39,15 @@ But few solutions exist for data vizualisation, and specially selection of radio
 
 There is two RShiny apps with the more or less same options. Only the dataset changes:
 
-* [EUROEVOL_R](https://neolithic.shinyapps.io/Euroevol_R/) is based on the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/) and covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC) with near to 13,000 C14 datations  
+* **[EUROEVOL_R](https://neolithic.shinyapps.io/Euroevol_R/)** is based on the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/) and covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC) with near to 13,000 C14 datations  
 
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=100%}
+<p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}
+</p>
 
-* [NeoNet](https://neolithic.shinyapps.io/NeoNet/) is the based on a Google Sheet and covers the Central Mediterranean for the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC) with near to 13,000 C14 datations. The database is still at its development stage  
+* **[NeoNet](https://neolithic.shinyapps.io/NeoNet/)** is the based on a Google Sheet and covers the Central Mediterranean for the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC) with near to 1,000 C14 datations. The database is still at its development stage.
 
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=100%}
+<p style="text-align: center;">
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=50%}
+</p>
 
-To use the apps, see the [NeoNet webpage](https://zoometh.github.io/C14/neonet)
-
+To learn how to use the apps see the [NeoNet webpage](https://zoometh.github.io/C14/neonet)
