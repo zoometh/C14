@@ -1,5 +1,5 @@
 ---
-title: "XXXXXX C14 dating interactive maps: the **NeoNet** and **EUROEVOL_R** apps"
+title: "RShiny C14 dating interactive maps: the **NeoNet** and **EUROEVOL_R** apps"
 author: "Thomas Huet"
 date: "11/12/2020"
 header-includes:
