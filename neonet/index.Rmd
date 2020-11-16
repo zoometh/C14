@@ -20,7 +20,7 @@ GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
 The **NeoNet** app is a RShiny based application for the selection of radiocarbon dating by location, chronology and material life duration. The [NeoNet project](https://www.imf.csic.es/index.php/actualidad/actividades/actividades-2020/1224-seminario-neonet-origen-desarrollo-y-consolidacion-del-neolitico-en-el-ambito-mediterraneo) aims to investigate the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
 
 
-<p style="text-align: center;"> <font size="8"> the **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** </font>
+<p style="text-align: center;"> <font size="5"> the **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** </font>
 [![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=50%}](https://neolithic.shinyapps.io/NeoNet/)
 </p>
 
