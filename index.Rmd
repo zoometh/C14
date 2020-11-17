@@ -41,10 +41,6 @@ There is two RShiny apps with the more or less same options. Only the dataset ch
 
 * **[EUROEVOL_R](https://neolithic.shinyapps.io/Euroevol_R/)** is based on the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/) and covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC) with near to 13,000 C14 datations  
 
-```{r neonet, echo=FALSE}
-knitr::include_app("https://neolithic.shinyapps.io/NeoNet/")
-```
-
 <p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}
 </p>
 
