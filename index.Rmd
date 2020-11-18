@@ -15,8 +15,8 @@ library(dplyr)
 library(knitr)
 library(magick)
 GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
-c14.db.url <- c("http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.archeometrie.mom.fr/banadora/","http://discovery.ucl.ac.uk/1469811")
-c14.db.names <- c("telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","BANADORA","EUROEVOL")
+c14.db.url <- c("http://discovery.ucl.ac.uk/1469811","http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.14sea.org/2_dates.html","https://www.exoriente.org/associated_projects/ppnd_sites.php","http://www.archeometrie.mom.fr/banadora/")
+c14.db.names <- c("EUROEVOL","telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","14SEA Project","EX ORIENTE","BANADORA")
 ```
 
 # Radiocarbon chronicles, databases and data visualization
@@ -50,4 +50,4 @@ There is two RShiny apps with the more or less same options. Only the dataset ch
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=50%}
 </p>
 
-To learn how to use the apps see the [NeoNet webpage](https://zoometh.github.io/C14/neonet)
+To learn how to use the apps see the [**NeoNet app** webpage](https://zoometh.github.io/C14/neonet)

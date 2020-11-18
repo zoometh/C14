@@ -203,7 +203,7 @@ df.mat.life <- data.frame(material.type = c("bone","seed","wood","..."),
                          life.duration = c("short life", "short life", "long life","..."),
                          stringsAsFactors = F)
 kable(df.mat.life,"html") %>%
-  kable_styling(full_width = FALSE, position = "center", font_size=11)
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
 You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/material_life.html)
@@ -220,7 +220,7 @@ df.period.abrev <- data.frame(period.abrev = c("LM","LMEN","EN","..."),
                          period = c("Late Mesolithic", "Late Mesolithic/Early Neolithic", "Early Neolithic","..."),
                          stringsAsFactors = F)
 kable(df.period.abrev,"html") %>%
-  kable_styling(full_width = FALSE, position = "center", font_size=11)
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
 You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/period_abrev.html)
