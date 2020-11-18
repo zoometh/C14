@@ -9,12 +9,20 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
+# knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
+knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14, fig.align = TRUE)
 library(kableExtra)
 library(dplyr)
 library(knitr)
 library(magick)
 GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
+## sizes
+# map
+panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
+ratio.panel.map <- image_info(panel.map)$height/image_info(panel.map)$width
+# calib
+panel.calib <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_calib.png")
+ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
 ```
 
 The **NeoNet** app is a RShiny based application for the selection of radiocarbon dating by location, chronology and material life duration. The [NeoNet project](https://www.imf.csic.es/index.php/actualidad/actividades/actividades-2020/1224-seminario-neonet-origen-desarrollo-y-consolidacion-del-neolitico-en-el-ambito-mediterraneo) aims to investigate the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
@@ -49,12 +57,12 @@ The panel **map** is used for selection of radiocarbon dating by location, chron
 * The top-left button **group c14 on map** (<span style="color:red">red</span> box) allows to cluster datations by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html))
 * The top-right checkboxes  **periods** (<span style="color:brown">brown</span> box) allows to select dataions by periods. An hyperlink allows to understand the [abrevations of the periods](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/period_abrev.html)
 
-```{r panel.map,echo=FALSE,message=FALSE, out.width = "200%"}
+```{r panel.map,echo=FALSE,message=FALSE,fig.fullwidth=TRUE,fig.asp=ratio.panel.map}
+# par(mar = c(0, 0, 0, 0))
 # # A tibble: 1 x 7
 #   format width height colorspace matte filesize density
 #   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
 # 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
-panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
 map.group.c14 <- image_draw(panel.map)
 # xleft, ybottom, xright, ytop
 # Group button
@@ -79,10 +87,10 @@ invisible(dev.off())
 plot(map.group.c14)
 ```
 
-* The bottom-left legend **periods** (<span style="color:orange">orange</span> box) is a dynamic list of periods which exist in the selection (see checkboxes  **periods**)
-* The bottom-left slider  **tpq-taq** (<span style="color:blue">blue</span> box) allows to subset a range of dating between a tpq and a taq (in cal BC) 
-* The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple">purple</span> box) allow to subset a range of dating relatively to the duration of their material (short to long-life material) and/or to determine the maximum threshold for standard errors (SD, or delta) for the datations. An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
-* The table at the bottom (<span style="color:green">green</span> box) is a dynamic table which list all the datations within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datations is dynamically done above this table.
+* The bottom-left legend **periods** (<span style="color:orange"><b>orange</b></span> box) is a dynamic list of periods which exist in the selection (see checkboxes  **periods**)
+* The bottom-left slider  **tpq-taq** (<span style="color:blue"><b>blue</b></span> box) allows to subset a range of dating between a tpq and a taq (in cal BC) 
+* The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple"><b>purple</b></span> box) allow to subset a range of dating relatively to the duration of their material (short to long-life material) and/or to determine the maximum threshold for standard errors (SD, or delta) for the datations. An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
+* The table at the bottom (<span style="color:green"><b>green</b></span> box) is a dynamic table which list all the datations within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datations is dynamically done above this table.
 
 ### **calib** panel
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png){width=20%}
@@ -90,19 +98,19 @@ plot(map.group.c14)
   
 The panel **calib** is used for datation calibration on-the-fly with the R packages Bchron and radiocarbon. Calibrations are done on the whole dataset of datations displayed in the **map** panel.
 
-* The top-center radio button **c14 group by site and/or period** (<span style="color:red">red</span> box) allows to plot datations:
+* The top-center radio button **c14 group by site and/or period** (<span style="color:red"><b>red</b></span> box) allows to plot datations:
   + by datation: each datation is plot separeltly (by default)
   + by site and period: datation coming from the same site and having the same period are cumulated
   + by period: datation having the same period are cumulated
   + all C14: all datation are cumulated together
 
-```{r panel.calib,echo=FALSE,message=FALSE, out.width = "200%"}
+```{r panel.calib, echo=FALSE, message=FALSE, fig.fullwidth=TRUE, fig.asp=ratio.panel.calib}
 # # A tibble: 1 x 7
 #   format width height colorspace matte filesize density
 #   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
 # 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
-panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_calib.png")
-calib.group.c14 <- image_draw(panel.map)
+
+calib.group.c14 <- image_draw(panel.calib)
 # > image_info(panel.map)
 # # A tibble: 1 x 7
 #   format width height colorspace matte filesize density
@@ -134,9 +142,11 @@ invisible(dev.off())
 plot(calib.group.c14)
 ```
 
-* The graph area (<span style="color:orange">orange</span> box) shows dynamically the SPD of the cabibrated datations seriated on their weighted means. The top-right  button **Download.** (<span style="color:green">green</span> box) allows to export the last plot in a PNG image
+* The graph area (<span style="color:orange"><b>orange</b></span> box) shows dynamically the SPD of the cabibrated datations seriated on their weighted means. The top-right  button **Download** (<span style="color:green"><b>green</b></span> box) allows to export the last plot in a PNG image
 
+<p style="text-align: center;">
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/neonet_calib_example.png){width=80%}
+</p>
 
 
 ## How to participate to the **NeoNet database**
@@ -158,14 +168,15 @@ This is the complete database. The mandatory fields are:
 * **Latitude**: in decimal degrees (ex: 43.9265)
 * **Period**: a value from the [**period.abrev** spreadsheet][]
 * **C14Age**: a numerical radiocarbon dating in BP
-* **C14SD**: the delta of the radiocarbon dating
+* **C14SD**: the standard deviation of the radiocarbon dating
 * **LabCode**: the unique identifier of the radiocarbon dating
 * **Material**: a value from the [**material.life** spreadsheet][] 
-* **tpq**: the terminus post quem of the radiocarbon dating in cal BC
-* **taq**: the terminus ante quem of the radiocarbon dating in cal BC
+* **tpq**: the *terminus post quem* of the radiocarbon dating in cal BC
+* **taq**: the *terminus ante quem* of the radiocarbon dating in cal BC
 
 The recommended fields are:
 
+* **PhaseCode**: a code for the stratigaphical unit
 * **bib**: a plain text bibliographical reference
 * **bib_url**: the current URL of the reference or its notice 
 
@@ -188,4 +199,4 @@ The two fields show the period abreviation and the period full label
 
 ### What is next for **NeoNet** participant
 
-Thanks to the facilities offer by the app, we expect to conduct collaborative spatio-temporal analysis. At the short and middle term, we also expect to publish scientific papers. So every C14 dating should be carefully referenced.
+Thanks to the facilities offer by the app, we expect to conduct collaborative spatio-temporal analysis. At the short and middle term we want to conform the app and the database to the [FAIR principles](https://www.go-fair.org/fair-principles/) of Open Science, and we also want to publish scientific papers. Do do so, every C14 dating should be carefully referenced and license and auhorship should be clear.
