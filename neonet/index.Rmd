@@ -179,9 +179,6 @@ The recommended fields are:
 * **PhaseCode**: a code for the stratigaphical unit
 * **bib**: a plain text bibliographical reference
 * **bib_url**: the current URL of the reference or its notice 
-
-The optional fields are:
-
 * **MaterialSpecies**: a specification of the field **Material**
 * **Culture**: a specification of the field **Period**
 
