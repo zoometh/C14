@@ -1,7 +1,7 @@
 ---
-title: "**NeoNet**, mapping radiocarbon dating online"
+title: "**NeoNet app**, mapping radiocarbon dating online"
 author: "Thomas Huet, Niccolo Mazzucco"
-date: "11/12/2020"
+# date: "11/12/2020"
 header-includes:
   - \usepackage{float}
   - \floatplacement{figure}{H}  #make every figure with capti
@@ -18,32 +18,41 @@ library(magick)
 GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
 ## sizes
 # map
-panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
+panel.map <- image_read("../docs/imgs/panels_map.png")
+# panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
 ratio.panel.map <- image_info(panel.map)$height/image_info(panel.map)$width
 # calib
-panel.calib <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_calib.png")
+panel.calib <- image_read("../docs/imgs/panels_calib.png")
+# panel.calib <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_calib.png")
 ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
 ```
 
-The **NeoNet** app is a RShiny based application for the selection of radiocarbon dating by location, chronology and material life duration. The [NeoNet project](https://www.imf.csic.es/index.php/actualidad/actividades/actividades-2020/1224-seminario-neonet-origen-desarrollo-y-consolidacion-del-neolitico-en-el-ambito-mediterraneo) aims to investigate the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
+The **NeoNet** app is a RShiny based application for the selection of radiocarbon dating by location, chronology and material life duration. It allows to subset the radiocarbon dataset by: 
 
+* geographical region of interest (ROI)
+* time span between a *tpq* and a *taq* in cal BC
+* period
+* type of material life duration (short like, long life or others)
+* maximum standard deviation threshold (SD)
+
+After a short presentation of the [**NeoNet project**][], we will see [How to use the **NeoNet app**][] and [How to participate to the **NeoNet database**][] 
+
+## **NeoNet project**
+
+The **[NeoNet project](https://www.imf.csic.es/index.php/actualidad/actividades/actividades-2020/1224-seminario-neonet-origen-desarrollo-y-consolidacion-del-neolitico-en-el-ambito-mediterraneo)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), aims to investigate the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
+
+## How to use the **NeoNet app**
 
 <p style="text-align: center;"> <font size="5"> the **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** </font>
 [![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=50%}](https://neolithic.shinyapps.io/NeoNet/)
 </p>
 
-We will see [How to use the **NeoNet app**][] and [How to participate to the **NeoNet database**][] 
+The app is divided into 4 panels:
 
-
-## How to use the **NeoNet app**
-
-
-The apps are divided into 4 panels:
-
-* [**map** panel][]: region of interest with different possibilities to subset datations
-* [**calib** panel][]: calibration on-the-fly of the selected datations
+* [**map** panel][]: geographical region of interest with different possibilities to subset the datings dataset
+* [**calib** panel][]: calibration on-the-fly of the selected datings
 * **data** panel: the whole dataset with search tools
-* **credits** panel: data source, data gathering and IT credits
+* **infos** panel: data and IT source, gathering, credits and link to the **NeoNet app** webpage
 
 The two main panels are **map** and **calib**
 
@@ -54,7 +63,7 @@ The two main panels are **map** and **calib**
 
 The panel **map** is used for selection of radiocarbon dating by location, chronology and material life duration.
 
-* The top-left button **group c14 on map** (<span style="color:red">red</span> box) allows to cluster datations by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html))
+* The top-left button **group c14 on map** (<span style="color:red">red</span> box) allows to cluster datings by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html))
 * The top-right checkboxes  **periods** (<span style="color:brown">brown</span> box) allows to select dataions by periods. An hyperlink allows to understand the [abrevations of the periods](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/period_abrev.html)
 
 ```{r panel.map,echo=FALSE,message=FALSE,fig.fullwidth=TRUE,fig.asp=ratio.panel.map}
@@ -89,21 +98,24 @@ plot(map.group.c14)
 
 * The bottom-left legend **periods** (<span style="color:orange"><b>orange</b></span> box) is a dynamic list of periods which exist in the selection (see checkboxes  **periods**)
 * The bottom-left slider  **tpq-taq** (<span style="color:blue"><b>blue</b></span> box) allows to subset a range of dating between a tpq and a taq (in cal BC) 
-* The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple"><b>purple</b></span> box) allow to subset a range of dating relatively to the duration of their material (short to long-life material) and/or to determine the maximum threshold for standard errors (SD, or delta) for the datations. An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
-* The table at the bottom (<span style="color:green"><b>green</b></span> box) is a dynamic table which list all the datations within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datations is dynamically done above this table.
+* The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple"><b>purple</b></span> box) allow to subset a range of dating:
+  + relatively to the duration of their material (short to long-life material). An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
+  + below a maximum accepted threshold for the standard deviations (SD) for the datings
+* The table at the bottom (<span style="color:green"><b>green</b></span> box) is a dynamic table which list all the datings within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datings is dynamically done above this table.
 
 ### **calib** panel
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png){width=20%}
   
   
-The panel **calib** is used for datation calibration on-the-fly with the R packages Bchron and radiocarbon. Calibrations are done on the whole dataset of datations displayed in the **map** panel.
+The panel **calib** is used for dating calibration on-the-fly with the R packages Bchron and radiocarbon. Calibrations are done on the whole dataset of datings displayed in the **map** panel.
 
-* The top-center radio button **c14 group by site and/or period** (<span style="color:red"><b>red</b></span> box) allows to plot datations:
-  + by datation: each datation is plot separeltly (by default)
-  + by site and period: datation coming from the same site and having the same period are cumulated
-  + by period: datation having the same period are cumulated
-  + all C14: all datation are cumulated together
-
+* The top-center radio button **c14 group by common site, layer/structure and/or period** (<span style="color:red"><b>red</b></span> box) allows to plot datings:
+  - by dating: each dating is plot separeltly (by default)
+  - by site and layer: datings coming from the same site and having the same layer/structure are cumulated
+  - by site and period: datings coming from the same site and having the same period are cumulated
+  - by period: datings having the same period are cumulated
+  - all C14: all datings are cumulated together  
+  
 ```{r panel.calib, echo=FALSE, message=FALSE, fig.fullwidth=TRUE, fig.asp=ratio.panel.calib}
 # # A tibble: 1 x 7
 #   format width height colorspace matte filesize density
@@ -142,7 +154,7 @@ invisible(dev.off())
 plot(calib.group.c14)
 ```
 
-* The graph area (<span style="color:orange"><b>orange</b></span> box) shows dynamically the SPD of the cabibrated datations seriated on their weighted means. The top-right  button **Download** (<span style="color:green"><b>green</b></span> box) allows to export the last plot in a PNG image
+* The graph area (<span style="color:orange"><b>orange</b></span> box) shows dynamically the SPD of the cabibrated datings seriated on their weighted means. The top-right  button **Download** (<span style="color:green"><b>green</b></span> box) allows to export the last plot in a PNG image
 
 <p style="text-align: center;">
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/neonet_calib_example.png){width=80%}
@@ -155,9 +167,10 @@ The current database is a collaborative online Google Sheet. To get an access to
 
 ### NeoNet spreadsheets
 
-The database is composed by three spreadsheets  
+The Google Sheet (ie, the database) is composed by three spreadsheets  
 
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_onglets.png){width=30%}
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_onglets.png){width=30%}  
+
 
 #### **c14** spreadsheet
 
@@ -176,7 +189,7 @@ This is the complete database. The mandatory fields are:
 
 The recommended fields are:
 
-* **PhaseCode**: a code for the stratigaphical unit
+* **PhaseCode**: a code for the dating stratigaphical unit and/or structure
 * **bib**: a plain text bibliographical reference
 * **bib_url**: the current URL of the reference or its notice 
 * **MaterialSpecies**: a specification of the field **Material**
@@ -187,6 +200,13 @@ The others fields only concern the **[EUROEVOL_R app](https://zoometh.github.io/
 #### **material.life** spreadsheet
 
 The two fields show the material type and the material life duration 
+
+```{r material.life, echo=FALSE}
+# knitr::include_url("../docs/material_life.html", height = "400px")
+knitr::include_url("https://raw.githubusercontent.com/zoometh/C14/main/docs/material_life.html", height = "200px")
+# htmltools::includeHTML()
+```
+
 
 #### **period.abrev** spreadsheet
 
