@@ -27,25 +27,23 @@ panel.calib <- image_read("../docs/imgs/panels_calib.png")
 ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
 ```
 
-The **NeoNet** app is a RShiny based application for the selection of radiocarbon dating by location, chronology and material life duration. It allows to subset the radiocarbon dataset by: 
+The **NeoNet app** allows the selection of radiocarbon dating by location, chronology and material life duration  by subsetting a radiocarbon dataset according to: 
 
-* geographical region of interest (ROI)
-* time span between a *tpq* and a *taq* in cal BC
-* period
-* type of material life duration (short like, long life or others)
-* maximum standard deviation threshold (SD)
+* a geographical region of interest (ROI)
+* a time span between a *tpq* and a *taq* in cal BC
+* some periods
+* some type of material life duration (short like, long life or others)
+* a maximum accepted standard deviation threshold (SD)
 
-After a short presentation of the [**NeoNet project**][], we will see [How to use the **NeoNet app**][] and [How to participate to the **NeoNet database**][] 
-
-## **NeoNet project**
-
-The **[NeoNet project](https://www.imf.csic.es/index.php/actualidad/actividades/actividades-2020/1224-seminario-neonet-origen-desarrollo-y-consolidacion-del-neolitico-en-el-ambito-mediterraneo)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), aims to investigate the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
+We will see [How to use the **NeoNet app**][], [How to use the **NeoNet database**][] and [How to participate][]
 
 ## How to use the **NeoNet app**
 
+The **NeoNet app** is a [RShiny](https://shiny.rstudio.com/) interactive web application. 
+
 <p style="text-align: center;"> <font size="5"> the **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** </font>
 [![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=50%}](https://neolithic.shinyapps.io/NeoNet/)
-</p>
+</p>  
 
 The app is divided into 4 panels:
 
@@ -161,18 +159,14 @@ plot(calib.group.c14)
 </p>
 
 
-## How to participate to the **NeoNet database**
+## How to use the **NeoNet database**
 
-The current database is a collaborative online Google Sheet. To get an access to the permission to edit data, please contact the authors (<thomashuet7@gmail.com >, <nicco.mazzucco@gmail.com >)
-
-### NeoNet spreadsheets
-
-The Google Sheet (ie, the database) is composed by three spreadsheets  
+The **NeoNet database** is a collaborative online Google Sheet. The database is composed by 3 spreadsheets  
 
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_onglets.png){width=30%}  
 
 
-#### **c14** spreadsheet
+### **c14** spreadsheet
 
 This is the complete database. The mandatory fields are:
 
@@ -197,23 +191,59 @@ The recommended fields are:
 
 The others fields only concern the **[EUROEVOL_R app](https://zoometh.github.io/C14)** 
 
-#### **material.life** spreadsheet
+### **material.life** spreadsheet
 
-The two fields show the material type and the material life duration 
+The two fields show the material type and the material life duration, for example: 
 
 ```{r material.life, echo=FALSE}
 # knitr::include_url("../docs/material_life.html", height = "400px")
-knitr::include_url("https://raw.githubusercontent.com/zoometh/C14/main/docs/material_life.html", height = "200px")
+# knitr::include_url("https://raw.githubusercontent.com/zoometh/C14/main/docs/material_life.html", height = "200px")
 # htmltools::includeHTML()
+df.mat.life <- data.frame(material.type = c("bone","seed","wood","..."),
+                         life.duration = c("short life", "short life", "long life","..."),
+                         stringsAsFactors = F)
+kable(df.mat.life,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=11)
 ```
 
+You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/material_life.html)
 
-#### **period.abrev** spreadsheet
+### **period.abrev** spreadsheet
 
-The two fields show the period abreviation and the period full label
+The two fields show the period abreviation and the period full label, for example:
 
-*As data come from various publication, an homogenisation the different values must be done*
+```{r period.abrev, echo=FALSE}
+# knitr::include_url("../docs/material_life.html", height = "400px")
+# knitr::include_url("https://raw.githubusercontent.com/zoometh/C14/main/docs/material_life.html", height = "200px")
+# htmltools::includeHTML()
+df.period.abrev <- data.frame(period.abrev = c("LM","LMEN","EN","..."),
+                         period = c("Late Mesolithic", "Late Mesolithic/Early Neolithic", "Early Neolithic","..."),
+                         stringsAsFactors = F)
+kable(df.period.abrev,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=11)
+```
 
-### What is next for **NeoNet** participant
+You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/period_abrev.html)
 
-Thanks to the facilities offer by the app, we expect to conduct collaborative spatio-temporal analysis. At the short and middle term we want to conform the app and the database to the [FAIR principles](https://www.go-fair.org/fair-principles/) of Open Science, and we also want to publish scientific papers. Do do so, every C14 dating should be carefully referenced and license and auhorship should be clear.
+## How to participate
+
+Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://www.imf.csic.es/index.php/actualidad/actividades/actividades-2020/1224-seminario-neonet-origen-desarrollo-y-consolidacion-del-neolitico-en-el-ambito-mediterraneo)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
+
+To get an access to the permission to edit data, please contact the authors (<thomashuet7@gmail.com >, <nicco.mazzucco@gmail.com >)
+
+### Next developments
+
+As data came from various publications:
+
+* an homogenisation the different values must be done
+* every radiocarbon dating should be carefully referenced
+* license and auhorship should be clearly defined
+
+### Final objectives
+
+At the middle term we want to:
+
+* publish scientific papers both for the archaeological results and for the app
+* in accordance with the [**FAIR** principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*) of the Open Science, publish as open-source data the **NeoNet app** source code and the radiocarbon dataset 
+
+
