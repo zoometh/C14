@@ -19,6 +19,8 @@ GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
 ## sizes
 # map
 panel.map <- image_read("../docs/imgs/panels_map.png")
+panel.map.coords <- image_read("../docs/imgs/panel_map_coords.png")
+ratio.panel.map.coords <- image_info(panel.map.coords)$height/image_info(panel.map.coords)$width
 # panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
 ratio.panel.map <- image_info(panel.map)$height/image_info(panel.map)$width
 # calib
@@ -99,7 +101,30 @@ plot(map.group.c14)
 * The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple"><b>purple</b></span> box) allow to subset a range of dating:
   + relatively to the duration of their material (short to long-life material). An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
   + below a maximum accepted threshold for the standard deviations (SD) for the datings
-* The table at the bottom (<span style="color:green"><b>green</b></span> box) is a dynamic table which list all the datings within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datings is dynamically done above this table.
+* The table at the bottom (<span style="color:green"><b>green</b></span> box) is a dynamic table which list all the datings within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datings is dynamically done above this table.  
+
+#### retrieve coordinates of an archaeological site
+
+The geographical map, OpenStreetMap, offers a well documented basemap. Archaeological sites are sometimes already mapped, like the Ligurian sites of Arene Candide and Grotta della Pollera. Clicking on the map show the lat/long coordinates of the current point (<span style="color:red"><b>red</b></span> box under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database. 
+
+```{r panel.map.coords.img,echo=FALSE,message=FALSE,fig.width=5, fig.height=5}
+# par(mar = c(0, 0, 0, 0))
+# # A tibble: 1 x 7
+#   format width height colorspace matte filesize density
+#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+# 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
+panel.map.coords.img <- image_draw(panel.map.coords)
+# xleft, ybottom, xright, ytop
+# Group button
+rect(120, 270, 270, 300,
+     border = "red", lty = "dashed", lwd = 4)
+invisible(dev.off())
+plot(panel.map.coords.img)
+```
+
+<!-- <p style="text-align: center;"> -->
+<!-- ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_coords.png){width=40%} -->
+<!-- </p>  -->
 
 ### **calib** panel
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png){width=20%}
