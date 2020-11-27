@@ -189,7 +189,7 @@ plot(calib.group.c14)
 The **NeoNet database** is a collaborative online Google Sheet. The database is composed by 3 spreadsheets: [**c14**](#bd.C14), [**material.life**](#bd.material) and [**period.abrev**](#bd.period) 
 
 ### **c14** {#bd.C14}
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_onglets.png){width=30%}  
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_c14.png){width=30%}  
 
 This is the complete database. The **mandatory fields** are:
 
@@ -236,6 +236,7 @@ kable(df.ex.labcode,"html") %>%
 
 
 ### **material.life** {#bd.material}
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_material.png){width=30%}
 
 The two fields show the material type and the material life duration, for example: 
 
@@ -253,6 +254,7 @@ kable(df.mat.life,"html") %>%
 You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/material_life.html)
 
 ### **period.abrev** {#bd.period}
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_period.png){width=30%}
 
 The two fields show the period abreviation and the period full label, for example:
 
