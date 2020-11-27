@@ -37,9 +37,9 @@ The **NeoNet app** allows the selection of radiocarbon dating by location, chron
 * some type of material life duration (short like, long life or others)
 * a maximum accepted standard deviation threshold (SD)
 
-We will see [How to use the **NeoNet app**][], [How to use the **NeoNet database**][] and [How to participate][]
+We will see how to use the [**NeoNet app**](#app), the [**NeoNet database**](#bd) and how to [**participate**](#particip)
 
-## How to use the **NeoNet app**
+## How to use the **NeoNet app** {#app}
 
 The **NeoNet app** is a [RShiny](https://shiny.rstudio.com/) interactive web application. 
 
@@ -184,29 +184,27 @@ plot(calib.group.c14)
 </p>
 
 
-## How to use the **NeoNet database**
+## How to use the **NeoNet database** {#bd}
 
-The **NeoNet database** is a collaborative online Google Sheet. The database is composed by 3 spreadsheets  
+The **NeoNet database** is a collaborative online Google Sheet. The database is composed by 3 spreadsheets: [**c14**](#bd.C14), [**material.life**](#bd.material) and [**period.abrev**](#bd.period) 
 
+### **c14** {#bd.C14}
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_onglets.png){width=30%}  
 
-
-### **c14** spreadsheet
-
-This is the complete database. The mandatory fields are:
+This is the complete database. The **mandatory fields** are:
 
 * **SiteName**: the site name
 * **Longitude**: in decimal degrees (ex: 1.04573)
 * **Latitude**: in decimal degrees (ex: 43.9265)
-* **Period**: a value from the [**period.abrev** spreadsheet][]
+* **Period**: a value from the [**period.abrev**](#bd.period) spreadsheet
 * **C14Age**: a numerical radiocarbon dating in BP
 * **C14SD**: the standard deviation of the radiocarbon dating
-* **LabCode**: the unique identifier of the radiocarbon dating
-* **Material**: a value from the [**material.life** spreadsheet][] 
+* [**LabCode**](#mf.labcode): the unique identifier of the radiocarbon dating
+* **Material**: a value from the [**material.life**](#bd.material) spreadsheet 
 * **tpq**: the *terminus post quem* of the radiocarbon dating in cal BC
 * **taq**: the *terminus ante quem* of the radiocarbon dating in cal BC
 
-The recommended fields are:
+The **recommended** fields are:
 
 * **PhaseCode**: a code for the dating stratigaphical unit and/or structure
 * **bib**: a plain text bibliographical reference
@@ -216,7 +214,28 @@ The recommended fields are:
 
 The others fields only concern the **[EUROEVOL_R app](https://zoometh.github.io/C14)** 
 
-### **material.life** spreadsheet
+#### **mandatory fields**
+
+All these fields are needed to make app working
+
+##### **LabCode** {#mf.labcode}
+
+The correct syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*number*'. For example:
+
+```{r LabCode, echo=FALSE}
+# knitr::include_url("../docs/material_life.html", height = "400px")
+# knitr::include_url("https://raw.githubusercontent.com/zoometh/C14/main/docs/material_life.html", height = "200px")
+# htmltools::includeHTML()
+ex.labcode <- c("Beta-103487", "CSIC-1133", "ETH-15984", "Gif-1855", "KIA-21356",
+                "LTL-13440A", "Ly-11338", "MC-2145", "OxA-9217","Poz-18393","...")
+df.ex.labcode <- data.frame(LabCode = ex.labcode,
+                         stringsAsFactors = F)
+kable(df.ex.labcode,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+
+### **material.life** {#bd.material}
 
 The two fields show the material type and the material life duration, for example: 
 
@@ -233,7 +252,7 @@ kable(df.mat.life,"html") %>%
 
 You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/material_life.html)
 
-### **period.abrev** spreadsheet
+### **period.abrev** {#bd.period}
 
 The two fields show the period abreviation and the period full label, for example:
 
@@ -250,7 +269,7 @@ kable(df.period.abrev,"html") %>%
 
 You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/period_abrev.html)
 
-## How to participate
+## How to participate {#particip}
 
 Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://www.imf.csic.es/index.php/actualidad/actividades/actividades-2020/1224-seminario-neonet-origen-desarrollo-y-consolidacion-del-neolitico-en-el-ambito-mediterraneo)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
 
@@ -258,11 +277,19 @@ To get an access to the permission to edit data, please contact the authors (<th
 
 ### Next developments
 
+#### Data integration
+
 As data came from various publications:
 
 * an homogenisation the different values must be done
 * every radiocarbon dating should be carefully referenced
 * license and auhorship should be clearly defined
+
+#### Server and database {#next.server}
+
+Today the **NeoNet app** is host on the **[shinyapps.io](https://www.shinyapps.io/)** server, an opensource but limited solution. For example, no direct connection can be done between the app and the database (ie the Google Sheet), so the app have to be *pushed* regularly on the **shinyapps.io** server after the database have been updated (contact <thomashuet7@gmail.com > for this update)
+
+We plan to host the app on a R server in a research institution (University, Laboratory) and to developp a real database on [PostgresSQL/PostGIS](https://www.postgresql.org/)
 
 ### Final objectives
 
