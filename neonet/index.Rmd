@@ -105,7 +105,8 @@ plot(map.group.c14)
 
 #### retrieve coordinates of an archaeological site {#map.coords}
 
-The default geographical background, the [OpenStreetMap map](https://www.openstreetmap.org/#map=6/37.753/14.524), offers a well documented basemap. Archaeological sites are sometimes already mapped, like the Ligurian sites of [Arene Candide](https://www.openstreetmap.org/#map=19/44.16233/8.32827) and [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466).  
+The default geographical background of the app, the [OpenStreetMap map](https://www.openstreetmap.org/#map=6/37.753/14.524) (OSM), offers a well documented basemap. In OSM, archaeological sites are sometimes already mapped, like the Ligurian sites of [Arene Candide](https://www.openstreetmap.org/#map=19/44.16233/8.32827) and [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). 
+
 Clicking on the NeoNet app map show the lat/long coordinates of the current point (<span style="color:red"><b>red</b></span> box under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database. 
 
 ```{r panel.map.coords.img,echo=FALSE,message=FALSE,fig.width=5, fig.height=5}
@@ -122,6 +123,8 @@ rect(120, 270, 270, 300,
 invisible(dev.off())
 plot(panel.map.coords.img)
 ```
+
+OSM search bar permits to find these two Ligurian sites and many others... 
 
 <!-- <p style="text-align: center;"> -->
 <!-- ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_coords.png){width=40%} -->
