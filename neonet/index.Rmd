@@ -103,9 +103,10 @@ plot(map.group.c14)
   + below a maximum accepted threshold for the standard deviations (SD) for the datings
 * The table at the bottom (<span style="color:green"><b>green</b></span> box) is a dynamic table which list all the datings within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datings is dynamically done above this table.  
 
-#### retrieve coordinates of an archaeological site
+#### retrieve coordinates of an archaeological site {#map.coords}
 
-The geographical map, OpenStreetMap, offers a well documented basemap. Archaeological sites are sometimes already mapped, like the Ligurian sites of Arene Candide and Grotta della Pollera. Clicking on the map show the lat/long coordinates of the current point (<span style="color:red"><b>red</b></span> box under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database. 
+The default geographical background, the [OpenStreetMap map](https://www.openstreetmap.org/#map=6/37.753/14.524), offers a well documented basemap. Archaeological sites are sometimes already mapped, like the Ligurian sites of [Arene Candide](https://www.openstreetmap.org/#map=19/44.16233/8.32827) and [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466).  
+Clicking on the NeoNet app map show the lat/long coordinates of the current point (<span style="color:red"><b>red</b></span> box under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database. 
 
 ```{r panel.map.coords.img,echo=FALSE,message=FALSE,fig.width=5, fig.height=5}
 # par(mar = c(0, 0, 0, 0))
