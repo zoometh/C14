@@ -277,6 +277,8 @@ To get an access to the permission to edit data, please contact the authors (<th
 
 ### Next developments
 
+In a context of collaborative research and Open Science, for the benefit of the scientific community, good practices and new IT developments are already planned
+
 #### Data integration
 
 As data came from various publications:
@@ -289,13 +291,20 @@ As data came from various publications:
 
 Today the **NeoNet app** is host on the **[shinyapps.io](https://www.shinyapps.io/)** server, an opensource but limited solution. For example, no direct connection can be done between the app and the database (ie the Google Sheet), so the app have to be *pushed* regularly on the **shinyapps.io** server after the database have been updated (contact <thomashuet7@gmail.com > for this update)
 
-We plan to host the app on a R server in a research institution (University, Laboratory) and to developp a real database on [PostgresSQL/PostGIS](https://www.postgresql.org/)
+We plan to host the app on a R server in a research institution (University, Laboratory) and to developp a **real database** on [PostgresSQL/PostGIS](https://www.postgresql.org/)
+
+#### Open Science recommendations {#next.openscience}
+
+In accordance with the Open Science, we will try to respect the data [**FAIR** principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*)
 
 ### Final objectives
 
 At the middle term we want to:
 
-* publish scientific papers both for the archaeological results and for the app
-* in accordance with the [**FAIR** principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*) of the Open Science, publish as open-source data the **NeoNet app** source code and the radiocarbon dataset 
+* publish the archaeological result(s) in scientific paper(s)
+* publish the **NeoNet app** development in a digital humanities papers
+* present the results and the app in conferences, seminar, etc.
+* present the app in dedicated workshops
+* publish as FAIR open-source data the **NeoNet app** source code and the radiocarbon dataset 
 
 
