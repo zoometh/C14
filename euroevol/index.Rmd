@@ -1,5 +1,5 @@
 ---
-title: "**EUROEVOL_R app**, mapping radiocarbon dating online"
+title: "**EUROEVOL_R app**, mapping radiocarbon dating from the EUROEVOL database"
 author: "Thomas Huet"
 # date: "11/12/2020"
 header-includes:
@@ -51,22 +51,26 @@ panel.calib <- image_read("../docs/imgs/panels_calib.png")
 ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
 ```
 
-The [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) is an interactive web application based on the **[EUROEVOL database](#db)** radiocarbon chronicles. It allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
+The [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) is an interactive web application based on the radiocarbon **[EUROEVOL database](#db)**. It allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
 
 * a geographical region of interest (ROI)
 * a time span between a *tpq* and a *taq* in cal BC
-* some periods
+* some periods (Late Mesolithic, Early Neolithic, etc.)
 * some type of material life duration (short like, long life or others)
 * a maximum accepted standard deviation threshold (SD)
 
 ## The **EUROEVOL\_R app** {#app}
 
-The [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) has been developped with [RShiny](https://shiny.rstudio.com/).
+the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) has been developped with [RShiny](https://shiny.rstudio.com/).
 
-<p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}
-</p>
+<p style="text-align: center;"> <font size="5"> the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) </font>
+[![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}](https://neolithic.shinyapps.io/Euroevol_R/)
+</p>  
 
-**EUROEVOL_R app** has a different dataset from the **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)**  but the same functionalities. So, to learn how to use these two apps, visit the [**NeoNet app** webpage](https://zoometh.github.io/C14/neonet/#app).  
+<!-- <p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%} -->
+<!-- </p> -->
+
+**EUROEVOL_R app** has a different dataset from the **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)**  but the same functionalities (ie, same RShiny script). So, to learn how to use these two apps, visit the [**NeoNet app** webpage](https://zoometh.github.io/C14/neonet/#app).  
 
 ## The **EUROEVOL database** {#db}
 
@@ -134,19 +138,19 @@ ages <- BchronCalibrate(ages=df.C14.sample$C14Age,
 
 The result of the `BchronCalibrate` function is a list where each calibrated dating (eg, `ages[[1]]`) is described by:
 
-* **ages**: a age (in uncal BP)
-* **ageSds**: a standard deviation
-* **calCurves**: the calibration curve used
+* **ages**: an age (in uncal BP)
+* **ageSds**: a standard deviation (SD)
+* **calCurves**: the calibration curve used ('intcal13', etc.)
 * **ageGrid**: a vector with all the years present in the calibration range (in cal BP)
 * **densities**: the densities of each year present in the calibration range
 
 To illustrate this calibration, we only plot the first dating
 
 ```{r dat.calib.BP.1, echo=TRUE, warning = F, fig.cap="Ten first radiocarbon dating calibration (cal BP)"}
-str(ages[[1]]) # plot
+str(ages[[1]])
 ```
 
-Datings are still in BP. A standardised way in archaeology will be to present them in cal BC. Furthermore, our purpose is to calculate *terminus post quem* (tpq) and *terminus ante quem* (taq) limits of each radiocarbon dating in order to use these *termini* for subsetting the dataset in the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/)
+Datings are still in BP. In archaeology, a standardised way will be to present them in cal BC. Furthermore, our purpose is to calculate *terminus post quem* (tpq) and *terminus ante quem* (taq) limits of each radiocarbon dating in order to use these *termini* for subsetting the dataset in the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/)
 
 ```{r dat.calib.BC, echo=TRUE, fig.cap="Ten first radiocarbon dating calibration (cal BC)"}
 tpqs <- taqs <- c()

@@ -41,7 +41,7 @@ We will see how to use the [**NeoNet app**](#app), the [**NeoNet database**](#bd
 
 ## How to use the **NeoNet app** {#app}
 
-The **NeoNet app** is a [RShiny](https://shiny.rstudio.com/) interactive web application. 
+The **NeoNet app** is a [RShiny](https://shiny.rstudio.com/) interactive web application 
 
 <p style="text-align: center;"> <font size="5"> the **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** </font>
 [![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=50%}](https://neolithic.shinyapps.io/NeoNet/)
@@ -97,7 +97,7 @@ plot(map.group.c14)
 ```
 
 * The bottom-left legend **periods** (<span style="color:orange"><b>orange</b></span> box) is a dynamic list of periods which exist in the selection (see checkboxes  **periods**)
-* The bottom-left slider  **tpq-taq** (<span style="color:blue"><b>blue</b></span> box) allows to subset a range of dating between a tpq and a taq (in cal BC) 
+* The bottom-left slider  **tpq/taq** (<span style="color:blue"><b>blue</b></span> box) allows to subset a range of dating between a *tpq* and a *taq* (in cal BC) 
 * The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple"><b>purple</b></span> box) allow to subset a range of dating:
   + relatively to the duration of their material (short to long-life material). An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
   + below a maximum accepted threshold for the standard deviations (SD) for the datings
