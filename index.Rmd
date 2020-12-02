@@ -22,7 +22,7 @@ Today exists a lot of web-based [radiocarbon databases, database portals](#c14.d
 
 # The **NeoNet** and **EUROEVOL_R** apps {#pres}
 
-There is two RShiny apps, **[NeoNet app](#neonet)** and **[EUROEVOL_R app](#euroevol)** with the same options, only the dataset changes. These applications allow the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
+There is two RShiny apps, **[NeoNet app](#neonet)** and **[EUROEVOL_R app](#euroevol)** with the same options, only the datasets are different. These applications allow the selection of radiocarbon dating by: 
 
 * a geographical region of interest (ROI)
 * a time span between a *tpq* and a *taq* in cal BC
@@ -49,7 +49,7 @@ The database is opensource and active (in development). See the [**NeoNet app** 
 <p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}
 </p>
 
-The database is opensource and static (yet developed)
+The database is opensource and static (yet developed). Visit the [**EUROEVOL_R app** webpage](https://zoometh.github.io/C14/euroevol) to see how the **EUROEVOL database** can be read by R.
 
 # Ressources
 
@@ -73,8 +73,6 @@ c14.calib.names <- c("OxCal","CalPal")
 c14.calib.df <- data.frame(names=c14.calib.names,
                         url=c14.calib.url,
                         stringsAsFactors = F)
-kable(c14.db.df,"html") %>%
+kable(c14.calib.df,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
-
-# References

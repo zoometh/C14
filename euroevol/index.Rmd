@@ -134,10 +134,10 @@ ages <- BchronCalibrate(ages=df.C14.sample$C14Age,
 
 The result of the `BchronCalibrate` function is a list where each calibrated dating (eg, `ages[[1]]`) is described by:
 
-* **ages**: a age (in BP)
+* **ages**: a age (in uncal BP)
 * **ageSds**: a standard deviation
 * **calCurves**: the calibration curve used
-* **ageGrid**: a vector with all the years present in the calibration range (in BP)
+* **ageGrid**: a vector with all the years present in the calibration range (in cal BP)
 * **densities**: the densities of each year present in the calibration range
 
 To illustrate this calibration, we only plot the first dating
@@ -157,19 +157,20 @@ for (i in 1:length(ages)){
 # to bc
 df.C14.sample$tpq <- tpqs + 1950
 df.C14.sample$taq <- taqs + 1950
-kable(df.C14.sample,"html") %>%
+kable(df.C14.sample,"html", row.names = F) %>%
   kable_styling(full_width = FALSE, position = "center", font_size=10)
 ```
 
-Here, our purpose was calculate *tpq* and *taq* for subsetting the dataset in the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) with the **slider tpq/taq** of the [**map** panel](https://zoometh.github.io/C14/neonet/#panel.map). But for each date selected in the app, such a calibration will be performed on-the-fly and the whole density curve will be displayed on the [**calib** panel](https://zoometh.github.io/C14/neonet/#panel.calib)  
-
-Once calculated, the dataset is saved 
+Once calculated, the dataset can be saved and will be re-read in the RShiny app
 
 ```{r dat.calib.BC.save, echo=TRUE, fig.cap="Ten first radiocarbon dating calibration (cal BC)"}
 ## nor run
 # write.csv(df.C14.sample, file = "euroevol.csv", sep = ";")
 ```
 
+## Final remarks
+
+Here, our purpose was calculate *tpq* and *taq* for the interactive subsetting of the dataset with the **slider tpq/taq** of the [**EUROEVOL_R app**](https://neolithic.shinyapps.io/Euroevol_R/) [**map** panel](https://zoometh.github.io/C14/neonet/#panel.map). But in the app, for each date selected, a such calibration will be performed on-the-fly and the whole density curve will be displayed on the [**calib** panel](https://zoometh.github.io/C14/neonet/#panel.calib)  
 
 # References
 
