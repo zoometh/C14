@@ -1,7 +1,7 @@
 ---
 title: "**NeoNet** and **EUROEVOL_R** apps for radiocarbon interactive maps"
 author: "Thomas Huet"
-date: "11/12/2020"
+# date: "11/12/2020"
 header-includes:
   - \usepackage{float}
   - \floatplacement{figure}{H}  #make every figure with capti
@@ -15,15 +15,49 @@ library(dplyr)
 library(knitr)
 library(magick)
 GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
-c14.db.url <- c("http://discovery.ucl.ac.uk/1469811","http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.14sea.org/2_dates.html","https://www.exoriente.org/associated_projects/ppnd_sites.php","http://www.archeometrie.mom.fr/banadora/")
-c14.db.names <- c("EUROEVOL","telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","14SEA Project","EX ORIENTE","BANADORA")
+
 ```
 
-# Radiocarbon chronicles, databases and data visualization
+Today exists a lot of web-based [radiocarbon databases, database portals](#c14.db) or [calibration applications](#c14.cal). But few solutions exist for data vizualisation, and specially selection of radiocarbon dating by location, chronology and material life duration. Since, the idea was to create an interactive web form map-based for selection of radiocarbon data. [R](https://www.r-project.org/) with the [Shiny package](https://shiny.rstudio.com/), and [Leaflet](https://rstudio.github.io/leaflet/) offer easy programming solutions to create such interactive maps.
 
-Today exists a lot of databases or database portals for C14 datings
+# The **NeoNet** and **EUROEVOL_R** apps {#pres}
+
+There is two RShiny apps, **[NeoNet app](#neonet)** and **[EUROEVOL_R app](#euroevol)** with the same options, only the dataset changes. These applications allow the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
+
+* a geographical region of interest (ROI)
+* a time span between a *tpq* and a *taq* in cal BC
+* some periods (Late Mesolithic, Early Neolithic, etc.)
+* some type of material life duration (short like, long life or others)
+* a maximum accepted standard deviation threshold (SD)
+
+To learn how to use the apps see the [**NeoNet app** webpage](https://zoometh.github.io/C14/neonet/#app)
+
+## **NeoNet app** {#neonet}
+
+**[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** is the based on a Google Sheet and covers the Central Mediterranean for the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC) with near to 1,000 radiocarbon datations.  
+
+<p style="text-align: center;">
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=50%}
+</p>
+
+The database is opensource and active (in development). See the [**NeoNet app** webpage](https://zoometh.github.io/C14/neonet/#particip) to understand how to participate
+
+## **EUROEVOL_R app** {#euroevol}
+
+**[EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)** is based on the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/) and covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC) with near to 14,000 radiocarbon datations  
+
+<p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}
+</p>
+
+The database is opensource and static (yet developed)
+
+# Ressources
+
+## Radiocarbon web databases {#c14.db}
 
 ```{r dat.db, echo=FALSE}
+c14.db.url <- c("http://discovery.ucl.ac.uk/1469811","https://c14.arch.ox.ac.uk","http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.14sea.org/2_dates.html","https://www.exoriente.org/associated_projects/ppnd_sites.php","http://www.archeometrie.mom.fr/banadora/")
+c14.db.names <- c("EUROEVOL","ORAU","telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","14SEA Project","EX ORIENTE","BANADORA")
 c14.db.df <- data.frame(names=c14.db.names,
                         url=c14.db.url,
                         stringsAsFactors = F)
@@ -31,23 +65,16 @@ kable(c14.db.df,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-Online app also exist for C14 calibration: [OxCal](https://c14.arch.ox.ac.uk/oxcal/), [CalPal](http://www.calpal-online.de/), etc.
+## Radiocarbon web calibrations {#c14.cal}
 
-But few solutions exist for data vizualisation, and specially selection of radiocarbon dating by location, chronology and material life duration. Since, the idea was to create an interactive web form map-based for selection of radiocarbon data. [R](https://www.r-project.org/) and [Leaflet](https://rstudio.github.io/leaflet/) offer easy programming solutions to create such interactive maps.
+```{r dat.calib, echo=FALSE}
+c14.calib.url <- c("https://c14.arch.ox.ac.uk/oxcal/","http://www.calpal-online.de/")
+c14.calib.names <- c("OxCal","CalPal")
+c14.calib.df <- data.frame(names=c14.calib.names,
+                        url=c14.calib.url,
+                        stringsAsFactors = F)
+kable(c14.db.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
 
-## The **NeoNet** and **EUROEVOL_R** apps
-
-There is two RShiny apps with the more or less same options. Only the dataset changes:
-
-* **[EUROEVOL_R](https://neolithic.shinyapps.io/Euroevol_R/)** is based on the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/) and covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC) with near to 13,000 C14 datations  
-
-<p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}
-</p>
-
-* **[NeoNet](https://neolithic.shinyapps.io/NeoNet/)** is the based on a Google Sheet and covers the Central Mediterranean for the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC) with near to 1,000 C14 datations. The database is still at its development stage.
-
-<p style="text-align: center;">
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=50%}
-</p>
-
-To learn how to use the apps see the [**NeoNet app** webpage](https://zoometh.github.io/C14/neonet)
+# References

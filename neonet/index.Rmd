@@ -29,7 +29,7 @@ panel.calib <- image_read("../docs/imgs/panels_calib.png")
 ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
 ```
 
-The **NeoNet app** allows the selection of radiocarbon dating by location, chronology and material life duration  by subsetting a radiocarbon dataset according to: 
+The **NeoNet app** allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
 
 * a geographical region of interest (ROI)
 * a time span between a *tpq* and a *taq* in cal BC
@@ -49,15 +49,15 @@ The **NeoNet app** is a [RShiny](https://shiny.rstudio.com/) interactive web app
 
 The app is divided into 4 panels:
 
-* [**map** panel][]: geographical region of interest with different possibilities to subset the datings dataset
-* [**calib** panel][]: calibration on-the-fly of the selected datings
+* [**map** panel](#panel.map): geographical region of interest with different possibilities to subset the datings dataset
+* [**calib** panel](#panel.calib): calibration on-the-fly of the selected datings
 * **data** panel: the whole dataset with search tools
 * **infos** panel: data and IT source, gathering, credits and link to the **NeoNet app** webpage
 
 The two main panels are **map** and **calib**
 
 
-### **map** panel
+### **map** panel {#panel.map}
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_idx.png){width=20%}
 
 
@@ -130,7 +130,7 @@ OSM search bar permits to find these two Ligurian sites and many others...
 <!-- ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_coords.png){width=40%} -->
 <!-- </p>  -->
 
-### **calib** panel
+### **calib** panel {#panel.calib}
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png){width=20%}
   
   
