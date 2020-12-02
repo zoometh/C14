@@ -277,7 +277,7 @@ You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://
 
 ## How to participate {#particip}
 
-Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://www.imf.csic.es/index.php/actualidad/actividades/actividades-2020/1224-seminario-neonet-origen-desarrollo-y-consolidacion-del-neolitico-en-el-ambito-mediterraneo)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
+Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
 
 To get an access to the permission to edit data, please contact the authors (<thomashuet7@gmail.com >, <nicco.mazzucco@gmail.com >)
 
