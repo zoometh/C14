@@ -5,7 +5,13 @@ author: "Thomas Huet, Niccolo Mazzucco"
 header-includes:
   - \usepackage{float}
   - \floatplacement{figure}{H}  #make every figure with capti
-output: html_document
+# output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
 ---
 
 ```{r setup, include=FALSE}
@@ -29,6 +35,8 @@ panel.calib <- image_read("../docs/imgs/panels_calib.png")
 ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
 ```
 
+# Presentation
+
 The **NeoNet app** allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
 
 * a geographical region of interest (ROI)
@@ -37,162 +45,15 @@ The **NeoNet app** allows the selection of radiocarbon dating by location, chron
 * some type of material life duration (short like, long life or others)
 * a maximum accepted standard deviation threshold (SD)
 
-We will see how to use the [**NeoNet app**](#app), the [**NeoNet database**](#bd) and how to [**participate**](#particip)
+We will see how to use the [**NeoNet app**](https://zoometh.github.io/C14/#app), the [**NeoNet database**](#bd) and how to [**participate**](#particip)
 
-## How to use the **NeoNet app** {#app}
+# The **NeoNet database** {#bd}
 
-The **NeoNet app** is a [RShiny](https://shiny.rstudio.com/) interactive web application 
+The **NeoNet database** is a collaborative online Google Sheet. The database is composed by 3 spreadsheets: [**c14**](#bd.C14), [**material.life**](#bd.material) and [**period.abrev**](#bd.period)
 
-<p style="text-align: center;"> <font size="5"> the **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** </font>
-[![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=50%}](https://neolithic.shinyapps.io/NeoNet/)
-</p>  
+## Database spreadsheets
 
-The app is divided into 4 panels:
-
-* [**map** panel](#panel.map): geographical region of interest with different possibilities to subset the datings dataset
-* [**calib** panel](#panel.calib): calibration on-the-fly of the selected datings
-* **data** panel: the whole dataset with search tools
-* **infos** panel: data and IT source, gathering, credits and link to the **NeoNet app** webpage
-
-The two main panels are **map** and **calib**
-
-
-### **map** panel {#panel.map}
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_idx.png){width=20%}
-
-
-The panel **map** is used for selection of radiocarbon dating by location, chronology and material life duration.
-
-* The top-left button **group c14 on map** (<span style="color:red">red</span> box) allows to cluster datings by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html))
-* The top-right checkboxes  **periods** (<span style="color:brown">brown</span> box) allows to select dataions by periods. An hyperlink allows to understand the [abrevations of the periods](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/period_abrev.html)
-
-```{r panel.map,echo=FALSE,message=FALSE,fig.fullwidth=TRUE,fig.asp=ratio.panel.map}
-# par(mar = c(0, 0, 0, 0))
-# # A tibble: 1 x 7
-#   format width height colorspace matte filesize density
-#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
-# 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
-map.group.c14 <- image_draw(panel.map)
-# xleft, ybottom, xright, ytop
-# Group button
-rect(20, 30, 200, 160,
-     border = "red", lty = "dashed", lwd = 4)
-# dynamic periods
-rect(20, 750, 130, 600,
-     border = "orange", lty = "dashed", lwd = 4)
-# slider
-rect(150, 720, 800, 650,
-     border = "blue", lty = "dashed", lwd = 4)
-# dynamic table
-rect(20, 886, 1650, 770,
-     border = "green", lty = "dashed", lwd = 4)
-# SDs
-rect(1300, 720, 1650, 600,
-     border = "purple", lty = "dashed", lwd = 4)
-# button periods
-rect(1450, 30, 1650, 550,
-     border = "brown", lty = "dashed", lwd = 4)
-invisible(dev.off())
-plot(map.group.c14)
-```
-
-* The bottom-left legend **periods** (<span style="color:orange"><b>orange</b></span> box) is a dynamic list of periods which exist in the selection (see checkboxes  **periods**)
-* The bottom-left slider  **tpq/taq** (<span style="color:blue"><b>blue</b></span> box) allows to subset a range of dating between a *tpq* and a *taq* (in cal BC) 
-* The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple"><b>purple</b></span> box) allow to subset a range of dating:
-  + relatively to the duration of their material (short to long-life material). An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
-  + below a maximum accepted threshold for the standard deviations (SD) for the datings
-* The table at the bottom (<span style="color:green"><b>green</b></span> box) is a dynamic table which list all the datings within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datings is dynamically done above this table.  
-
-#### retrieve coordinates of an archaeological site {#map.coords}
-
-The default geographical background of the app, the [OpenStreetMap map](https://www.openstreetmap.org/#map=6/37.753/14.524) (OSM), offers a well documented basemap. In OSM, archaeological sites are sometimes already mapped, like the Ligurian sites of [Arene Candide](https://www.openstreetmap.org/#map=19/44.16233/8.32827) and [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). 
-
-Clicking on the NeoNet app map show the lat/long coordinates of the current point (<span style="color:red"><b>red</b></span> box under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database. 
-
-```{r panel.map.coords.img,echo=FALSE,message=FALSE,fig.width=5, fig.height=5}
-# par(mar = c(0, 0, 0, 0))
-# # A tibble: 1 x 7
-#   format width height colorspace matte filesize density
-#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
-# 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
-panel.map.coords.img <- image_draw(panel.map.coords)
-# xleft, ybottom, xright, ytop
-# Group button
-rect(120, 270, 270, 300,
-     border = "red", lty = "dashed", lwd = 4)
-invisible(dev.off())
-plot(panel.map.coords.img)
-```
-
-OSM search bar permits to find these two Ligurian sites and many others... 
-
-<!-- <p style="text-align: center;"> -->
-<!-- ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_coords.png){width=40%} -->
-<!-- </p>  -->
-
-### **calib** panel {#panel.calib}
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png){width=20%}
-  
-  
-The panel **calib** is used for dating calibration on-the-fly with the R packages Bchron and radiocarbon. Calibrations are done on the whole dataset of datings displayed in the **map** panel.
-
-* The top-center radio button **c14 group by common site, layer/structure and/or period** (<span style="color:red"><b>red</b></span> box) allows to plot datings:
-  - by dating: each dating is plot separeltly (by default)
-  - by site and layer: datings coming from the same site and having the same layer/structure are cumulated
-  - by site and period: datings coming from the same site and having the same period are cumulated
-  - by period: datings having the same period are cumulated
-  - all C14: all datings are cumulated together  
-  
-```{r panel.calib, echo=FALSE, message=FALSE, fig.fullwidth=TRUE, fig.asp=ratio.panel.calib}
-# # A tibble: 1 x 7
-#   format width height colorspace matte filesize density
-#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
-# 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
-
-calib.group.c14 <- image_draw(panel.calib)
-# > image_info(panel.map)
-# # A tibble: 1 x 7
-#   format width height colorspace matte filesize density
-#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
-# 1 PNG     1518    702 sRGB       TRUE     63969 118x118
-# # xleft, ybottom, xright, ytop
-# Group button
-rect(1400, 0, 1500, 70,
-     border = "green", lty = "dashed", lwd = 4)
-# download
-rect(700, 0, 1300, 70,
-     border = "red", lty = "dashed", lwd = 4)
-# dynamic periods
-rect(20, 80, 1400, 700,
-     border = "orange", lty = "dashed", lwd = 4)
-# # slider
-# rect(150, 720, 800, 650,
-#      border = "blue", lty = "dashed", lwd = 4)
-# # dynamic table
-# rect(20, 886, 1650, 770,
-#      border = "green", lty = "dashed", lwd = 4)
-# # SDs
-# rect(1300, 720, 1650, 600,
-#      border = "purple", lty = "dashed", lwd = 4)
-# # button periods
-# rect(1450, 30, 1650, 550,
-#      border = "brown", lty = "dashed", lwd = 4)
-invisible(dev.off())
-plot(calib.group.c14)
-```
-
-* The graph area (<span style="color:orange"><b>orange</b></span> box) shows dynamically the SPD of the cabibrated datings seriated on their weighted means. The top-right  button **Download** (<span style="color:green"><b>green</b></span> box) allows to export the last plot in a PNG image
-
-<p style="text-align: center;">
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/neonet_calib_example.png){width=80%}
-</p>
-
-
-## How to use the **NeoNet database** {#bd}
-
-The **NeoNet database** is a collaborative online Google Sheet. The database is composed by 3 spreadsheets: [**c14**](#bd.C14), [**material.life**](#bd.material) and [**period.abrev**](#bd.period) 
-
-### **c14** {#bd.C14}
+### c14 {#bd.C14}
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_c14.png){width=30%}  
 
 This is the complete database. The **mandatory fields** are:
@@ -218,7 +79,7 @@ The **recommended** fields are:
 
 The others fields only concern the **[EUROEVOL_R app](https://zoometh.github.io/C14)** 
 
-#### **mandatory fields**
+#### mandatory fields
 
 All these fields are needed to make app working
 
@@ -239,7 +100,7 @@ kable(df.ex.labcode,"html") %>%
 ```
 
 
-### **material.life** {#bd.material}
+### material.life {#bd.material}
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_material.png){width=30%}
 
 The two fields show the material type and the material life duration, for example: 
@@ -257,7 +118,7 @@ kable(df.mat.life,"html") %>%
 
 You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/material_life.html)
 
-### **period.abrev** {#bd.period}
+### period.abrev {#bd.period}
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_period.png){width=30%}
 
 The two fields show the period abreviation and the period full label, for example:
@@ -275,17 +136,17 @@ kable(df.period.abrev,"html") %>%
 
 You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/period_abrev.html)
 
-## How to participate {#particip}
+# How to participate {#particip}
 
 Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean.
 
 To get an access to the permission to edit data, please contact the authors (<thomashuet7@gmail.com >, <nicco.mazzucco@gmail.com >)
 
-### Next developments
+## Next developments
 
 In a context of collaborative research and Open Science, for the benefit of the scientific community, good practices and new IT developments are already planned
 
-#### Data integration
+### Data integration
 
 As data came from various publications:
 
@@ -293,24 +154,24 @@ As data came from various publications:
 * every radiocarbon dating should be carefully referenced
 * license and auhorship should be clearly defined
 
-#### Server and database {#next.server}
+### Server and database {#next.server}
 
 Today the **NeoNet app** is host on the **[shinyapps.io](https://www.shinyapps.io/)** server, an opensource but limited solution. For example, no direct connection can be done between the app and the database (ie the Google Sheet), so the app have to be *pushed* regularly on the **shinyapps.io** server after the database have been updated (contact <thomashuet7@gmail.com > for this update)
 
-We plan to host the app on a R server in a research institution (University, Laboratory) and to developp a **real database** on [PostgresSQL/PostGIS](https://www.postgresql.org/)
+We plan to host the app on a R server in a research institution (University, Laboratory) and to developp a *real* database on [PostgreSQL/PostGIS](https://www.postgresql.org/)
 
-#### Open Science recommendations {#next.openscience}
+### Open Science {#next.openscience}
 
 In accordance with the Open Science, we will try to respect the data [**FAIR** principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*)
 
-### Final objectives
+## Final objectives
 
 At the middle term we want to:
 
 * publish the archaeological result(s) in scientific paper(s)
 * publish the **NeoNet app** development in a digital humanities papers
-* present the results and the app in conferences, seminar, etc.
+* present the results and the app in conferences, seminars, etc.
 * present the app in dedicated workshops
-* publish as FAIR open-source data the **NeoNet app** source code and the radiocarbon dataset 
+* publish as FAIR open-source data the **NeoNet app** source code and a selection of the radiocarbon dataset 
 
 

@@ -5,7 +5,13 @@ author: "Thomas Huet"
 header-includes:
   - \usepackage{float}
   - \floatplacement{figure}{H}  #make every figure with capti
-output: html_document
+# output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
 ---
 
 ```{r setup, include=FALSE}
@@ -15,13 +21,18 @@ library(dplyr)
 library(knitr)
 library(magick)
 GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
-
+panel.map <- image_read("docs/imgs/panels_map.png")
+panel.map.coords <- image_read("docs/imgs/panel_map_coords.png")
+panel.calib <- image_read("docs/imgs/panels_calib.png")
 ```
 
-Today exists a lot of web-based [radiocarbon databases, database portals](#c14.db) or [calibration applications](#c14.cal). But few solutions exist for data vizualisation, and specially selection of radiocarbon dating by location, chronology and material life duration. Since, the idea was to create an interactive web form map-based for selection of radiocarbon data. [R](https://www.r-project.org/) with the [Shiny package](https://shiny.rstudio.com/), and [Leaflet](https://rstudio.github.io/leaflet/) offer easy programming solutions to create such interactive maps.
+# Presentation {#pres}
 
-# The **NeoNet** and **EUROEVOL_R** apps {#pres}
+Today exists a lot of web-based [radiocarbon databases, database portals](#c14.db) or [calibration applications](#c14.cal). But few solutions exist for data vizualisation, and specially selection of radiocarbon dating by location, chronology and material life duration. Since, the idea was to create an interactive web form map-based for selection of radiocarbon data. These apps are [**NeoNet** and **EUROEVOL_R**](#apps)
 
+# **NeoNet** and **EUROEVOL_R** apps {#apps}
+
+These two apps have been developped with the [R](https://www.r-project.org/) programming language, its [Shiny](https://shiny.rstudio.com/) and [Leaflet](https://rstudio.github.io/leaflet/) packages. 
 There is two RShiny apps, **[NeoNet app](#neonet)** and **[EUROEVOL_R app](#euroevol)** with the same options, only the datasets are different. These applications allow the selection of radiocarbon dating by: 
 
 * a geographical region of interest (ROI)
@@ -51,7 +62,155 @@ The database is opensource and active (in development). See the [**NeoNet app** 
 
 The database is opensource and static (yet developed). Visit the [**EUROEVOL_R app** webpage](https://zoometh.github.io/C14/euroevol) to see how the **EUROEVOL database** can be read by R.
 
-# Ressources
+## How to use the apps {#app}
+
+These apps are [RShiny](https://shiny.rstudio.com/) interactive web applications they have different data sources but the same functionalities. We will illustrate how to use them with the case of the  **NeoNet app**
+
+<p style="text-align: center;"> <font size="5"> the **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** </font>
+[![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet.png){width=50%}](https://neolithic.shinyapps.io/NeoNet/)
+</p>  
+
+The app is divided into 4 panels:
+
+* [**map** panel](#panel.map): geographical region of interest with different possibilities to subset the datings dataset
+* [**calib** panel](#panel.calib): calibration on-the-fly of the selected datings
+* **data** panel: the whole dataset with search tools
+* **infos** panel: data and IT source, gathering, credits and link to the **NeoNet app** webpage
+
+The two main panels are **map** and **calib**
+
+
+### **map** panel {#panel.map}
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_idx.png){width=20%}
+
+
+The panel **map** is used for selection of radiocarbon dating by location, chronology and material life duration.
+
+* The top-left button **group c14 on map** (<span style="color:red">red</span> box) allows to cluster datings by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html))
+* The top-right checkboxes  **periods** (<span style="color:brown">brown</span> box) allows to select dataions by periods. An hyperlink allows to understand the [abrevations of the periods](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/period_abrev.html)
+
+```{r panel.map,echo=FALSE,message=FALSE,fig.fullwidth=TRUE}
+# par(mar = c(0, 0, 0, 0))
+# # A tibble: 1 x 7
+#   format width height colorspace matte filesize density
+#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+# 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
+map.group.c14 <- image_draw(panel.map)
+# xleft, ybottom, xright, ytop
+# Group button
+rect(20, 30, 200, 160,
+     border = "red", lty = "dashed", lwd = 4)
+# dynamic periods
+rect(20, 750, 130, 600,
+     border = "orange", lty = "dashed", lwd = 4)
+# slider
+rect(150, 720, 800, 650,
+     border = "blue", lty = "dashed", lwd = 4)
+# dynamic table
+rect(20, 886, 1650, 770,
+     border = "green", lty = "dashed", lwd = 4)
+# SDs
+rect(1300, 720, 1650, 600,
+     border = "purple", lty = "dashed", lwd = 4)
+# button periods
+rect(1450, 30, 1650, 550,
+     border = "brown", lty = "dashed", lwd = 4)
+invisible(dev.off())
+plot(map.group.c14)
+```
+
+* The bottom-left legend **periods** (<span style="color:orange"><b>orange</b></span> box) is a dynamic list of periods which exist in the selection (see checkboxes  **periods**)
+* The bottom-left slider  **tpq/taq** (<span style="color:blue"><b>blue</b></span> box) allows to subset a range of dating between a *tpq* and a *taq* (in cal BC) 
+* The bottom-right checkboxes and slider  **material life duration and max accepted SD** (<span style="color:purple"><b>purple</b></span> box) allow to subset a range of dating:
+  + relatively to the duration of their material (short to long-life material). An hyperlink allows to understand the [classification of the material into the short life, long life and others](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/material_life.html) categories
+  + below a maximum accepted threshold for the standard deviations (SD) for the datings
+* The table at the bottom (<span style="color:green"><b>green</b></span> box) is a dynamic table which list all the datings within the map and in the selection (tpq/taq, material life duration, maximum SD, periods). A count of selected sites and selected datings is dynamically done above this table.  
+
+#### retrieve coordinates of an archaeological site {#map.coords}
+
+The default geographical background of the app, the [OpenStreetMap map](https://www.openstreetmap.org/#map=6/37.753/14.524) (OSM), offers a well documented basemap. In OSM, archaeological sites are sometimes already mapped, like the Ligurian sites of [Arene Candide](https://www.openstreetmap.org/#map=19/44.16233/8.32827) and [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). 
+
+Clicking on the NeoNet app map show the lat/long coordinates of the current point (<span style="color:red"><b>red</b></span> box under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database. 
+
+```{r panel.map.coords.img,echo=FALSE,message=FALSE,fig.width=5, fig.height=5}
+# par(mar = c(0, 0, 0, 0))
+# # A tibble: 1 x 7
+#   format width height colorspace matte filesize density
+#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+# 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
+panel.map.coords.img <- image_draw(panel.map.coords)
+# xleft, ybottom, xright, ytop
+# Group button
+rect(120, 270, 270, 300,
+     border = "red", lty = "dashed", lwd = 4)
+invisible(dev.off())
+plot(panel.map.coords.img)
+```
+
+OSM search bar permits to find these two Ligurian sites and many others... 
+
+<!-- <p style="text-align: center;"> -->
+<!-- ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map_coords.png){width=40%} -->
+<!-- </p>  -->
+
+### **calib** panel {#panel.calib}
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_calib_idx.png){width=20%}
+  
+  
+The panel **calib** is used for dating calibration on-the-fly with the R packages Bchron and radiocarbon. Calibrations are done on the whole dataset of datings displayed in the **map** panel.
+
+* The top-center radio button **c14 group by common site, layer/structure and/or period** (<span style="color:red"><b>red</b></span> box) allows to plot datings:
+  - by dating: each dating is plot separeltly (by default)
+  - by site and layer: datings coming from the same site and having the same layer/structure are cumulated
+  - by site and period: datings coming from the same site and having the same period are cumulated
+  - by period: datings having the same period are cumulated
+  - all C14: all datings are cumulated together  
+  
+```{r panel.calib, echo=FALSE, message=FALSE, fig.fullwidth=TRUE}
+# # A tibble: 1 x 7
+#   format width height colorspace matte filesize density
+#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+# 1 PNG     1664    886 sRGB       TRUE   1496175 118x118
+
+calib.group.c14 <- image_draw(panel.calib)
+# > image_info(panel.map)
+# # A tibble: 1 x 7
+#   format width height colorspace matte filesize density
+#   <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+# 1 PNG     1518    702 sRGB       TRUE     63969 118x118
+# # xleft, ybottom, xright, ytop
+# Group button
+rect(1400, 0, 1500, 70,
+     border = "green", lty = "dashed", lwd = 4)
+# download
+rect(700, 0, 1300, 70,
+     border = "red", lty = "dashed", lwd = 4)
+# dynamic periods
+rect(20, 80, 1400, 700,
+     border = "orange", lty = "dashed", lwd = 4)
+# # slider
+# rect(150, 720, 800, 650,
+#      border = "blue", lty = "dashed", lwd = 4)
+# # dynamic table
+# rect(20, 886, 1650, 770,
+#      border = "green", lty = "dashed", lwd = 4)
+# # SDs
+# rect(1300, 720, 1650, 600,
+#      border = "purple", lty = "dashed", lwd = 4)
+# # button periods
+# rect(1450, 30, 1650, 550,
+#      border = "brown", lty = "dashed", lwd = 4)
+invisible(dev.off())
+plot(calib.group.c14)
+```
+
+* The graph area (<span style="color:orange"><b>orange</b></span> box) shows dynamically the SPD of the cabibrated datings seriated on their weighted means. The top-right  button **Download** (<span style="color:green"><b>green</b></span> box) allows to export the last plot in a PNG image
+
+<p style="text-align: center;">
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/neonet_calib_example.png){width=80%}
+</p>
+
+# Radiocarbon ressources
 
 ## Radiocarbon web databases {#c14.db}
 
