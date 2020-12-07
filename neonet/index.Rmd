@@ -45,6 +45,10 @@ The **NeoNet app** allows the selection of radiocarbon dating by location, chron
 * some type of material life duration (short like, long life or others)
 * a maximum accepted standard deviation threshold (SD)
 
+<p style="text-align: center;"> <font size="5"> the [**NeoNet app**](https://neolithic.shinyapps.io/neonet/) </font>
+[![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=50%}](https://neolithic.shinyapps.io/neonet/)
+</p>  
+
 We will see how to use the [**NeoNet app**](https://zoometh.github.io/C14/#app), the [**NeoNet database**](#bd) and how to [**participate**](#particip)
 
 # The **NeoNet database** {#bd}
