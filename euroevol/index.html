@@ -2179,11 +2179,11 @@ ages &lt;- BchronCalibrate(ages=df.C14.sample$C14Age,
 <p>To illustrate this calibration, we only plot the first dating</p>
 <pre class="r"><code>str(ages[[1]])</code></pre>
 <pre><code>## List of 5
-##  $ ages     : int 2750
+##  $ ages     : int 4590
 ##  $ ageSds   : int 100
 ##  $ calCurves: chr &quot;intcal13&quot;
-##  $ ageGrid  : num [1:996] 2359 2360 2361 2362 2363 ...
-##  $ densities: num [1:996] 1.06e-05 1.24e-05 1.36e-05 1.48e-05 1.62e-05 ...</code></pre>
+##  $ ageGrid  : num [1:816] 4837 4838 4839 4840 4841 ...
+##  $ densities: num [1:816] 1.09e-05 1.23e-05 1.39e-05 1.57e-05 1.73e-05 ...</code></pre>
 <p>Datings are still in BP. In archaeology, a standardised way will be to present them in cal BC. Furthermore, our purpose is to calculate <em>terminus post quem</em> (tpq) and <em>terminus ante quem</em> (taq) limits of each radiocarbon dating in order to use these <em>termini</em> for subsetting the dataset in the <a href="https://neolithic.shinyapps.io/Euroevol_R/"><strong>EUROEVOL_R app</strong></a></p>
 <pre class="r"><code>tpqs &lt;- taqs &lt;- c()
 for (i in 1:length(ages)){
@@ -2254,84 +2254,384 @@ taq
 NA
 </td>
 <td style="text-align:left;">
-S4991
+S6295
 </td>
 <td style="text-align:left;">
 Great Britain
 </td>
 <td style="text-align:right;">
-51.4158
+50.7965
 </td>
 <td style="text-align:right;">
--1.85759
+0.233712
 </td>
 <td style="text-align:left;">
-Silbury Hill
+Combe Hill
 </td>
 <td style="text-align:right;">
-16221
+25513
 </td>
 <td style="text-align:left;">
 UN
 </td>
 <td style="text-align:right;">
-2750
+4590
 </td>
 <td style="text-align:right;">
 100
 </td>
 <td style="text-align:left;">
-I-2795
+I-11613
 </td>
 <td style="text-align:left;">
-antler
+charcoal
 </td>
 <td style="text-align:left;">
-NA
+Fraxinus sp., Corylus sp., Crataegus sp.
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:right;">
--1404
+-3702
 </td>
 <td style="text-align:right;">
--409
+-2887
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-MGNG
+NA
 </td>
 <td style="text-align:left;">
-S8066
+S3115
 </td>
 <td style="text-align:left;">
-Denmark
+Great Britain
 </td>
 <td style="text-align:right;">
-55.5793
+55.7600
 </td>
 <td style="text-align:right;">
-11.57940
+-6.211000
 </td>
 <td style="text-align:left;">
-Maglelyng 3
+Newton
 </td>
 <td style="text-align:right;">
-20464
+11010
 </td>
 <td style="text-align:left;">
-NoPeriod
+UM
 </td>
 <td style="text-align:right;">
-4700
+7765
 </td>
 <td style="text-align:right;">
-65
+225
 </td>
 <td style="text-align:left;">
-K-3779
+GU-1953
+</td>
+<td style="text-align:left;">
+charred plant macrofossils
+</td>
+<td style="text-align:left;">
+Corylus avellana
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+-7567
+</td>
+<td style="text-align:right;">
+-5916
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+S1416
+</td>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:right;">
+43.5800
+</td>
+<td style="text-align:right;">
+3.360000
+</td>
+<td style="text-align:left;">
+Cabrieres, Baume de Bourbon
+</td>
+<td style="text-align:right;">
+6411
+</td>
+<td style="text-align:left;">
+MN
+</td>
+<td style="text-align:right;">
+6050
+</td>
+<td style="text-align:right;">
+120
+</td>
+<td style="text-align:left;">
+Ly-412
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+-5470
+</td>
+<td style="text-align:right;">
+-4460
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+S6652
+</td>
+<td style="text-align:left;">
+Great Britain
+</td>
+<td style="text-align:right;">
+55.5834
+</td>
+<td style="text-align:right;">
+-2.069810
+</td>
+<td style="text-align:left;">
+Thirlings
+</td>
+<td style="text-align:right;">
+16095
+</td>
+<td style="text-align:left;">
+UN
+</td>
+<td style="text-align:right;">
+4270
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:left;">
+HAR-1450
+</td>
+<td style="text-align:left;">
+charcoal
+</td>
+<td style="text-align:left;">
+Crataegus sp./Pyrus sp./Sorbus sp./Malus sp., Corylus sp.
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+-3368
+</td>
+<td style="text-align:right;">
+-2461
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+WARB2
+</td>
+<td style="text-align:left;">
+S4193
+</td>
+<td style="text-align:left;">
+Germany
+</td>
+<td style="text-align:right;">
+51.4800
+</td>
+<td style="text-align:right;">
+9.140000
+</td>
+<td style="text-align:left;">
+Warburg III
+</td>
+<td style="text-align:right;">
+1343
+</td>
+<td style="text-align:left;">
+LN
+</td>
+<td style="text-align:right;">
+4653
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:left;">
+KN-4504
+</td>
+<td style="text-align:left;">
+human bone
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+<td style="text-align:left;">
+Wartberg
+</td>
+<td style="text-align:right;">
+-3638
+</td>
+<td style="text-align:right;">
+-3101
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+S4380
+</td>
+<td style="text-align:left;">
+Great Britain
+</td>
+<td style="text-align:right;">
+50.9130
+</td>
+<td style="text-align:right;">
+-2.222000
+</td>
+<td style="text-align:left;">
+Hambledon Hill
+</td>
+<td style="text-align:right;">
+25409
+</td>
+<td style="text-align:left;">
+UN
+</td>
+<td style="text-align:right;">
+4679
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+UB-4243
+</td>
+<td style="text-align:left;">
+human bone
+</td>
+<td style="text-align:left;">
+Homo sapiens
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+-3632
+</td>
+<td style="text-align:right;">
+-3354
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VITTX1
+</td>
+<td style="text-align:left;">
+S4162
+</td>
+<td style="text-align:left;">
+France
+</td>
+<td style="text-align:right;">
+47.3800
+</td>
+<td style="text-align:right;">
+4.520000
+</td>
+<td style="text-align:left;">
+Vitteaux, Oppidum Myard
+</td>
+<td style="text-align:right;">
+1047
+</td>
+<td style="text-align:left;">
+MN
+</td>
+<td style="text-align:right;">
+4880
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:left;">
+GIF-2341
+</td>
+<td style="text-align:left;">
+charcoal
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Cortaillod
+</td>
+<td style="text-align:right;">
+-4232
+</td>
+<td style="text-align:right;">
+-3025
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SEED4
+</td>
+<td style="text-align:left;">
+S7521
+</td>
+<td style="text-align:left;">
+Germany
+</td>
+<td style="text-align:right;">
+54.0310
+</td>
+<td style="text-align:right;">
+10.508600
+</td>
+<td style="text-align:left;">
+Seedorf-Furthberg-LA245
+</td>
+<td style="text-align:right;">
+18783
+</td>
+<td style="text-align:left;">
+LM
+</td>
+<td style="text-align:right;">
+5830
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:left;">
+KIA-282
 </td>
 <td style="text-align:left;">
 food residue
@@ -2340,63 +2640,13 @@ food residue
 NA
 </td>
 <td style="text-align:left;">
-Trichterbecher
+Ertebolle
 </td>
 <td style="text-align:right;">
--3702
+-4890
 </td>
 <td style="text-align:right;">
--3098
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-PRZ
-</td>
-<td style="text-align:left;">
-S4938
-</td>
-<td style="text-align:left;">
-Poland
-</td>
-<td style="text-align:right;">
-52.8300
-</td>
-<td style="text-align:right;">
-18.65000
-</td>
-<td style="text-align:left;">
-Przybranowo 3
-</td>
-<td style="text-align:right;">
-19948
-</td>
-<td style="text-align:left;">
-EN
-</td>
-<td style="text-align:right;">
-6860
-</td>
-<td style="text-align:right;">
-110
-</td>
-<td style="text-align:left;">
-Gd 2595
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-Linearbandkeramik
-</td>
-<td style="text-align:right;">
--6081
-</td>
-<td style="text-align:right;">
--5471
+-4494
 </td>
 </tr>
 <tr>
@@ -2404,299 +2654,49 @@ Linearbandkeramik
 NA
 </td>
 <td style="text-align:left;">
-S1093
-</td>
-<td style="text-align:left;">
-France
-</td>
-<td style="text-align:right;">
-44.6800
-</td>
-<td style="text-align:right;">
-5.38000
-</td>
-<td style="text-align:left;">
-Antonnaire
-</td>
-<td style="text-align:right;">
-6294
-</td>
-<td style="text-align:left;">
-NoPeriod
-</td>
-<td style="text-align:right;">
-5750
-</td>
-<td style="text-align:right;">
-40
-</td>
-<td style="text-align:left;">
-Lyon-3702
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
--4786
-</td>
-<td style="text-align:right;">
--4410
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-S6540
+S6455
 </td>
 <td style="text-align:left;">
 Great Britain
 </td>
 <td style="text-align:right;">
-51.8331
+51.9754
 </td>
 <td style="text-align:right;">
--2.11031
+-1.569020
 </td>
 <td style="text-align:left;">
-Peak Camp
+King Stone
 </td>
 <td style="text-align:right;">
-25531
+15724
 </td>
 <td style="text-align:left;">
-UN
+UBA
 </td>
 <td style="text-align:right;">
-5060
+3480
 </td>
 <td style="text-align:right;">
-45
+50
 </td>
 <td style="text-align:left;">
-GrA-30028
+BM-2428
 </td>
 <td style="text-align:left;">
 charcoal
 </td>
 <td style="text-align:left;">
-Quercus sp.
+Corylus sp.
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:right;">
--4038
+-2031
 </td>
 <td style="text-align:right;">
--3655
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-MRRE1
-</td>
-<td style="text-align:left;">
-S3058
-</td>
-<td style="text-align:left;">
-France
-</td>
-<td style="text-align:right;">
-44.0000
-</td>
-<td style="text-align:right;">
-4.93000
-</td>
-<td style="text-align:left;">
-Mourre de Seve
-</td>
-<td style="text-align:right;">
-6154
-</td>
-<td style="text-align:left;">
-UM
-</td>
-<td style="text-align:right;">
-7730
-</td>
-<td style="text-align:right;">
-60
-</td>
-<td style="text-align:left;">
-Lyon-148
-</td>
-<td style="text-align:left;">
-charcoal
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-Castelnovien
-</td>
-<td style="text-align:right;">
--6904
-</td>
-<td style="text-align:right;">
--6397
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-S4235
-</td>
-<td style="text-align:left;">
-Great Britain
-</td>
-<td style="text-align:right;">
-51.4401
-</td>
-<td style="text-align:right;">
--1.87480
-</td>
-<td style="text-align:left;">
-Windmill Hill
-</td>
-<td style="text-align:right;">
-25228
-</td>
-<td style="text-align:left;">
-UN
-</td>
-<td style="text-align:right;">
-4673
-</td>
-<td style="text-align:right;">
-30
-</td>
-<td style="text-align:left;">
-OxA-15076
-</td>
-<td style="text-align:left;">
-antler
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
--3633
-</td>
-<td style="text-align:right;">
--3349
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-HAG2
-</td>
-<td style="text-align:left;">
-S7957
-</td>
-<td style="text-align:left;">
-Sweden
-</td>
-<td style="text-align:right;">
-59.2370
-</td>
-<td style="text-align:right;">
-17.88460
-</td>
-<td style="text-align:left;">
-Häggsta
-</td>
-<td style="text-align:right;">
-20218
-</td>
-<td style="text-align:left;">
-EMN
-</td>
-<td style="text-align:right;">
-4500
-</td>
-<td style="text-align:right;">
-105
-</td>
-<td style="text-align:left;">
-Ua 1393
-</td>
-<td style="text-align:left;">
-charcoal
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-Pitted Ware
-</td>
-<td style="text-align:right;">
--3644
-</td>
-<td style="text-align:right;">
--2696
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-S7256
-</td>
-<td style="text-align:left;">
-Ireland
-</td>
-<td style="text-align:right;">
-52.7972
-</td>
-<td style="text-align:right;">
--6.89529
-</td>
-<td style="text-align:left;">
-Tinryland
-</td>
-<td style="text-align:right;">
-17671
-</td>
-<td style="text-align:left;">
-UN
-</td>
-<td style="text-align:right;">
-3379
-</td>
-<td style="text-align:right;">
-35
-</td>
-<td style="text-align:left;">
-UBA-8046
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:right;">
--1881
-</td>
-<td style="text-align:right;">
--1504
+-1559
 </td>
 </tr>
 <tr>
@@ -2713,25 +2713,25 @@ Germany
 54.2500
 </td>
 <td style="text-align:right;">
-11.05000
+11.050000
 </td>
 <td style="text-align:left;">
 Rosenhof
 </td>
 <td style="text-align:right;">
-10640
+10642
 </td>
 <td style="text-align:left;">
 LM
 </td>
 <td style="text-align:right;">
-4790
+4560
 </td>
 <td style="text-align:right;">
-60
+65
 </td>
 <td style="text-align:left;">
-KN-2776
+KN-2104
 </td>
 <td style="text-align:left;">
 wood
@@ -2743,10 +2743,10 @@ NA
 Ertebolle
 </td>
 <td style="text-align:right;">
--3790
+-3633
 </td>
 <td style="text-align:right;">
--3353
+-2911
 </td>
 </tr>
 </tbody>
