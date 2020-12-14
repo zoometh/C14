@@ -30,7 +30,7 @@ panel.calib <- image_read("docs/imgs/panels_calib.png")
 
 # Presentation {#apps}
 
-Today exists a lot of web-based ressources to manage radiocarbon dates, but few solutions exist for their **interactive selection and spatialization**. NeoNet app and EUROEVOL_R app have been developped for this purpose. These interactive web form map-based allow the selection of radiocarbon dates by: 
+Today exists a lot of web-based ressources to manage radiocarbon dates, but [few solutions](#c14.app) exist for their **interactive selection and spatialization**, NeoNet app and EUROEVOL_R app have been developped for this purpose. These interactive web form map-based allow the selection of radiocarbon dates by: 
 
 * a geographical region of interest (ROI)
 * a time span between a *tpq* and a *taq* in cal BC
@@ -205,11 +205,11 @@ Credits and link to the dedicated GitHub webpage ([EUROEVOL_R](https://zoometh.g
 
 Free ressources exist for radiocarbon [databases](#c14.db), [calibrations](#c14.cal) or for [analysis](#c14.analysis)
 
-## application {#c14.app}
+## applications {#c14.app}
 
 
 ```{r dat.app, echo=FALSE}
-c14.app.url <- c("https://theia.arch.cam.ac.uk/MedAfriCarbon/", "https://github.com/ropensci/c14bazAAR/blob/main/README.md", "https://www.ibercrono.org/goget/index.php", "https://github.com/ISAAKiel/oxcAAR/blob/main/README.md")
+c14.app.url <- c("https://theia.arch.cam.ac.uk/MedAfriCarbon/", "https://github.com/ropensci/c14bazAAR", "https://www.ibercrono.org/goget/index.php", "https://github.com/ISAAKiel/oxcAAR")
 c14.app.names <- c("MedAfriCarbon", "c14bazAAR", "GoGet", "oxcAAR")
 c14.app.df <- data.frame(names=c14.app.names,
                         url=c14.app.url,
