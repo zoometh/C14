@@ -205,7 +205,25 @@ Credits and link to the dedicated GitHub webpage ([EUROEVOL_R](https://zoometh.g
 
 Free ressources exist for radiocarbon [databases](#c14.db), [calibrations](#c14.cal) or for [analysis](#c14.analysis)
 
+## application {#c14.app}
+
+
+```{r dat.app, echo=FALSE}
+c14.app.url <- c("https://theia.arch.cam.ac.uk/MedAfriCarbon/", "https://github.com/ropensci/c14bazAAR/blob/main/README.md", "https://www.ibercrono.org/goget/index.php", "https://github.com/ISAAKiel/oxcAAR/blob/main/README.md")
+c14.app.names <- c("MedAfriCarbon", "c14bazAAR", "GoGet", "oxcAAR")
+c14.app.df <- data.frame(names=c14.app.names,
+                        url=c14.app.url,
+                        stringsAsFactors = F)
+kable(c14.app.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+
+The [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) RShiny app offers additional options for selection and calibration of radiocarbon dates
+
 ## databases {#c14.db}
+
+An almost exhaustive inventory of open databases has been made on the [c14bazAAR repository](https://github.com/ropensci/c14bazAAR#databases)
 
 ```{r dat.db, echo=FALSE}
 c14.db.url <- c("http://discovery.ucl.ac.uk/1469811","https://c14.arch.ox.ac.uk","http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.14sea.org/2_dates.html","https://www.exoriente.org/associated_projects/ppnd_sites.php","http://www.archeometrie.mom.fr/banadora/")
