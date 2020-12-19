@@ -1,0 +1,116 @@
+---
+title: "**NeoNet** and **EUROEVOL_R** apps for radiocarbon interactive maps"
+author: "Thomas Huet"
+# date: "11/12/2020"
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}  #make every figure with capti
+# output: html_document
+output: 
+  html_document:
+    highlight: tango
+    toc: true
+    toc_depth: 3
+    toc_float :
+      collapsed: false
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
+library(kableExtra) 
+library(dplyr)
+library(knitr)
+library(magick)
+GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
+panel.map <- image_read("docs/imgs/panels_map.png")
+panel.map.coords <- image_read("docs/imgs/panel_map_coords.png")
+panel.calib <- image_read("docs/imgs/panels_calib.png")
+```
+
+# Presentation {#apps}
+
+Today exists a lot of web-based ressources to manage radiocarbon dates, but [few solutions](#c14.app) exist for their **interactive selection and spatialization**, NeoNet app and EUROEVOL_R app have been developped for this purpose. These interactive web form map-based allow the selection of radiocarbon dates by: 
+
+* a geographical region of interest (ROI)
+* a time span between a *tpq* and a *taq* in cal BC
+* some periods (Late Mesolithic, Early Neolithic, etc.)
+* the quality of the date (live duration, maximum accepted SD)
+
+The apps offer also **tools for their analysis** like summing probability densities (SPD) depending on different levels of grouping, starting from the archaeoligical unit (layer, structure, etc.) to the total sum of the selected dates.
+
+The **NeoNet and EUROEVOL_R apps** have been developped with [R](https://www.r-project.org/) programming language and the [Shiny](https://shiny.rstudio.com/) package. They share the same layout, only the datasets are differents. **NeoNet and EUROEVOL_R databases** canvas -- like the columns' names or values' names -- is the one of the EUROEVOL database. 
+
+* **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** covers the Central Mediterranean for the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC) with near to 1,000 radiocarbon dates.  
+
+<p style="text-align: center;">
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=50%}
+</p>
+
+The database, a Google Sheet, is opensource and active (in development), see the [**NeoNet app** webpage](https://zoometh.github.io/C14/neonet/#app)
+
+* **[EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)** covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC) with near to 14,000 radiocarbon dates  
+
+<p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}
+</p>
+
+The app database is the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/), is opensource and static (yet developed), see the [**EUROEVOL_R app** webpage](https://zoometh.github.io/C14/euroevol)
+
+# Radiocarbon ressources
+
+Free ressources exist for radiocarbon [apps](c14.app), [databases](#c14.db), [calibrations](#c14.cal) or for [analysis](#c14.analysis)
+
+## applications {#c14.app}
+
+
+```{r dat.app, echo=FALSE}
+c14.app.url <- c("https://theia.arch.cam.ac.uk/MedAfriCarbon/", "https://github.com/ropensci/c14bazAAR", "https://www.ibercrono.org/goget/index.php", "https://github.com/ISAAKiel/oxcAAR")
+c14.app.names <- c("MedAfriCarbon", "c14bazAAR", "GoGet", "oxcAAR")
+c14.app.df <- data.frame(names=c14.app.names,
+                        url=c14.app.url,
+                        stringsAsFactors = F)
+kable(c14.app.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+
+The [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) RShiny app offers additional options for selection and calibration of radiocarbon dates
+
+## databases {#c14.db}
+
+An almost exhaustive inventory of open databases has been made on the [c14bazAAR repository](https://github.com/ropensci/c14bazAAR#databases)
+
+```{r dat.db, echo=FALSE}
+c14.db.url <- c("http://discovery.ucl.ac.uk/1469811","https://c14.arch.ox.ac.uk","http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.14sea.org/2_dates.html","https://www.exoriente.org/associated_projects/ppnd_sites.php","http://www.archeometrie.mom.fr/banadora/")
+c14.db.names <- c("EUROEVOL","ORAU","telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","14SEA Project","EX ORIENTE","BANADORA")
+c14.db.df <- data.frame(names=c14.db.names,
+                        url=c14.db.url,
+                        stringsAsFactors = F)
+kable(c14.db.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+## calibrations {#c14.cal}
+
+```{r dat.calib, echo=FALSE}
+c14.calib.app <- c("dedicated","dedicated","dedicated","R programming", "R programming")
+c14.calib.url <- c("https://c14.arch.ox.ac.uk/oxcal/",
+                   "http://www.calpal-online.de/",
+                   "http://calib.org/calib/",
+                   "https://cran.r-project.org/web/packages/rcarbon/index.html",
+                   "https://cran.r-project.org/web/packages/Bchron/index.html")
+c14.calib.names <- c("OxCal","CalPal","Calib","rcarbon","Bchron")
+c14.calib.df <- data.frame(type=c14.calib.app,
+                           names=c14.calib.names,
+                           url=c14.calib.url,
+                           stringsAsFactors = F)
+kable(c14.calib.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+## analysis {#c14.analysis}
+
+R offers a comprehensive framework to calibrate, plot, sum and use temporal constraints -- stratigraphy, periodisations, etc., like bayesian analysis -- on radiocarbon datasets. 
+Free software offering a dedicated solution for bayesian inference are: [ChronoModel](https://chronomodel.com/), [OpenBUGS](http://www.openbugs.net/w/FrontPage), [JAGS](http://mcmc-jags.sourceforge.net/), etc.
+
+For a overview of the available solutions, see the [R Bayesian task view](https://cran.r-project.org/web/views/Bayesian.html)
