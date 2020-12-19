@@ -144,7 +144,7 @@ Selection shapes can be ***polygons*** and ***rectanges***. These shapes can be 
 
 #### retrieve coordinates from the map
 
-One of the basemaps of the app is [OpenStreetMap](https://www.openstreetmap.org/#map=6/37.753/14.524) (OSM). OSM offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the NeoNet app map show the lat/long coordinates of the current point (<span style="color:red"><u>red</u></span> box under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database
+One of the basemaps of the app is [OpenStreetMap](https://www.openstreetmap.org/#map=6/37.753/14.524) (OSM). OSM offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the NeoNet app map show the lat/long coordinates of the current point (under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database
 
 <center>
 
