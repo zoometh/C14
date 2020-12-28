@@ -119,7 +119,7 @@ The bottom-right checkboxes and slider (Fig. \@ref(fig:panel-map1), <span style=
 
 The panel **calib** is used for dates on-the-fly calibration with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). Calibrations are done on the whole dataset of dates displayed in the [table of the **map panel**](#panel.map). If the dates are numerous (eg > 100) the computing time could take times.
 
-### c14 group by *filter*
+### c14 group by *filter* {#panel.calib.group}
 
 The only selection which can be done is on the top-center radio button  (Fig. \@ref(fig:panel-calib), <span style="color:red"><u>red</u></span> box). The **c14 group by** filter allows to plot dates and to sum their probability densities depending on different levels of grouping:
 
@@ -172,17 +172,17 @@ This is the complete database. The **mandatory fields** are:
 * **Latitude**: in decimal degrees (ex: `43.921`)
 * **Period**: a value from the [**period.abrev**](#bd.period) spreadsheet
 * **C14Age**: a numerical radiocarbon dating in BP
-* **C14SD**: the standard deviation of the radiocarbon dating
+* **C14SD**: the standard deviation (SD) of the radiocarbon dating
 * [**LabCode**](#mf.labcode): the unique identifier of the radiocarbon dating
 * **Material**: a value from the [**material.life**](#bd.material) spreadsheet 
 * **tpq**: the *terminus post quem* of the radiocarbon dating in cal BC
 * **taq**: the *terminus ante quem* of the radiocarbon dating in cal BC
+* [**bib_url**](#mf.bib_url): a BibTex key bibliographical reference (for publication purpose)
 
 The **recommended** fields are:
 
-* **PhaseCode**: a code for the dating stratigaphical unit and/or structure
+* **PhaseCode**: a code for the dating stratigaphical unit and/or structure, useful for [**layer/structure C14 grouping**](#panel.calib.group)
 * **bib**: a plain text bibliographical reference
-* **bib_url**: the current URL of the reference or its notice 
 * **MaterialSpecies**: a specification of the field **Material**
 * **Culture**: a specification of the field **Period**
 
@@ -190,7 +190,7 @@ The others fields only concern the **[EUROEVOL_R app](https://zoometh.github.io/
 
 #### mandatory fields
 
-All these fields are needed to make app working
+Here we explain more precisely some mandatory fields
 
 ##### **LabCode** {#mf.labcode}
 
@@ -239,6 +239,57 @@ The correct syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*number*'.
 </tbody>
 </table>
 
+##### **bib_url** {#mf.bib_url}
+
+Every radiocarbon dating should be referenced with a BibTeX format bibliographical reference in the **bib_url** field. The unique values of this field will be parsed and the entire corresponding bibliographical references will be retrieved from the Google Drive document \texttt{references.bib}. 
+
+<table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> tpq </th>
+   <th style="text-align:left;"> taq </th>
+   <th style="text-align:left;"> select </th>
+   <th style="text-align:left;"> RedNeo </th>
+   <th style="text-align:left;"> bib </th>
+   <th style="text-align:left;"> bib_url </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> -6086 </td>
+   <td style="text-align:left;"> -5923 </td>
+   <td style="text-align:left;"> VRAI </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> Binder D,. et al. Modelling the earliest ... </td>
+   <td style="text-align:left;"> <b>Binder18</b> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+  </tr>
+</tbody>
+</table>
+
+For example, the value **Binder18** from the c14 spreadsheet will match this complete reference:
+
+
+```r
+@article{Binder18,
+  title={Modelling the earliest north-western dispersal of Mediterranean Impressed Wares: new dates and Bayesian chronological model.},
+  author={Binder, Didier and Lanos, Philippe and Angeli, Lucia and Gomart, Louise and Guilaine, Jean and Manen, Claire and Maggi, Roberto and Muntoni, Italo M and Panelli, Chiara and Radi, Giovanna and others},
+  journal={Documenta praehistorica.},
+  volume={44},
+  pages={54--77},
+  year={2018},
+  publisher={University of Ljubljana Department of Archaeology}
+}
+```
+
+The BibTex references are recorded [here](https://drive.google.com/file/d/1ZmbddwV7iqHUut1e_FNRa9_qogvHkSTj/view?usp=sharing)
 
 ### material.life {#bd.material}
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_material.png){width=30%}
@@ -310,10 +361,7 @@ You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://
 
 # How to **participate** {#particip}
 
-Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean. As data came from various publications:
-
-* an homogenisation the different values (material, cultures, etc.) must be done
-* every radiocarbon dating should be carefully referenced with a bibliographical reference in BibTeX format
+Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean. As data came from various publications, an homogenisation the different values (material, cultures, bibliographical references, etc.) must be done
 
 Contact <nicco.mazzucco@gmail.com> for database and data integration
 
