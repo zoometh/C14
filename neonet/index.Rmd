@@ -248,6 +248,7 @@ This is the complete database. The **mandatory fields** are:
 * **Longitude**: in decimal degrees (ex: `1.045`)
 * **Latitude**: in decimal degrees (ex: `43.921`)
 * **Period**: a value from the [**period.abrev**](#bd.period) spreadsheet
+* **PhaseCode**: a code for the dating stratigaphical unit and/or structure, useful for [**layer/structure C14 grouping**](#panel.calib.group)
 * **C14Age**: a numerical radiocarbon dating in BP
 * **C14SD**: the standard deviation (SD) of the radiocarbon dating
 * [**LabCode**](#mf.labcode): the unique identifier of the radiocarbon dating
@@ -258,7 +259,6 @@ This is the complete database. The **mandatory fields** are:
 
 The **recommended** fields are:
 
-* **PhaseCode**: a code for the dating stratigaphical unit and/or structure, useful for [**layer/structure C14 grouping**](#panel.calib.group)
 * **bib**: a plain text bibliographical reference
 * **MaterialSpecies**: a specification of the field **Material**
 * **Culture**: a specification of the field **Period**
