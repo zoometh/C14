@@ -23,14 +23,14 @@ library(dplyr)
 library(knitr)
 library(magick)
 GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
-panel.map <- image_read("docs/imgs/panels_map.png")
+panel.map <- image_read("docs/imgs/panel_map.png")
 panel.map.coords <- image_read("docs/imgs/panel_map_coords.png")
-panel.calib <- image_read("docs/imgs/panels_calib.png")
+panel.calib <- image_read("docs/imgs/panel_calib.png")
 ```
 
 # Presentation {#apps}
 
-Today exists a lot of web-based ressources to manage radiocarbon dates, but [few solutions](#c14.app) exist for their **interactive selection and spatialization**, NeoNet app and EUROEVOL_R app have been developped for this purpose. These interactive web form map-based allow the selection of radiocarbon dates by: 
+Today exists a lot of web-based ressources for [database](#c14.db) and [calibrate](#c14.cal) radiocarbon dates, but few solutions exist for their [**interactive selection and spatialization**](#c14.app), NeoNet app and EUROEVOL_R app have been developped for this purpose. These interactive web form map-based allow the selection of radiocarbon dates by: 
 
 * a geographical region of interest (ROI)
 * a time span between a *tpq* and a *taq* in cal BC
@@ -64,8 +64,8 @@ Free ressources exist for radiocarbon [apps](c14.app), [databases](#c14.db), [ca
 
 
 ```{r dat.app, echo=FALSE}
-c14.app.url <- c("https://theia.arch.cam.ac.uk/MedAfriCarbon/", "https://github.com/ropensci/c14bazAAR", "https://www.ibercrono.org/goget/index.php", "https://github.com/ISAAKiel/oxcAAR")
-c14.app.names <- c("MedAfriCarbon", "c14bazAAR", "GoGet", "oxcAAR")
+c14.app.url <- c("https://theia.arch.cam.ac.uk/MedAfriCarbon/", "https://github.com/ropensci/c14bazAAR", "https://www.ibercrono.org/goget/index.php")
+c14.app.names <- c("MedAfriCarbon", "c14bazAAR", "GoGet")
 c14.app.df <- data.frame(names=c14.app.names,
                         url=c14.app.url,
                         stringsAsFactors = F)
@@ -81,8 +81,8 @@ The [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) RShiny app offe
 An almost exhaustive inventory of open databases has been made on the [c14bazAAR repository](https://github.com/ropensci/c14bazAAR#databases)
 
 ```{r dat.db, echo=FALSE}
-c14.db.url <- c("http://discovery.ucl.ac.uk/1469811","https://c14.arch.ox.ac.uk","http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.14sea.org/2_dates.html","https://www.exoriente.org/associated_projects/ppnd_sites.php","http://www.archeometrie.mom.fr/banadora/")
-c14.db.names <- c("EUROEVOL","ORAU","telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","14SEA Project","EX ORIENTE","BANADORA")
+c14.db.url <- c("http://discovery.ucl.ac.uk/1469811","https://radon.ufg.uni-kiel.de/","https://c14.arch.ox.ac.uk","http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.14sea.org/2_dates.html","https://www.exoriente.org/associated_projects/ppnd_sites.php","http://www.archeometrie.mom.fr/banadora/")
+c14.db.names <- c("EUROEVOL","Radon","ORAU","telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","14SEA Project","EX ORIENTE","BANADORA")
 c14.db.df <- data.frame(names=c14.db.names,
                         url=c14.db.url,
                         stringsAsFactors = F)
@@ -93,13 +93,14 @@ kable(c14.db.df,"html") %>%
 ## calibrations {#c14.cal}
 
 ```{r dat.calib, echo=FALSE}
-c14.calib.app <- c("dedicated","dedicated","dedicated","R programming", "R programming")
+c14.calib.app <- c("dedicated","dedicated","dedicated","R programming", "R programming","R programming")
 c14.calib.url <- c("https://c14.arch.ox.ac.uk/oxcal/",
                    "http://www.calpal-online.de/",
                    "http://calib.org/calib/",
                    "https://cran.r-project.org/web/packages/rcarbon/index.html",
-                   "https://cran.r-project.org/web/packages/Bchron/index.html")
-c14.calib.names <- c("OxCal","CalPal","Calib","rcarbon","Bchron")
+                   "https://cran.r-project.org/web/packages/Bchron/index.html",
+                   "https://cran.r-project.org/web/packages/oxcAAR/index.html")
+c14.calib.names <- c("OxCal","CalPal","Calib","rcarbon","Bchron","oxcAAR")
 c14.calib.df <- data.frame(type=c14.calib.app,
                            names=c14.calib.names,
                            url=c14.calib.url,
