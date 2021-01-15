@@ -25,4 +25,10 @@ df <- bib2df(path)
 df <- df[df$BIBTEXKEY == "Binder18",]
 
 #Binder18 
-GetBibEntryWithDOI(c("10.4312/dp.44.4"))
+GetBibEntryWithDOI(c("10.4312/dp.44.4")) # OK
+remotes::install_github("ropensci/jstor")
+jst_get_references(
+  jst_example("parsed_references.xml"),
+  parse_refs = TRUE
+) 
+GetBibEntryWithDOI(c("https://www.jstor.org/stable/27923702"))

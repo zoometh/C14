@@ -33,21 +33,21 @@ The **NeoNet app** allows the selection of radiocarbon dating by location, chron
 [![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_map.png){width=50%}](https://neolithic.shinyapps.io/neonet/)
 </p>  
 
-We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet database**](#bd) and how to [**participate**](#particip) to the developments of these tools
+We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet database**](#bd) and our [**Objectives**](#particip)
 
-# Use **NeoNet** {#app}
+# **NeoNet app** {#app}
 
-The apps are [RShiny](https://shiny.rstudio.com/) have the same functionalities. The app is divided into 4 panels:
+The app is a [RShiny](https://shiny.rstudio.com/) divided into 4 panels:
 
-* [**map** panel](#panel.map): ROI with selection menus
-* [**calib** panel](#panel.calib): calibration of the selected dates
-* [**data** panel](#panel.data): the whole dataset
-* [**infos** panel](#panel.infos): handbook and credits
+1. [**map** panel](#panel.map): ROI with selection menus
+2. [**calib** panel](#panel.calib): calibration of the selected dates
+3. [**data** panel](#panel.data): the whole dataset
+4. [**infos** panel](#panel.infos): handbook and credits
 
 The two main panels are **map** and **calib**
 
 
-## **map** panel {#panel.map}
+## 1. **map** panel {#panel.map}
 ![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_map_idx.png){width=15%}
   
  
@@ -113,7 +113,7 @@ The bottom-right checkboxes and slider (Fig. \@ref(fig:panel-map1), <span style=
 
 * below a maximum accepted threshold for the standard deviations (SD) for the dates
 
-## **calib** panel {#panel.calib}
+## 2. **calib** panel {#panel.calib}
 ![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_calib_idx.png){width=15%}
 
 
@@ -146,19 +146,19 @@ The plot area (Fig. \@ref(fig:panel-calib), <span style="color:orange"><u>orange
 ![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/neonet_calib_example.png){width=80%}
 </p>
 
-## **data** panel {#panel.data}
+## 3. **data** panel {#panel.data}
 ![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_data_idx.png){width=15%}
 
 The complete database is a datatable ([DT package](https://cran.r-project.org/web/packages/DT/index.html)), with sorting and filtering tools
 
-## **infos** panel {#panel.infos}
+## 4. **infos** panel {#panel.infos}
 ![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_infos_idx.png){width=15%}
 
-This webpage is embedded into this panel
+The URL of this webpage (https://zoometh.github.io/C14/neonet) is embedded into this panel
 
-# The **NeoNet database** {#bd}
+# **NeoNet database** {#bd}
 
-The **NeoNet database** is a collaborative online Google Sheet. The database is composed by 3 spreadsheets: [**c14**](#bd.C14), [**material.life**](#bd.material) and [**period.abrev**](#bd.period)
+The **NeoNet database** is composed by 3 spreadsheets: [**c14**](#bd.C14), [**material.life**](#bd.material) and [**period.abrev**](#bd.period)
 
 ## Database spreadsheets
 
@@ -171,18 +171,19 @@ This is the complete database. The **mandatory fields** are:
 * **Longitude**: in decimal degrees (ex: `1.045`)
 * **Latitude**: in decimal degrees (ex: `43.921`)
 * **Period**: a value from the [**period.abrev**](#bd.period) spreadsheet
+* [**PhaseCode**](#mf.phasecode): a code for the dating stratigaphical unit and/or structure
 * **C14Age**: a numerical radiocarbon dating in BP
 * **C14SD**: the standard deviation (SD) of the radiocarbon dating
 * [**LabCode**](#mf.labcode): the unique identifier of the radiocarbon dating
 * **Material**: a value from the [**material.life**](#bd.material) spreadsheet 
 * **tpq**: the *terminus post quem* of the radiocarbon dating in cal BC
 * **taq**: the *terminus ante quem* of the radiocarbon dating in cal BC
-* [**bib_url**](#mf.bib_url): a BibTex key bibliographical reference (for publication purpose)
+* [bibliographical references (two fields)](#mf.bib_all)
+  + [**bib**](#mf.bib): a short plain text bibliographical reference
+  + [**bib_url**](#mf.bib_url): a DOI or a BibTex key bibliographical reference
 
 The **recommended** fields are:
 
-* **PhaseCode**: a code for the dating stratigaphical unit and/or structure, useful for [**layer/structure C14 grouping**](#panel.calib.group)
-* **bib**: a plain text bibliographical reference
 * **MaterialSpecies**: a specification of the field **Material**
 * **Culture**: a specification of the field **Period**
 
@@ -190,11 +191,46 @@ The others fields only concern the **[EUROEVOL_R app](https://zoometh.github.io/
 
 #### mandatory fields
 
-Here we explain more precisely some mandatory fields
+Here we explain more precisely some of the mandatory fields
+
+##### **PhaseCode** {#mf.phasecode}
+
+The PhaseCode field provide a more precise archaeological context than the site name. It is useful for [**layer/structure C14 grouping**](#panel.calib.group). It could be:
+
+* the layer
+
+* the structure
+
+<table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> PhaseCode </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> C5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> C7-8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> foyer 7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> niv. II </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ... </td>
+  </tr>
+</tbody>
+</table>
+
+This values of this field needs to be homogeneized (for example: `C.5` -> `C5`), at first for the same sites, then for the whole dataset 
 
 ##### **LabCode** {#mf.labcode}
 
-The correct syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*number*'. For example:
+The conventional syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*number*', respecting the case letters (upper case and lower case) For example:
 
 <table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
@@ -214,6 +250,9 @@ The correct syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*number*'.
   </tr>
   <tr>
    <td style="text-align:left;"> Gif-1855 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GrN-6706 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> KIA-21356 </td>
@@ -239,9 +278,17 @@ The correct syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*number*'.
 </tbody>
 </table>
 
-##### **bib_url** {#mf.bib_url}
+##### **bib** and **bib_url** {#mf.bib_all}
 
-Every radiocarbon dating should be referenced with a BibTeX format bibliographical reference in the **bib_url** field. The unique values of this field will be parsed and the entire corresponding bibliographical references will be retrieved from the Google Drive document \texttt{references.bib}. 
+Every radiocarbon date should be referenced with a bibliographical reference with a plain text in the [**bib**](#mf.bib) field and and a DOI or a BibTex key in the [**bib_url**](#mf.bib_url) field. We favour the earliest mention of the radiocarbon date
+
+###### **bib** {#mf.bib}
+
+The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the year of the publcation, for example `Guilaine et al. 1993` or `Binder et al. 2018`
+
+###### **bib_url** {#mf.bib_url}
+
+We favour the DOI as a unique bibliographical reference. For example: 
 
 <table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
@@ -260,8 +307,8 @@ Every radiocarbon dating should be referenced with a BibTeX format bibliographic
    <td style="text-align:left;"> -5923 </td>
    <td style="text-align:left;"> VRAI </td>
    <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> Binder D,. et al. Modelling the earliest ... </td>
-   <td style="text-align:left;"> <b>Binder18</b> </td>
+   <td style="text-align:left;"> Binder et al. 2018 </td>
+   <td style="text-align:left;"> <b>https://doi.org/10.4312/dp.44.4</b> </td>
   </tr>
   <tr>
    <td style="text-align:left;"> ... </td>
@@ -274,22 +321,50 @@ Every radiocarbon dating should be referenced with a BibTeX format bibliographic
 </tbody>
 </table>
 
-For example, the value **Binder18** from the c14 spreadsheet will match this complete reference:
+When the DOI is lacking, the bibliographical reference should be include into the BibTex document \texttt{references.bib} with the name of the first author and the two last digits of the year:
 
 
 ```r
-@article{Binder18,
-  title={Modelling the earliest north-western dispersal of Mediterranean Impressed Wares: new dates and Bayesian chronological model.},
-  author={Binder, Didier and Lanos, Philippe and Angeli, Lucia and Gomart, Louise and Guilaine, Jean and Manen, Claire and Maggi, Roberto and Muntoni, Italo M and Panelli, Chiara and Radi, Giovanna and others},
-  journal={Documenta praehistorica.},
-  volume={44},
-  pages={54--77},
-  year={2018},
-  publisher={University of Ljubljana Department of Archaeology}
+@book{Guilaine93,
+  title={Dourgne: derniers chasseurs-collecteurs et premiers {\'e}leveurs de la Haute-Vall{\'e}e de l'Aude},
+  author={Guilaine, Jean and Barbaza, Michel},
+  year={1993},
+  publisher={Centre d'anthropologie des soci{\'e}t{\'e}s rurales; Arch{\'e}ologie en Terre d'Aude}
 }
 ```
 
-The BibTex references are recorded [here](https://drive.google.com/file/d/1ZmbddwV7iqHUut1e_FNRa9_qogvHkSTj/view?usp=sharing)
+The key of this reference is added to the **bib_url** field. For example, the key value **Guilaine93** from the c14 spreadsheet will match this complete reference. 
+
+<table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> tpq </th>
+   <th style="text-align:left;"> taq </th>
+   <th style="text-align:left;"> select </th>
+   <th style="text-align:left;"> RedNeo </th>
+   <th style="text-align:left;"> bib </th>
+   <th style="text-align:left;"> bib_url </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> -3330 </td>
+   <td style="text-align:left;"> -2492 </td>
+   <td style="text-align:left;"> FAUX </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> Guilaine et al. 1993 </td>
+   <td style="text-align:left;"> <b>Guilaine93</b> </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> ... </td>
+  </tr>
+</tbody>
+</table>
 
 ### material.life {#bd.material}
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_material.png){width=30%}
@@ -359,7 +434,7 @@ The two fields show the period abreviation and the period full label, for exampl
 
 You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/period_abrev.html)
 
-# How to **participate** {#particip}
+# **Objectives** {#particip}
 
 Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean. As data came from various publications, an homogenisation the different values (material, cultures, bibliographical references, etc.) must be done
 
@@ -367,11 +442,14 @@ Contact <nicco.mazzucco@gmail.com> for database and data integration
 
 ## Short-term objectives {#next.publish}
 
-Today, the **NeoNet app** release is online. At the short-term, and in the frame of [**FAIR** Open Science principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*), we plan to:
+Today, the **NeoNet app** release is online. At the short-term, and in the frame of [**FAIR** Open Science principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*), our publication plan is:
 
-* publish the **NeoNet database** in a Open Data repository (ex: [Zenodo](https://zenodo.org/))
-* publish the **NeoNet database** reference in a data paper (ex: [JOAD](https://openarchaeologydata.metajnl.com/))
-* publish the RShiny **NeoNet app** source code in a Open digital humanities paper (ex: [JOSS](https://joss.theoj.org/))
+1. publish the **NeoNet database** in a Open Data repository (ex: [Zenodo](https://zenodo.org/))
+2. publish the **NeoNet database** reference in a data paper (ex: [JOAD](https://openarchaeologydata.metajnl.com/))
+3. publish the RShiny **NeoNet app** source code in a Open digital humanities paper (ex: [JOSS](https://joss.theoj.org/))
+  
+Beside this publication plan, we will also:
+
 * publish the archaeological result(s) in scientific paper(s) (*journal to be defined*)
 * present the results and the app in conferences, seminars, etc.
 
