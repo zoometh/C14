@@ -1,5 +1,7 @@
 ---
-title: "a Radiocarbon review: databases, calibrations and interactive apps"
+title: | 
+  | **A radiocarbon review**: 
+  | Apps, databases, calibrations and analysis
 author: "Thomas Huet"
 # date: "11/12/2020"
 header-includes:
@@ -28,16 +30,14 @@ panel.map.coords <- image_read("docs/imgs/panel_map_coords.png")
 panel.calib <- image_read("docs/imgs/panel_calib.png")
 ```
 
-# Radiocarbon ressources {#apps}
-
-Today exists various web-based ressources for [database](#c14.db), [calibrations](#c14.cal),  [**interactive selection and spatialization**](#c14.app) and [analysis](#c14.analysis) 
+Today exists various web-based open access ressources for [database](#c14.db), [calibrations](#c14.cal),  [interactive selection and spatialization](#c14.app) and [analysis](#c14.analysis) 
 
 # Applications {#c14.app}
 
 
 ```{r dat.app, echo=FALSE}
-c14.app.url <- c("https://theia.arch.cam.ac.uk/MedAfriCarbon/","https://zoometh.github.io/C14/neonet","https://neolithic.shinyapps.io/Euroevol_R/","https://github.com/ropensci/c14bazAAR", "https://www.ibercrono.org/goget/index.php")
-c14.app.names <- c("MedAfriCarbon", "NeoNet","EUROEVOL_R", "c14bazAAR", "GoGet")
+c14.app.url <- c("https://theia.arch.cam.ac.uk/MedAfriCarbon/","https://zoometh.github.io/C14/neonet","https://neolithic.shinyapps.io/Euroevol_R/")
+c14.app.names <- c("MedAfriCarbon", "NeoNet","EUROEVOL_R")
 c14.app.df <- data.frame(names=c14.app.names,
                         url=c14.app.url,
                         stringsAsFactors = F)
@@ -45,8 +45,7 @@ kable(c14.app.df,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-**MedAfriCarbon**, **NeoNet** and **EUROEVOL_R** allow interactive web form map-based for  of radiocarbon dates selection by geographical region of interest, time span and periods, quality of the date, etc. These apps offer also analysis tools like summing probability densities (SPD).
-
+**MedAfriCarbon**, **NeoNet** and **EUROEVOL_R** allow interactive web form map-based for  of radiocarbon dates selection by geographical region of interest, time span and periods, quality of the date, etc. These apps offer also analysis tools like summing probability densities (SPD). 
 These apps have been developped with [R](https://www.r-project.org/) programming language and the [Shiny](https://shiny.rstudio.com/) package
 
 ## MedAfriCarbon {#c14.app.MedAfriCarbon}
@@ -67,7 +66,7 @@ The [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) offers an almos
 * **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** covers the Northern Central Mediterranean between the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC) with near to 1,500 radiocarbon dates  
 
 <p style="text-align: center;">
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_thumbnail.png){width=50%}
+![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map.png){width=50%}
 </p>
 
 The database, an Excel Sheet, see the [**NeoNet app** webpage](https://zoometh.github.io/C14/neonet/#app)
@@ -77,9 +76,9 @@ The database, an Excel Sheet, see the [**NeoNet app** webpage](https://zoometh.g
 <p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}
 </p>
 
-The app database is the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/), is opensource and static (yet developed), see the [**EUROEVOL_R app** webpage](https://zoometh.github.io/C14/euroevol)
+The database is the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/), is opensource and static (yet developed), see the [**EUROEVOL_R app** webpage](https://zoometh.github.io/C14/euroevol)
 
-# databases {#c14.db}
+# Databases {#c14.db}
 
 An almost exhaustive inventory of open databases has been made on the [c14bazAAR repository](https://github.com/ropensci/c14bazAAR#databases)
 
@@ -93,7 +92,44 @@ kable(c14.db.df,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-# calibrations {#c14.cal}
+## Get data
+
+R progamming language permits to download radiocarbon data from databases.
+
+```{r dat.get, echo=FALSE}
+c14.get.app <- c("R programming", "dedicated")
+c14.get.url <- c("https://github.com/ropensci/c14bazAAR", "https://www.ibercrono.org/goget/index.php")
+c14.get.names <- c("c14bazAAR", "GoGet")
+c14.get.df <- data.frame(type=c14.get.app,
+                         names=c14.get.names,
+                         url=c14.get.url,
+                         stringsAsFactors = F)
+kable(c14.get.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
+The [c14bazAAR package](https://github.com/ropensci/c14bazAAR) allows to browse different database. As an example, let's load the the [Radon database](https://radon.ufg.uni-kiel.de/","https://c14.arch.ox.ac.uk):
+
+```{r dat.get.c14bazAAR.load, echo=TRUE}
+library(c14bazAAR)
+radonC14 <- get_c14data("radon")
+```
+
+And retrieve a radiocarbon data (site, c14age, c14std, etc.) from its LabCode. For example, let's choose the 'Ly-11645' LabCode: 
+
+```{r dat.get.c14bazAAR.labcode, echo=TRUE}
+# function to retrieve main info from a date
+f.info.a.date <- function(a.db, a.dat){
+  col.nmes <- c("site", "labnr","c14age","c14std", "shortref")
+  df <- a.db[a.db$labnr == a.dat, col.nmes]
+  df <- as.data.frame(df[!is.na(df$labnr), ])
+  return(df)
+}
+# run
+f.info.a.date(radonC14, 'Ly-11645')
+```
+
+# Calibrations {#c14.cal}
 
 ```{r dat.calib, echo=FALSE}
 c14.calib.app <- c("dedicated","dedicated","dedicated","R programming", "R programming","R programming")
@@ -112,7 +148,7 @@ kable(c14.calib.df,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-# analysis {#c14.analysis}
+# Analysis {#c14.analysis}
 
 R offers a comprehensive framework to calibrate, plot, sum and use temporal constraints -- stratigraphy, periodisations, etc., like bayesian analysis -- on radiocarbon datasets. 
 Free software offering a dedicated solution for bayesian inference are: [ChronoModel](https://chronomodel.com/), [OpenBUGS](http://www.openbugs.net/w/FrontPage), [JAGS](http://mcmc-jags.sourceforge.net/), etc.
