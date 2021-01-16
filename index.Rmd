@@ -28,15 +28,11 @@ panel.map.coords <- image_read("docs/imgs/panel_map_coords.png")
 panel.calib <- image_read("docs/imgs/panel_calib.png")
 ```
 
-# Presentation {#apps}
+# Radiocarbon ressources {#apps}
 
-Today exists various web-based ressources for [database](#c14.db), [calibrations](#c14.cal) and [**interactive selection and spatialization**](#c14.app), 
+Today exists various web-based ressources for [database](#c14.db), [calibrations](#c14.cal),  [**interactive selection and spatialization**](#c14.app) and [analysis](#c14.analysis) 
 
-# Radiocarbon ressources
-
-Free ressources exist for radiocarbon [apps](c14.app), [databases](#c14.db), [calibrations](#c14.cal) or for [analysis](#c14.analysis)
-
-## applications {#c14.app}
+# Applications {#c14.app}
 
 
 ```{r dat.app, echo=FALSE}
@@ -53,7 +49,7 @@ kable(c14.app.df,"html") %>%
 
 These apps have been developped with [R](https://www.r-project.org/) programming language and the [Shiny](https://shiny.rstudio.com/) package
 
-### **MedAfriCarbon** app {#c14.app.MedAfriCarbon}
+## MedAfriCarbon {#c14.app.MedAfriCarbon}
 
 * **[MedAfriCarbon app](https://theia.arch.cam.ac.uk/MedAfriCarbon/)** covers the South Mediterranean between the beginning of the Holocene ) and the arrival of Phoenicians and Greeks (ca. 9,600 - 600 BC) with near 1,600 radiocarbon dates
 
@@ -61,10 +57,10 @@ These apps have been developped with [R](https://www.r-project.org/) programming
 ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_mediafricarbon_thumbnail.png){width=50%}
 </p>
 
-The [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) RShiny app offers additional options for selection and calibration of radiocarbon dates
+The [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) offers an almost complete toolbox to manage radiocarbon dates
 
 
-### **NeoNet** and **EUROEVOL_R** apps {#c14.app.14C}
+## NeoNet and EUROEVOL_R {#c14.app.14C}
 
 **NeoNet** and **EUROEVOL_R** share the same layout, mostly inherited from the EUROEVOL database, only the datasets are differents
 
@@ -83,7 +79,7 @@ The database, an Excel Sheet, see the [**NeoNet app** webpage](https://zoometh.g
 
 The app database is the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/), is opensource and static (yet developed), see the [**EUROEVOL_R app** webpage](https://zoometh.github.io/C14/euroevol)
 
-## databases {#c14.db}
+# databases {#c14.db}
 
 An almost exhaustive inventory of open databases has been made on the [c14bazAAR repository](https://github.com/ropensci/c14bazAAR#databases)
 
@@ -97,7 +93,7 @@ kable(c14.db.df,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-## calibrations {#c14.cal}
+# calibrations {#c14.cal}
 
 ```{r dat.calib, echo=FALSE}
 c14.calib.app <- c("dedicated","dedicated","dedicated","R programming", "R programming","R programming")
@@ -116,7 +112,7 @@ kable(c14.calib.df,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-## analysis {#c14.analysis}
+# analysis {#c14.analysis}
 
 R offers a comprehensive framework to calibrate, plot, sum and use temporal constraints -- stratigraphy, periodisations, etc., like bayesian analysis -- on radiocarbon datasets. 
 Free software offering a dedicated solution for bayesian inference are: [ChronoModel](https://chronomodel.com/), [OpenBUGS](http://www.openbugs.net/w/FrontPage), [JAGS](http://mcmc-jags.sourceforge.net/), etc.
