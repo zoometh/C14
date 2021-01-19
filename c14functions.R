@@ -1,17 +1,17 @@
 library(oxcAAR)
 library(c14bazAAR)
 
-radonC14 <- get_c14data("radon") # load
-
-# retrieve main info from a date
+# load Radon database
+radonC14 <- get_c14data("radon")
+# function to retrieve main info from a date
 f.info.a.date <- function(a.db, a.dat){
   col.nmes <- c("site", "labnr","c14age","c14std", "shortref")
   df <- a.db[a.db$labnr == a.dat, col.nmes]
   df <- df[!is.na(df$labnr), ]
-  return(df)
+  return(as.data.frame(df))
 }
-
-f.info.a.date(radonC14, 'Ly-11645')
+# run
+f.info.a.date(radonC14, 'Ly-5185')
 
 ## Not run: 
 x <- oxcalCalibrate(c(5000, 4500, 3000), c(20, 50, 60))
