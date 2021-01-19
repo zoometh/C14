@@ -6,6 +6,7 @@ library(leaflet)
 
 # load a database
 dbC14 <- get_c14data("radon")
+
 long.lat <- cbind(dbC14$lon, dbC14$lat) # matrix
 # clean up
 long.lat.clean <- long.lat[complete.cases(long.lat), ] # rm NA values
