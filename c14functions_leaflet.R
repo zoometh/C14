@@ -5,7 +5,10 @@ library(sp)
 library(leaflet)
 
 # load a database
-dbC14 <- get_c14data("radon")
+# with lon, lat (coord): radon, context, emedyd, eubar, medafricarbon, katsianis...
+# without lon, lat (coord): 14sea,...
+dbC14 <- get_c14data("katsianis")
+colnames(dbC14)
 
 long.lat <- cbind(dbC14$lon, dbC14$lat) # matrix
 # clean up
