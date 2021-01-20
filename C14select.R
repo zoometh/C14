@@ -1,12 +1,29 @@
 library(shiny)
 library(leaflet)
-library(RColorBrewer)
+library(dplyr)
+library(c14bazAAR)
+library(grDevices)
+library(sp)
+# library(RColorBrewer)
+
+# load a database
+dbC14 <- get_c14data("radon")
+
+long.lat <- cbind(dbC14$lon, dbC14$lat) # matrix
+# clean up
+long.lat.clean <- long.lat[complete.cases(long.lat), ] # rm NA values
+long.lat.clean <- long.lat.clean[(long.lat.clean[,1] >= -90) & (long.lat.clean[,1] <= 90),]
+long.lat.clean <- long.lat.clean[(coords.clean[,2] >= -90) & (long.lat.clean[,2] <= 90),]
+ch <- chull(long.lat.clean)
+coords <- long.lat.clean[c(ch, ch[1]), ]
+sp.ch <- SpatialPolygons(list(Polygons(list(Polygon(coords)),ID=1)))
+sp.ch.df <- SpatialPolygonsDataFrame(sp.ch, data=data.frame(ID=1))
 
 ui <- bootstrapPage(
   tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
   leafletOutput("map", width = "100%", height = "100%"),
   absolutePanel(top = 10, right = 10,
-                sliderInput("range", "Magnitudes", min(quakes$mag), max(quakes$mag),
+                sliderInput("range", "BP", min(quakes$mag), max(quakes$mag),
                             value = range(quakes$mag), step = 0.1
                 ),
                 selectInput("colors", "Color Scheme",
@@ -30,9 +47,6 @@ server <- function(input, output, session) {
   })
   
   output$map <- renderLeaflet({
-    # Use leaflet() here, and only include aspects of the map that
-    # won't need to change dynamically (at least, not unless the
-    # entire map is being torn down and recreated).
     leaflet(quakes) %>% addTiles() %>%
       fitBounds(~min(long), ~min(lat), ~max(long), ~max(lat))
   })
@@ -46,9 +60,15 @@ server <- function(input, output, session) {
     
     leafletProxy("map", data = filteredData()) %>%
       clearShapes() %>%
-      addCircles(radius = ~10^mag/10, weight = 1, color = "#777777",
-                 fillColor = ~pal(mag), fillOpacity = 0.7, popup = ~paste(mag)
-      )
+      addPolygons(data = sp.ch.df,
+                  # popup= ~secteur,
+                  stroke = TRUE,
+                  color = "#000000",
+                  weight = 2,
+                  fillOpacity = 0,
+                  smoothFactor = 0.5)
+      # addCircles(radius = ~10^mag/10, weight = 1, color = "#777777",
+      #            fillColor = ~pal(mag), fillOpacity = 0.7, popup = ~paste(mag)
   })
   
   # Use a separate observer to recreate the legend as needed.

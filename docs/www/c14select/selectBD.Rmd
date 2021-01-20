@@ -99,45 +99,41 @@ kable(c14.db.df,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-R progamming language permits to download radiocarbon data from databases. With [c14bazAAR package](https://github.com/ropensci/c14bazAAR),  [RShiny](https://shiny.rstudio.com/) and [Leaflet](https://rstudio.github.io/leaflet/), it is possible to plot interactive map of radiocarbon dates coming from different databases 
+## Get data
 
-```{r echo = FALSE, warning=FALSE}
-shiny::selectInput("c14.db", label = "c14 databases sample",
-                   choices = DBs, selected = "katsianis", width = "15%")
+R progamming language permits to download radiocarbon data from databases.
+
+```{r dat.get, echo=FALSE}
+c14.get.app <- c("R programming", "dedicated")
+c14.get.url <- c("https://github.com/ropensci/c14bazAAR", "https://www.ibercrono.org/goget/index.php")
+c14.get.names <- c("c14bazAAR", "GoGet")
+c14.get.df <- data.frame(type=c14.get.app,
+                         names=c14.get.names,
+                         url=c14.get.url,
+                         stringsAsFactors = F)
+kable(c14.get.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-```{r echo = FALSE, warning=FALSE}
-leaflet::renderLeaflet({
-  dbC14 <- get_c14data(input$c14.db)
-  dbC14 <- dbC14[complete.cases(dbC14[, mandat.fields]), ]
-  db.summary <- paste(as.character(nrow(dbC14)), "dates <br> from", 
-                      as.character(max(dbC14$c14age)),
-                                   "<br> to",
-                                   as.character(min(dbC14$c14age)),"BP")
-  dbC14$lbl <- paste0(dbC14$labnr, " [", dbC14$c14age, "BP +/- ", dbC14$c14std, "]")
-  long.lat.clean <- dbC14
-  leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
-    addTiles() %>%
-    addCircleMarkers(lng=dbC14$lon,
-                     lat=dbC14$lat,
-                     popup=dbC14$lbl,
-                     radius = 0.5,
-                     opacity = 0.3) %>%
-    addControl(db.summary, position = "topright")
-})
-```
-
-It is also possible to retrieve data (site, c14age, c14std, etc.). As an example, let's load the [Radon database](https://radon.ufg.uni-kiel.de/","https://c14.arch.ox.ac.uk) with the [c14bazAAR package](https://github.com/ropensci/c14bazAAR)
+The [c14bazAAR package](https://github.com/ropensci/c14bazAAR) allows to browse different database. As an example, let's load the the [Radon database](https://radon.ufg.uni-kiel.de/","https://c14.arch.ox.ac.uk):
 
 ```{r dat.get.c14bazAAR.load, echo=TRUE}
+library(c14bazAAR)
 radonC14 <- get_c14data("radon")
 ```
 
-And retrieve data from a radiocarbon date LabCode, for example, the 'Ly-11645' LabCode: 
+And retrieve a radiocarbon data (site, c14age, c14std, etc.) from its LabCode. For example, let's choose the 'Ly-11645' LabCode: 
 
 ```{r dat.get.c14bazAAR.labcode, echo=TRUE}
-df <- radonC14[radonC14$labnr == 'Ly-11645',
-               c("site", "labnr","c14age","c14std", "shortref")]
+# function to retrieve main info from a date
+f.info.a.date <- function(a.db, a.dat){
+  col.nmes <- c("site", "labnr","c14age","c14std", "shortref")
+  df <- a.db[a.db$labnr == a.dat, col.nmes]
+  df <- as.data.frame(df[!is.na(df$labnr), ])
+  return(df)
+}
+# run
+f.info.a.date(radonC14, 'Ly-11645')
 ```
 
 # Calibrations {#c14.cal}
@@ -167,3 +163,50 @@ Free software offering a dedicated solution for bayesian inference are: [ChronoM
 For a overview of the available solutions, see the [R Bayesian task view](https://cran.r-project.org/web/views/Bayesian.html)
 
 
+### Here are two Shiny widgets
+
+```{r echo = FALSE}
+# sliderInput("c14.threshold", label = "% of data to map",
+#               min = 5, max = 100, value = 95, step = 5)
+shiny::selectInput("c14.db", label = "c14 databases",
+                   choices = DBs, selected = "katsianis", width = "15%")
+```
+
+
+```{r echo = FALSE, warning=FALSE}
+leaflet::renderLeaflet({   # <- main difference from tutorial
+  # load a database
+  # dbC14 <- get_c14data("katsianis")
+  dbC14 <- get_c14data(input$c14.db)
+  dbC14 <- dbC14[complete.cases(dbC14[, mandat.fields]), ]
+  db.summary <- paste(as.character(nrow(dbC14)), "dates <br> from", 
+                      as.character(max(dbC14$c14age)),
+                                   "<br> to",
+                                   as.character(min(dbC14$c14age)),"BP")
+  # long.lat <- cbind(dbC14$lon, dbC14$lat) # matrix
+  # # clean up
+  # long.lat.clean <- long.lat[complete.cases(long.lat), ] # rm NA values
+  # long.lat.clean <- dbC14[!is.na(dbC14$lon) & !is.na(dbC14$lat), ] # rm NA values
+  # long.lat.clean <- long.lat.clean[(long.lat.clean$lon >= -90) & (long.lat.clean$lon <= 90),]
+  # long.lat.clean <- long.lat.clean[(long.lat.clean$lat >= -90) & (long.lat.clean$lat <= 90),]
+  dbC14$lbl <- paste0(dbC14$labnr, " [", dbC14$c14age, "BP +/- ", dbC14$c14std, "]")
+  long.lat.clean <- dbC14
+  leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
+    addTiles() %>%  # Add default OpenStreetMap map tiles
+    # all rocks
+    addCircleMarkers(lng=dbC14$lon,
+                     lat=dbC14$lat,
+                     popup=dbC14$lbl,
+                     radius = 0.5,
+                     opacity = 0.3) %>%
+    addControl(db.summary, position = "topright")
+})
+# renderPlot({
+#   ggplot()
+#   hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
+#        xlab = "Duration (minutes)", main = "Geyser eruption duration")
+#   
+#   dens <- density(faithful$eruptions, adjust = input$bw_adjust)
+#   lines(dens, col = "blue")
+# })
+```
