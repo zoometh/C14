@@ -1,15 +1,17 @@
-### ff
+## Radiocarbon data integration and visualization
 
-### The NeoNet app
-  
-  
-<img src="/docs/imgs/panel_map.png" align="center" style="width: 25%; height: 25%"/>
-  
-  
-and a review of IT solutions and tips to manage radiocarbon data [https://neolithic.shinyapps.io/C14review/](https://neolithic.shinyapps.io/C14review/)
+Radiocarbon dates (<sup>14</sup>C) are one of the most sharable world-wide data. Their integration in online database, their management, and their modeling represent a classic playground in computing archaeology
 
-| name              | webpage url                                                          | app url                                                |
-|-------------------|----------------------------------------------------------------------|--------------------------------------------------------|
-| EUROEVOL_R        | None                                                                 | https://neolithic.shinyapps.io/Euroevol_R/             |
-| NeoNet            | https://zoometh.github.io/C14/neonet                                 | https://neolithic.shinyapps.io/NeoNet/                 |
-| encounter_postdoc | https://zoometh.github.io/encounter_postdoc/docs/lf_jomon_sites.html | None                                                   
+### NeoNet, Neolithisation of the central and western Mediterranean
+> by [Thomas Huet](mailto:thomashuet7@gmail.com) and [Niccolo Mazzuco](nicco.mazzucco@gmail.com)
+
+A RShiny app for interactive selection, mapping and calibration for the Mesolithic/Neolithic transition
+
+[<img src="/docs/imgs/panel_map.png" align="center" style="width: 15%; height: 15%"/>](https://neolithic.shinyapps.io/NeoNet/)
+
+The [NeoNet database](https://zoometh.github.io/C14/neonet) is in progress. The canvas of the RShiny app allows to use the [Euroevol database](http://discovery.ucl.ac.uk/1469811/) for another app: the [EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)   
+
+### A *dated* review
+
+A [short interactive review](https://neolithic.shinyapps.io/C14review/) of computer solutions to manage radiocarbon data
+
