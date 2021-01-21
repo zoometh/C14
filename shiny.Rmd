@@ -1,0 +1,18 @@
+---
+runtime: shiny
+output: html_document
+---
+  
+```{r}
+library(shiny)
+print(getwd())
+ui <- shinyUI(
+  fluidPage(
+    includeHTML(rmarkdown::render("index.Rmd"))
+  )
+)
+server <- function(input, output) { }
+
+shinyApp(ui, server) 
+```
+
