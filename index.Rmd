@@ -103,7 +103,7 @@ R progamming language permits to download radiocarbon data from databases. With 
 
 ```{r echo = FALSE, warning=FALSE}
 shiny::selectInput("c14.db", label = "c14 databases sample",
-                   choices = DBs, selected = "katsianis", width = "15%")
+                   choices = DBs, selected = "katsianis", width = "25%")
 ```
 
 ```{r echo = FALSE, warning=FALSE}
