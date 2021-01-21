@@ -1,6 +1,6 @@
 ## C14
 
-A review of IT solutions and tips to manage radiocarbon data, starting from the webpage: [https://zoometh.github.io/C14/](https://zoometh.github.io/C14/)
+A review of IT solutions and tips to manage radiocarbon data, starting from the interactive webpage: [https://neolithic.shinyapps.io/C14review/](https://neolithic.shinyapps.io/C14review/)
 
 | name              | webpage url                                                          | app url                                                |
 |-------------------|----------------------------------------------------------------------|--------------------------------------------------------|
