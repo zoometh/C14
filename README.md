@@ -3,7 +3,7 @@
 Radiocarbon dates (<sup>14</sup>C) are one of the most sharable world-wide data. Their integration in online database, their management, and their modeling represent a classic playground in computing archaeology
 
 ### NeoNet, Neolithisation of the central and western Mediterranean
-> by [Thomas Huet](mailto:thomashuet7@gmail.com) and [Niccolo Mazzuco](nicco.mazzucco@gmail.com)
+> by Thomas Huet and [Niccolo Mazzuco](nicco.mazzucco@gmail.com)
 
 A RShiny app for interactive selection, mapping and calibration for the Mesolithic/Neolithic transition
 
