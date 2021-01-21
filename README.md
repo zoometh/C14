@@ -9,7 +9,7 @@ A RShiny app for interactive selection, mapping and calibration for the Mesolith
 
 [<img src="/docs/imgs/panel_map.png" align="center" style="width: 15%; height: 15%"/>](https://neolithic.shinyapps.io/NeoNet/)
 
-The [NeoNet database](https://zoometh.github.io/C14/neonet) is in progress. The canvas of the RShiny app allows to use the [Euroevol database](http://discovery.ucl.ac.uk/1469811/) for another app: the [EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)   
+The [NeoNet database](https://zoometh.github.io/C14/neonet) is in progress. The canvas of the RShiny app allows to use another database, the [Euroevol database](http://discovery.ucl.ac.uk/1469811/) into the [EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)   
 
 ### A *dated* review
 
