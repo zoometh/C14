@@ -8,7 +8,7 @@ library(shiny)
 print(getwd())
 ui <- shinyUI(
   fluidPage(
-    includeHTML(rmarkdown::render("index.Rmd"))
+    includeHTML(rmarkdown::render("index_1.Rmd"))
   )
 )
 server <- function(input, output) { }
