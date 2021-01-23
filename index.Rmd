@@ -1,6 +1,6 @@
 ---
 title: | 
-  | **A radiocarbon review**: 
+  | **A radiocarbon review with R**: 
   | Apps, databases, calibrations and analysis
 author: "Thomas Huet"
 runtime: shiny
@@ -24,6 +24,7 @@ library(c14bazAAR)
 library(grDevices)
 library(sp)
 library(leaflet)
+library(Bchron)
 DBs <- c("emedyd", "eubar", "euroevol", "context", "katsianis", "medafricarbon", "radon")
 mandat.fields <- c("labnr", "c14age", "c14std", "lon", "lat")
 GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
@@ -32,69 +33,72 @@ panel.map.coords <- image_read("docs/imgs/panel_map_coords.png")
 panel.calib <- image_read("docs/imgs/panel_calib.png")
 ```
 
-Today exists various web-based open access ressources for [database](#c14.db), [calibrations](#c14.cal),  [interactive selection and spatialization](#c14.app) and [analysis](#c14.analysis) 
+Today exists various web-based open access resources for radiocarbon [interactive management](#c14.app) and [database](#c14.db)
 
 # Applications {#c14.app}
 
+RShiny ([R](https://www.r-project.org/) + [Shiny](https://shiny.rstudio.com/)) allows to create interactive web forms for radiocarbon dates selection by geographical region of interest, absolute ages, cultural periods, quality of the date, etc. These apps offer also analysis tools like summing probability densities (SPD). 
 
 ```{r dat.app, echo=FALSE}
-c14.app.url <- c("https://theia.arch.cam.ac.uk/MedAfriCarbon/","https://zoometh.github.io/C14/neonet","https://neolithic.shinyapps.io/Euroevol_R/")
-c14.app.names <- c("MedAfriCarbon", "NeoNet","EUROEVOL_R")
-c14.app.df <- data.frame(names=c14.app.names,
-                        url=c14.app.url,
-                        stringsAsFactors = F)
+c14.app.names <- c("[**MedAfriCarbon**](https://theia.arch.cam.ac.uk/MedAfriCarbon/)",
+                   "[**NeoNet**](https://zoometh.github.io/C14/neonet)",
+                   "[**EUROEVOL_R**](https://neolithic.shinyapps.io/Euroevol_R/)",
+                   "[**CARD 2.0**](https://www.canadianarchaeology.ca/)")
+c14.app.geo <- c("South Mediterranean",
+                 "Northern Central Mediterranean",
+                 "Central, Western and Northern Europe",
+                 "North America, Europe and Australia")
+c14.app.chr <- c("~ 9,600 - 600 BC",
+                 "~ 8,000 - 4,500 BC",
+                 "~ 17,000 - 500 BC",
+                 "~ 13,000 BC - 1500 AD (year 2011)")
+c14.app.nbdat <- c("~ 1,600",
+                   "~ 1,600",
+                   "~ 14,000",
+                   "~ 36,000 (year 2011)")
+c14.app.df <- data.frame(name=c14.app.names,
+                         loc=c14.app.geo,
+                         chrono=c14.app.chr,
+                         nb.14C=c14.app.nbdat,
+                         stringsAsFactors = F)
 kable(c14.app.df,"html") %>%
-  kable_styling(full_width = FALSE, position = "center", font_size=12)
+  kable_styling(full_width = FALSE, position = "center", font_size=14)
 ```
 
-**MedAfriCarbon**, **NeoNet** and **EUROEVOL_R** allow interactive web form map-based for  of radiocarbon dates selection by geographical region of interest, time span and periods, quality of the date, etc. These apps offer also analysis tools like summing probability densities (SPD). 
-These apps have been developped with [R](https://www.r-project.org/) programming language and the [Shiny](https://shiny.rstudio.com/) package
+> <font size="2"> [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) offers an almost complete toolbox to manage radiocarbon dates. **NeoNet** and **EUROEVOL_R** share the same layout, mostly inherited from the EUROEVOL database, only the datasets are differents. The **NeoNet** database, an Excel Sheet. The **EUROEVOL_R** database is the an open source [EUROEVOL](http://discovery.ucl.ac.uk/1469811/) <br> ... vistit the webpages of [NeoNet](https://zoometh.github.io/C14/neonet/#app) and [EUROEVOL_R](https://zoometh.github.io/C14/euroevol)</font>
 
-## MedAfriCarbon {#c14.app.MedAfriCarbon}
+Programming language permits to handle radiocarbon data. [Shiny](https://shiny.rstudio.com/)and [Bchron](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html) easy to calibrate and plot radiocarbon dates
 
-* **[MedAfriCarbon app](https://theia.arch.cam.ac.uk/MedAfriCarbon/)** covers the South Mediterranean between the beginning of the Holocene ) and the arrival of Phoenicians and Greeks (ca. 9,600 - 600 BC) with near 1,600 radiocarbon dates
-
-<p style="text-align: center;">
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_mediafricarbon_thumbnail.png){width=50%}
-</p>
-
-The [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) offers an almost complete toolbox to manage radiocarbon dates
-
-
-## NeoNet and EUROEVOL_R {#c14.app.14C}
-
-**NeoNet** and **EUROEVOL_R** share the same layout, mostly inherited from the EUROEVOL database, only the datasets are differents
-
-* **[NeoNet app](https://neolithic.shinyapps.io/NeoNet/)** covers the Northern Central Mediterranean between the Late Mesolithic and Middle Neolithic (ca. 8,000 - 4,500 BC) with near to 1,500 radiocarbon dates  
-
-<p style="text-align: center;">
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panel_map.png){width=50%}
-</p>
-
-The database, an Excel Sheet, see the [**NeoNet app** webpage](https://zoometh.github.io/C14/neonet/#app)
-
-* **[EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)** covers the Central, Western and Northern Europe from Paleolithic times to the end of Bronze Age (ca. 17,000 - 500 BC) with near to 14,000 radiocarbon dates  
-
-<p style="text-align: center;"> ![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_euroevol_thumbnail.png){width=50%}
-</p>
-
-The database is the [EUROEVOL database](http://discovery.ucl.ac.uk/1469811/), is opensource and static (yet developed), see the [**EUROEVOL_R app** webpage](https://zoometh.github.io/C14/euroevol)
-
-# Databases {#c14.db}
-
-An almost exhaustive inventory of open databases has been made on the [c14bazAAR repository](https://github.com/ropensci/c14bazAAR#databases)
-
-```{r dat.db, echo=FALSE}
-c14.db.url <- c("http://discovery.ucl.ac.uk/1469811","https://radon.ufg.uni-kiel.de/","https://c14.arch.ox.ac.uk","http://telearchaeology.org/c14-databses/","http://www.britarch.ac.uk/info/c14.html","http://www.14sea.org/2_dates.html","https://www.exoriente.org/associated_projects/ppnd_sites.php","http://www.archeometrie.mom.fr/banadora/")
-c14.db.names <- c("EUROEVOL","Radon","ORAU","telearchaeology","Archaeological Site Index to Radiocarbon Dates from Great Britain and Ireland","14SEA Project","EX ORIENTE","BANADORA")
-c14.db.df <- data.frame(names=c14.db.names,
-                        url=c14.db.url,
-                        stringsAsFactors = F)
-kable(c14.db.df,"html") %>%
-  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```{r calibrate, echo=TRUE}
+ui <- fluidPage(
+  sidebarPanel(
+    shiny::numericInput("bp", "BP", 5600),
+    shiny::numericInput("sd", "+/-", 60),
+    actionButton("go", "calibrate")),
+  mainPanel(
+    plotOutput("plot"))
+)
+server <- function(input, output) {
+  bp <- eventReactive(input$go, {
+    runif(input$bp)
+  })
+  sd <- eventReactive(input$go, {
+    runif(input$sd)
+  })
+  output$plot <- renderPlot({
+    c14date <- BchronCalibrate(ages=input$bp,
+                               ageSds=input$sd,
+                               calCurves='intcal13',
+                               ids='date')
+    plot(c14date)
+  })
+}
+shinyApp(ui, server)
 ```
 
-R progamming language permits to download radiocarbon data from databases. With [c14bazAAR package](https://github.com/ropensci/c14bazAAR),  [RShiny](https://shiny.rstudio.com/) and [Leaflet](https://rstudio.github.io/leaflet/), it is possible to plot interactive map of radiocarbon dates coming from different databases 
+Beside [Bchron](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html), other R packages allows calibration and management of radiocarbon dates like  [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html) and  [OxcAAR](https://cran.r-project.org/web/packages/oxcAAR/index.html). The main dedicated apps for calibration are: [OxCal](https://c14.arch.ox.ac.uk/oxcal/),        [CalPal](http://www.calpal-online.de/) and [Calib](http://calib.org/calib/)
+  
+Using the packages [c14bazAAR](https://github.com/ropensci/c14bazAAR) and [Leaflet](https://rstudio.github.io/leaflet/) allow to create interactive map of radiocarbon dates coming from different databases:
 
 ```{r echo = FALSE, warning=FALSE}
 shiny::selectInput("c14.db", label = "c14 databases sample",
@@ -122,43 +126,26 @@ leaflet::renderLeaflet({
 })
 ```
 
-It is also possible to retrieve data (site, c14age, c14std, etc.). As an example, let's load the [Radon database](https://radon.ufg.uni-kiel.de/","https://c14.arch.ox.ac.uk) with the [c14bazAAR package](https://github.com/ropensci/c14bazAAR)
-
-```{r dat.get.c14bazAAR.load, echo=TRUE}
-radonC14 <- get_c14data("radon")
-```
-
-And retrieve data from a radiocarbon date LabCode, for example, the 'Ly-11645' LabCode: 
-
-```{r dat.get.c14bazAAR.labcode, echo=TRUE}
-radonC14[radonC14$labnr == 'Ly-11645',
-         c("site", "labnr","c14age","c14std", "shortref")]
-```
-
-# Calibrations {#c14.cal}
-
-```{r dat.calib, echo=FALSE}
-c14.calib.app <- c("dedicated","dedicated","dedicated","R programming", "R programming","R programming")
-c14.calib.url <- c("https://c14.arch.ox.ac.uk/oxcal/",
-                   "http://www.calpal-online.de/",
-                   "http://calib.org/calib/",
-                   "https://cran.r-project.org/web/packages/rcarbon/index.html",
-                   "https://cran.r-project.org/web/packages/Bchron/index.html",
-                   "https://cran.r-project.org/web/packages/oxcAAR/index.html")
-c14.calib.names <- c("OxCal","CalPal","Calib","rcarbon","Bchron","oxcAAR")
-c14.calib.df <- data.frame(type=c14.calib.app,
-                           names=c14.calib.names,
-                           url=c14.calib.url,
-                           stringsAsFactors = F)
-kable(c14.calib.df,"html") %>%
-  kable_styling(full_width = FALSE, position = "center", font_size=12)
-```
-
-# Analysis {#c14.analysis}
-
 R offers a comprehensive framework to calibrate, plot, sum and use temporal constraints -- stratigraphy, periodisations, etc., like bayesian analysis -- on radiocarbon datasets. 
-Free software offering a dedicated solution for bayesian inference are: [ChronoModel](https://chronomodel.com/), [OpenBUGS](http://www.openbugs.net/w/FrontPage), [JAGS](http://mcmc-jags.sourceforge.net/), etc.
+Free software offering a dedicated solution for bayesian inference are: [ChronoModel](https://chronomodel.com/), [OpenBUGS](http://www.openbugs.net/w/FrontPage), [JAGS](http://mcmc-jags.sourceforge.net/), etc. For a overview of the available solutions, see the [R Bayesian task view](https://cran.r-project.org/web/views/Bayesian.html)
 
-For a overview of the available solutions, see the [R Bayesian task view](https://cran.r-project.org/web/views/Bayesian.html)
+# Databases {#c14.db}
 
+An almost exhaustive inventory of open databases is avalaible on [c14bazAAR](https://github.com/ropensci/c14bazAAR#databases) and [telearchaeology](http://telearchaeology.org/c14-databses/). Some of these open database have form interface:
+
+```{r dat.db, echo=FALSE}
+c14.db.names <- c("[Radon](https://radon.ufg.uni-kiel.de/)",
+                "[ORAU](https://c14.arch.ox.ac.uk)",
+                "[14SEA Project](http://www.14sea.org/2_dates.html)",
+                "[EX ORIENTE](https://www.exoriente.org/associated_projects/ppnd_sites.php)",
+                "[BANADORA](http://www.archeometrie.mom.fr/banadora/)",
+                "...")
+c14.db.df <- data.frame(names=c14.db.names,
+                        stringsAsFactors = F)
+kable(c14.db.df,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=14)
+download.url.img <- "https://loading.io/icon/19ma0i"
+```
+
+But, other can also be simple download files: [download EUROEVOL](http://discovery.ucl.ac.uk/1469811), [download EUBAR](https://telearchaeology.org///EUBAR/EUBAR%20def.xlsx), [download "katsianis"](https://rdr.ucl.ac.uk/ndownloader/files/23166314), ...
 

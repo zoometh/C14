@@ -19,6 +19,12 @@ output:
 
 
 
+<p style="text-align: center;"> <font size="5">
+[![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_map.png){width=50%}](https://neolithic.shinyapps.io/neonet/)<br>
+the [**NeoNet app**](https://neolithic.shinyapps.io/neonet/)</font>
+</p>  
+
+
 # **Presentation**
 
 The **NeoNet app** allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
@@ -29,9 +35,11 @@ The **NeoNet app** allows the selection of radiocarbon dating by location, chron
 * some type of material life duration (short like, long life or others)
 * a maximum accepted standard deviation threshold (SD)
 
-<p style="text-align: center;"> <font size="5"> the [**NeoNet app**](https://neolithic.shinyapps.io/neonet/) </font><br>
-[![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_map.png){width=50%}](https://neolithic.shinyapps.io/neonet/)
-</p>  
+The chronological span covers the Late Mesolithic and the Early Neolithic. The region of interest is the Central and Western Mediterranean and more precisely the Mediterranean watersheds of this area
+
+<p style="text-align: center;">
+![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/ws_roi.png){width=35%}
+</p>
 
 We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet database**](#bd) and our [**Objectives**](#particip)
 

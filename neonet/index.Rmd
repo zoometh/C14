@@ -29,6 +29,7 @@ library(magick)
 # map
 path.img <- paste0(dirname(getwd()),"/docs/imgs/") # parent dir
 # panel.map <- image_read("../docs/imgs/panel_map.png")
+ws.roi <- paste0(path.img, "ws_roi.png")
 panel.map <- paste0(path.img, "panel_map.png")
 panel.map.coords <- paste0(path.img, "panel_map_coords.png")
 panel.map.select <- paste0(path.img, "panel_map_select.png")
@@ -53,6 +54,12 @@ app.neonet.db.c14 <- paste0(path.img, "app_neonet_db_c14.png")
 # ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
 ```
 
+<p style="text-align: center;"> <font size="5">
+[![](`r panel.map`){width=50%}](https://neolithic.shinyapps.io/neonet/)<br>
+the [**NeoNet app**](https://neolithic.shinyapps.io/neonet/)</font>
+</p>  
+
+
 # **Presentation**
 
 The **NeoNet app** allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
@@ -63,9 +70,11 @@ The **NeoNet app** allows the selection of radiocarbon dating by location, chron
 * some type of material life duration (short like, long life or others)
 * a maximum accepted standard deviation threshold (SD)
 
-<p style="text-align: center;"> <font size="5"> the [**NeoNet app**](https://neolithic.shinyapps.io/neonet/) </font><br>
-[![](`r panel.map`){width=50%}](https://neolithic.shinyapps.io/neonet/)
-</p>  
+The chronological span covers the Late Mesolithic and the Early Neolithic. The region of interest is the Central and Western Mediterranean and more precisely the Mediterranean watersheds of this area
+
+<p style="text-align: center;">
+![](`r ws.roi`){width=35%}
+</p>
 
 We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet database**](#bd) and our [**Objectives**](#particip)
 
