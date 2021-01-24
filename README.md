@@ -7,11 +7,15 @@ Radiocarbon dates (<sup>14</sup>C) are one of the most sharable world-wide data.
 
 A RShiny app for interactive selection, mapping and calibration for the Mesolithic/Neolithic transition
 
-[<img src="/docs/imgs/panel_map.png" align="center" style="width: 5%; height: 5%"/>](https://neolithic.shinyapps.io/NeoNet/)
+<p align="center">
+  
+[<img src="/docs/imgs/panel_map.png" width="500"/>](https://neolithic.shinyapps.io/NeoNet/)
+
+</p>
   
 The [NeoNet database](https://zoometh.github.io/C14/neonet) is in progress. The canvas of the RShiny app allows to use another database, the [Euroevol database](http://discovery.ucl.ac.uk/1469811/) into the [EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)   
 
 ### A *dated* review
 
-A [short interactive review](https://neolithic.shinyapps.io/C14review/) of computer solutions to manage radiocarbon data
+A [short interactive review](https://neolithic.shinyapps.io/C14dated_review/) of computer solutions with R to manage radiocarbon data
 
