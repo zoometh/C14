@@ -1,41 +1,170 @@
 ---
-title: "**NeoNet app**, mapping radiocarbon dating online"
-author: "Thomas Huet, Niccolo Mazzucco"
-# date: "11/12/2020"
-header-includes:
-  - \usepackage{float}
-  - \floatplacement{figure}{H}  #make every figure with capti
-# output: html_document
-output: 
-  html_document:
-    toc: true
-    toc_float: 
-      collapsed: false
-      smooth_scroll: false
+title: "Income and Housing Costs by Zip Code"
+output: html_document
+resource_files:
+   - mamarkdowndata.rdata
+   - zip_mass_appdata_for_map.rds
+runtime: shiny
 ---
 
-## Thomas Huet (Dr.)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+options(scipen = 999)
+library("DT")
+library("dplyr")
+library("ggplot2")
+ library("scales")
+library("leaflet")
+library("shiny")
+library("glue")
+library("rmarkdown")
+library("sf")
+load("mamarkdowndata.rdata") # loads variable markdowndata
+ma_appdata_for_map <- readRDS("zip_mass_appdata_for_map.rds")
+```
 
-[LabEx ARCHIMEDE](https://archimede.cnrs.fr/), Associate Researcher UMR 5140 ASM-CNRS, Université Paul-Valéry Montpellier 3, France
+```{r user_select_city}
+selectInput("mycities", "Choose 1 or more Massachusetts places:", choices = c("All Mass", sort(unique(markdowndata$City))), multiple = TRUE, selected = "Boston")
+```
+**Note: some cities may have more than one place name for Zip codes. For example, Allston, Brighton, Dorchester, and several other neighborhoods are not included in Zip code place name "Boston".**
 
-* mail: [thomashuet7@gmail.com](thomashuet7@gmail.com)
-* CV: [https://github.com/zoometh/thomashuet.github.io/raw/main/cv/cv_english.pdf](https://github.com/zoometh/thomashuet.github.io/raw/main/cv/cv_english.pdf)
-* ORCID: [0000-0002-1112-6122](https://orcid.org/0000-0002-1112-6122)
-* Google Scholar: [2hKEVaIAAAAJ&hl](https://scholar.google.fr/citations?user=2hKEVaIAAAAJ&hl=en&oi=sra)
-* ResearchGate: [Thomas_Huet2](https://www.researchgate.net/profile/Thomas_Huet2)
-* webpages:
-  + professional: [https://archimede.cnrs.fr/index.php/annuaire/123-annuaire/e-h/456-thomas-huet](https://archimede.cnrs.fr/index.php/annuaire/123-annuaire/e-h/456-thomas-huet)
-  + personal: [https://zoometh.github.io/thomashuet.github.io/](https://zoometh.github.io/thomashuet.github.io/)
 
-### Current researches
+```{r my_data}
+mydata <- reactive({
+  if("All Mass" %in% input$mycities){
+        markdowndata
+    
+  } else {
+  filter(markdowndata, City %in% input$mycities)
+  }
+})
+# mymapdata <- reactive({
+#   if("All Mass" %in% input$mycities){
+#     ma_appdata_for_map %>%
+#       mutate(
+#         Highlighted = "No"
+#       )
+#   } else {
+#     dplyr::filter(ma_appdata_for_map, City %in% input$mycities)
+#   }
+# })
+zip_highest_income_row <- reactive({
+  filter(mydata(), MedianHouseholdIncome == max(MedianHouseholdIncome, na.rm = TRUE))
+})
+zip_lowest_income_row <- reactive({
+  filter(mydata(), MedianHouseholdIncome >= 5000) %>%
+  filter(MedianHouseholdIncome == min(MedianHouseholdIncome, na.rm = TRUE))
+})
+selected_places <- reactive({
+  if("All Mass" %in% input$mycities){
+  "Massachusetts"
+} else {
+  paste(input$mycities, 
+  sep = " ", collapse = ", ")
+}
+})
+```
 
-| name              | topic                   | webpage url                                                          | app url                                                |
-|-------------------|-------------------------|----------------------------------------------------------------------|--------------------------------------------------------|
-| *iconr* R package    | Iconography analysis    | https://zoometh.github.io/iconr/vignettes/                        | *install with* devtools::install_github("zoometh/iconr") | 
-| EpiSpat_R         | Multifactorial analysis | None                                                                 | https://epispat.shinyapps.io/analyses_mult_5/          |                         
-| Golasecca-net     | Networks & Open Science | https://zoometh.github.io/golasecca/                                 | None                                                   |
-| EUROEVOL_R        | Radiocarbon mapping     | None                                                                 | https://neolithic.shinyapps.io/Euroevol_R/             |
-| NeoNet            | Radiocarbon mapping     | https://zoometh.github.io/C14/neonet                                 | https://neolithic.shinyapps.io/NeoNet/                 |
-| encounter_postdoc | Radiocarbon mapping     | https://zoometh.github.io/encounter_postdoc/docs/lf_jomon_sites.html | None                                                   |
-| Radiocarbon review                         || https://zoometh.github.io/C14/                                        | None                                                   |
-| Sauri             | Rock-art                | https://zoometh.github.io/Sauri/                                     | None
+<br />
+Zip code `r renderText(zip_highest_income_row()$ZipCode[1])` in
+ `r renderText(zip_highest_income_row()$City[1])` 
+has the highest median income in `r renderText(selected_places())` at 
+`r renderText(scales::dollar(zip_highest_income_row()$MedianHouseholdIncome[1]))`.
+
+Zip code `r renderText(zip_lowest_income_row()$ZipCode[1])` in
+`r renderText(zip_lowest_income_row()$City[1])` has the lowest 
+median income in `r renderText(selected_places())` at
+`r renderText(scales::dollar(zip_lowest_income_row()$MedianHouseholdIncome[1]))`.
+
+
+```{r mymap, warning=FALSE, message=FALSE}
+mapdata <- reactive({
+  if("All Mass" %in% input$mycities){
+    ma_appdata_for_map %>%
+      dplyr::select(ZipCode = GEOID, MedianHouseholdIncome = medincome, MedianMonthlyHousingCost = medmonthlyhousingcost, Population = pop, City, County = county.name, State, Lat, Long, income, housing, Pop, geometry) %>%
+      mutate(
+        Highlighted = "Yes"
+      ) %>%
+      sf::st_as_sf()
+  } else {
+  dplyr::filter(ma_appdata_for_map, City %in% input$mycities) %>%
+  dplyr::select(ZipCode = GEOID, MedianHouseholdIncome = medincome, MedianMonthlyHousingCost = medmonthlyhousingcost, Population = pop, City, County = county.name, State, Lat, Long, income, housing, Pop, geometry) %>%
+  dplyr::mutate(
+    Highlighted = ifelse(City %in% input$mycities, "Yes", "No")
+  ) %>%
+    sf::st_as_sf()
+  }
+})
+incomepal <- reactive({
+  leaflet::colorNumeric(palette = "Greens", domain = mapdata()$MedianHouseholdIncome)
+})
+housingpal <- reactive({
+  leaflet::colorNumeric(palette = "Greens", domain = mapdata()$MedianMonthlyHousingCost)
+})
+mypopups <- reactive({
+  glue::glue("Zip Code: {mapdata()$ZipCode}<br />Median Household Income: {mapdata()$income}<br />Median Monthly Housing Cost: {mapdata()$housing}<br />Population: {mapdata()$Pop}<br />City: {mapdata()$City}<br />County: {mapdata()$County}")
+})
+```
+
+
+<br />
+<h4>Map of median household incomes and monthly housing costs</h4>
+
+(Click a Zip code to get complete data)
+
+```{r themap}
+leaflet::renderLeaflet({
+  leaflet(mapdata()) %>%
+   addProviderTiles("CartoDB.Positron") %>%
+    addPolygons(fillColor = ~incomepal()(mapdata()$MedianHouseholdIncome),
+              fillOpacity = 0.7, 
+              weight = 1.0, 
+              color = "black",
+              smoothFactor = 0.2,
+              popup = mypopups(),
+              group = "Household Income"
+  ) %>%
+      addPolygons(fillColor = ~housingpal()(mapdata()$MedianMonthlyHousingCost),
+              fillOpacity = 0.7, 
+              weight = 0.2, 
+              color = "black",
+              smoothFactor = 0.2,
+              popup = mypopups(),
+              group = "Housing Costs"
+  ) %>%
+  addLayersControl(
+      baseGroups=c("Household Income", "Housing Costs"),
+      position = "bottomleft",
+      options = layersControlOptions(collapsed = FALSE)
+      ) 
+})
+```
+
+
+<h4>Histogram for `r renderText(selected_places())` income data</h4>
+
+
+
+```{r histo, warning=FALSE, message=FALSE}
+renderPlot(width = 500, height = 300, {
+ggplot(mydata(), aes(x = MedianHouseholdIncome)) +
+  geom_histogram(binwidth = 20000, color = "black", fill = "darkgreen") +
+  theme_classic() +
+   xlab("") +
+  ylab("")  +
+   scale_x_continuous(labels = dollar)
+})
+```
+
+
+<h4>`r renderText(selected_places())` data</h4>
+
+
+
+```{r mytable}
+renderDT({
+DT::datatable(mydata(), filter = 'top') %>%
+  formatCurrency(4:5, digits = 0) %>%
+  formatCurrency(6, currency = "", digits = 0)
+})
+```

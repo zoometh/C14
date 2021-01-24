@@ -1,13 +1,59 @@
-library(shiny)
-library(leaflet)
+library(openxlsx)
 library(dplyr)
+library(Bchron)
 library(c14bazAAR)
 library(grDevices)
 library(sp)
 # library(RColorBrewer)
 
 # load a database
-dbC14 <- get_c14data("radon")
+dbs <- c("radon","calpal","euroevol","pacea","14cpalaeolithic")
+db <- "14cpalaeolithic"
+dbC14 <- get_c14data(db)
+# write.xlsx(dbC14, file = "c14all.xlsx", row.names = TRUE, col.names=TRUE)
+# sdb.Fr <- head(db.Fr, 150)
+sdb <- dbC14 %>%
+  fix_database_country_name() %>%
+  determine_country_by_coordinate()
+# clean up
+sdb.Fr <- sdb[sdb$country_thes == "France",]
+sdb.Fr <- sdb.Fr[sdb.Fr$lat <= 46,]
+sdb.Fr <- sdb.Fr[sdb.Fr$c14age <= 8000,]
+sdb.Fr <- sdb.Fr[sdb.Fr$c14age >= 5000,]
+sdb.Fr <-sdb.Fr[!is.na(sdb.Fr$country_thes), ]
+nrow(sdb.Fr)
+sdb.Fr$tpq <- sdb.Fr$taq <-NA
+sdb.Fr <- head(sdb.Fr, 150)
+sdb.Fr <- as.data.frame(sdb.Fr)
+for (i in 1:nrow(sdb.Fr)){
+  #i <- 1
+  ages1 <- BchronCalibrate(ages=as.numeric(sdb.Fr[i,"c14age"]),
+                           ageSds=as.numeric(sdb.Fr[i,"c14std"]),
+                           calCurves='intcal13',
+                           ids='Date1')
+  max.calBC <- max(ages1$Date1$ageGrid)-1950
+  min.calBC<- min(ages1$Date1$ageGrid)-1950
+  sdb.Fr[i, "tpq"] <- max.calBC
+  sdb.Fr[i, "taq"] <- min.calBC
+}
+write.xlsx(sdb.Fr, file = paste0("c14_",db,"_NeoNet_Fr.xlsx"),
+           row.names = TRUE, col.names=TRUE)
+
+
+summary(ages1)
+
+xy <- list(longitude=c(sdb.Fr$lon),
+           latitude=c(sdb.Fr$lat))
+sdb.Fr.sp <- SpatialPointsDataFrame(coords = xy,
+                                    data = sdb.Fr,
+                                    proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
+
+# sdb.Fr <- sdb.Fr %>%
+#   remove_duplicates(mark_only = TRUE)
+# spatial subset
+sp.ch <- SpatialPolygons(list(Polygons(list(Polygon(coords)),ID=1)))
+sp.ch.df <- SpatialPolygonsDataFrame(sp.ch, data=data.frame(ID=1))
+
 
 long.lat <- cbind(dbC14$lon, dbC14$lat) # matrix
 # clean up

@@ -25,7 +25,6 @@ library(grDevices)
 library(sp)
 library(leaflet)
 library(Bchron)
-DBs <- c("emedyd", "eubar", "euroevol", "context", "katsianis", "medafricarbon", "radon")
 mandat.fields <- c("labnr", "c14age", "c14std", "lon", "lat")
 GHimgs <- "https://github.com/zoometh/C14/tree/main/docs/imgs/"
 panel.map <- image_read("docs/imgs/panel_map.png")
@@ -65,7 +64,7 @@ kable(c14.app.df,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=14)
 ```
 
-> <font size="2"> [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) offers an almost complete toolbox to manage radiocarbon dates. **NeoNet** and **EUROEVOL_R** share the same layout, mostly inherited from the EUROEVOL database, only the datasets are differents. The **NeoNet** database, an Excel Sheet. The **EUROEVOL_R** database is the an open source [EUROEVOL](http://discovery.ucl.ac.uk/1469811/) <br> ... vistit the webpages of [NeoNet](https://zoometh.github.io/C14/neonet/#app) and [EUROEVOL_R](https://zoometh.github.io/C14/euroevol)</font>
+> <font size="2"> [MedAfriCarbon](https://theia.arch.cam.ac.uk/MedAfriCarbon/) offers an almost complete toolbox to manage radiocarbon dates. **NeoNet** and **EUROEVOL_R** share the same layout, mostly inherited from the EUROEVOL database, only the datasets are differents. The **NeoNet** database, an Excel Sheet. The **EUROEVOL_R** database is the an open source [EUROEVOL](http://discovery.ucl.ac.uk/1469811/) <br>... *visit the webpages of* [NeoNet](https://zoometh.github.io/C14/neonet/#app) *and* [EUROEVOL_R](https://zoometh.github.io/C14/euroevol)</font>
 
 Programming language permits to handle radiocarbon data. [Shiny](https://shiny.rstudio.com/)and [Bchron](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html) easy to calibrate and plot radiocarbon dates
 
@@ -73,18 +72,11 @@ Programming language permits to handle radiocarbon data. [Shiny](https://shiny.r
 ui <- fluidPage(
   sidebarPanel(
     shiny::numericInput("bp", "BP", 5600),
-    shiny::numericInput("sd", "+/-", 60),
-    actionButton("go", "calibrate")),
+    shiny::numericInput("sd", "+/-", 60)),
   mainPanel(
-    plotOutput("plot"))
+    plotOutput("plot", height=300))
 )
 server <- function(input, output) {
-  bp <- eventReactive(input$go, {
-    runif(input$bp)
-  })
-  sd <- eventReactive(input$go, {
-    runif(input$sd)
-  })
   output$plot <- renderPlot({
     c14date <- BchronCalibrate(ages=input$bp,
                                ageSds=input$sd,
@@ -97,33 +89,42 @@ shinyApp(ui, server)
 ```
 
 Beside [Bchron](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html), other R packages allows calibration and management of radiocarbon dates like  [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html) and  [OxcAAR](https://cran.r-project.org/web/packages/oxcAAR/index.html). The main dedicated apps for calibration are: [OxCal](https://c14.arch.ox.ac.uk/oxcal/),        [CalPal](http://www.calpal-online.de/) and [Calib](http://calib.org/calib/)
-  
-Using the packages [c14bazAAR](https://github.com/ropensci/c14bazAAR) and [Leaflet](https://rstudio.github.io/leaflet/) allow to create interactive map of radiocarbon dates coming from different databases:
 
-```{r echo = FALSE, warning=FALSE}
-shiny::selectInput("c14.db", label = "c14 databases sample",
-                   choices = DBs, selected = "katsianis", width = "25%")
-```
+[c14bazAAR](https://github.com/ropensci/c14bazAAR) is a polyvalent package, allowing numerous operations
 
-```{r echo = FALSE, warning=FALSE}
-leaflet::renderLeaflet({
-  dbC14 <- get_c14data(input$c14.db)
-  dbC14 <- dbC14[complete.cases(dbC14[, mandat.fields]), ]
-  db.summary <- paste(as.character(nrow(dbC14)), "dates <br> from", 
-                      as.character(max(dbC14$c14age)),
-                                   "<br> to",
-                                   as.character(min(dbC14$c14age)),"BP")
-  dbC14$lbl <- paste0(dbC14$labnr, " [", dbC14$c14age, "BP +/- ", dbC14$c14std, "]")
-  long.lat.clean <- dbC14
-  leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
-    addTiles() %>%
-    addCircleMarkers(lng=dbC14$lon,
-                     lat=dbC14$lat,
-                     popup=dbC14$lbl,
-                     radius = 0.5,
-                     opacity = 0.3) %>%
-    addControl(db.summary, position = "topright")
-})
+Using the packages [c14bazAAR](https://github.com/ropensci/c14bazAAR) and [Leaflet](https://rstudio.github.io/leaflet/) allow to create interactive map of radiocarbon dates coming from different databases. 
+
+> <font size="2">At first, we read the list of available database stored in a csv file on GitHub (`DBs.list.url <- 'https://raw.github.com...`), then we create a Shiny app with a selection menu for the databases (`selectInput("c14.db", ...`) and a reactive map (`output$map <- ...`)</font>
+
+```{r echo = TRUE, warning=FALSE}
+DBs.list.url <- 'https://raw.github.com/ropensci/c14bazAAR/master/data-raw/url_reference.csv'
+DBs.list <- read.csv(DBs.list.url)
+DBs <- DBs.list$db
+ui <- fluidPage(selectInput("c14.db", label = "c14bazAAR c14 databases",
+                            choices = DBs, selected = DBs[2], width = "25%"),
+                leafletOutput("map", height=300)
+)
+server <- function(input, output) {
+  output$map <- renderLeaflet({
+    dbC14 <- get_c14data(input$c14.db)
+    dbC14 <- dbC14[complete.cases(dbC14[, mandat.fields]), ]
+    db.summary <- paste(as.character(nrow(dbC14)), "dates <br> from", 
+                        as.character(max(dbC14$c14age)),
+                        "<br> to",
+                        as.character(min(dbC14$c14age)),"BP")
+    dbC14$lbl <- paste0(dbC14$labnr, " [", dbC14$c14age, "BP +/- ", dbC14$c14std, "]")
+    long.lat.clean <- dbC14
+    leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
+      addTiles() %>%
+      addCircleMarkers(lng=dbC14$lon,
+                       lat=dbC14$lat,
+                       popup=dbC14$lbl,
+                       radius = 0.5,
+                       opacity = 0.3) %>%
+      addControl(db.summary, position = "topright")
+  })
+}
+shinyApp(ui, server)
 ```
 
 R offers a comprehensive framework to calibrate, plot, sum and use temporal constraints -- stratigraphy, periodisations, etc., like bayesian analysis -- on radiocarbon datasets. 
