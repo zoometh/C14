@@ -322,7 +322,7 @@ Every radiocarbon date should be referenced with a bibliographical reference wit
 
 ###### **bib** {#mf.bib}
 
-The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the year of the publcation, for example `Guilaine et al. 1993` or `Binder et al. 2018`
+The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the year of the publcation, for example `Guilaine et al. 1993`, `Binder 2018` or `Manen et Sabatier 2013`
 
 ###### **bib_url** {#mf.bib_url}
 
