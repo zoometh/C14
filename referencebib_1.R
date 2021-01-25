@@ -5,14 +5,25 @@ library(rcrossref)
 library(purrr)
 library(dplyr)
 
-reload.all <- T
+
+c14.to.github <- T
+reload.all.ref <- F
 
 path <- "C:/Users/supernova/Dropbox/My PC (supernova-pc)/Desktop/NeoNet/"
 fich <- "14C_DATES_v3_France_7.xlsx"
+df <- openxlsx::read.xlsx(paste0(path, fich), skipEmptyRows=TRUE)
 bibrefs <- paste0(getwd(),"/neonet/references_france.bib")
-if(reload.all){
+if(c14.to.github){
+  # create .tsv from the .xlsx file to be
+  # put file on GitHub
+  write.table(df,"neonet/c14data.tsv", sep="\t", row.names=FALSE)
+}
+if(reload.all.ref){
+  # for a .xlsx file of 14C
+  # recalcultate the "long.ref" value from BibTex entries (file 'references_france.bib')
+  # or DOIs for unique references 
+  # TODO: link with .xlsx file
   bib <- read.bib(bibrefs)
-  df <- openxlsx::read.xlsx(paste0(path, fich), skipEmptyRows=TRUE)
   # a shorter df for uniques references
   uniq.refs <- unique(df[c("bib", "bib_url")])
   # uniq.bib <- as.data.frame(unique(df$bib))
@@ -60,8 +71,7 @@ if(reload.all){
     }
   }
   write.table(uniq.refs,"neonet/references.tsv", sep="\t", row.names=FALSE)
+  references.df <- read.csv("neonet/references.tsv", sep = "\t")
+  View(references.df)
 }
-
-references.df <- read.csv("neonet/references.tsv", sep = "\t")
-View(references.df)
 
