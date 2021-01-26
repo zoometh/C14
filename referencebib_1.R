@@ -4,18 +4,19 @@ library(RefManageR)
 library(rcrossref)
 library(purrr)
 library(dplyr)
-
+library(Bchron)
 
 c14data.to.github <- F
 c14ref.to.github <- F
 join.c14data.and.c14ref <- T
 
 gh.master <- 'https://raw.github.com/zoometh/C14/master/' # github 'C14' folder
-gh.master <- paste0(getwd(),"/")
+#gh.master <- paste0(getwd(),"/") # working folder
+out.folder <- "D:/Cultures_9/Neolithique/web/" # app folder
+ggschol.h <- "https://scholar.google.com/scholar"
 path.data <- "C:/Users/supernova/Dropbox/My PC (supernova-pc)/Desktop/NeoNet/"
 fich <- "14C_DATES_v3_France_8.xlsx"
 df <- openxlsx::read.xlsx(paste0(path.data, fich), skipEmptyRows=TRUE)
-bibrefs <- paste0(getwd(),"/neonet/references_france.bib")
 
 if(join.c14data.and.c14ref){
   # load .tsv from GitHub
@@ -27,6 +28,38 @@ if(join.c14data.and.c14ref){
   df.tot <- merge(c14data, c14ref, by.x="bib_url", by.y="key.or.doi", all.x = T)
   # renames before run app ()
   colnames(df.tot)[which(names(df.tot) == "long.ref")] <- "bib"
+  colnames(df.tot)[which(names(df.tot) == "C14BP")] <- "C14Age"
+  # df.tot$bib_url[df.tot$bib_url == ''] <- "https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Engedal+radiocarbon&btnG="
+  # df.tot$bib[df.tot$bib == ''] <- "v. Google Scholar"
+  # calculate tpq/taq
+  df.tot$taq <- df.tot$tpq <- NA
+  for (i in 1:nrow(df.tot)){
+    # i <- 1
+    if(i %% 100 == 0) print(paste0(as.character(i),"/", as.character(nrow(df.tot))))
+    ## ref bib - - - - - - - - - - -
+    # non DOIs
+    if (!grepl("^10\\.", df.tot[i, "bib_url"])){
+      df.tot[i, "bib_url"] <- paste0(ggschol.h,
+                                     "?hl=en&as_sdt=0%2C5&q=",
+                                     df.tot[i, "SiteName"],
+                                     "+radiocarbon+",
+                                     df.tot[i, "LabCode"],
+                                     "&btnG= ")
+    }
+    # DOIs
+    if (grepl("^10\\.", df.tot[i, "bib_url"])){
+      df.tot[i, "bib_url"] <- paste0("https://doi.org/",df.tot[i, "bib_url"])
+    }
+    # calibration
+    ages1 = BchronCalibrate(ages=df.tot[i,"C14Age"],
+                            ageSds=df.tot[i,"C14SD"],
+                            calCurves='intcal13',
+                            ids='Date1')
+    df.tot[i,"tpq"] <- -(min(ages1$Date1$ageGrid)-1950)  
+    df.tot[i,"taq"] <- -(max(ages1$Date1$ageGrid)-1950) 
+  }
+  # save in the Shiny app folder
+  write.table(df.tot, paste0(out.folder,"df_tot.csv"), sep="\t", row.names=FALSE)
 }
 if(c14data.to.github){
   # create .tsv from the .xlsx file to be
@@ -38,6 +71,7 @@ if(c14ref.to.github){
   # recalcultate the "long.ref" value from BibTex entries (file 'references_france.bib')
   # or DOIs for unique references 
   # TODO: link with .xlsx file
+  bibrefs <- paste0(getwd(),"/neonet/references_france.bib")
   bib <- read.bib(bibrefs)
   # a shorter df for uniques references
   uniq.refs <- unique(df[c("bib", "bib_url")])
