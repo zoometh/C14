@@ -87,7 +87,7 @@ gcalib.bin <- 100 # the chrono granul
 nsites.14C.cal <- 1000 # max of sites calibrated at the same time, panel calib
 
 # setwd("D:/Cultures_9/Neolithique/web")
-c14bibtex.url <- paste0(dirname(getwd()), '/neonet/references_france.bib')
+c14bibtex.url <- 'references_france.bib'
 bib <- read.bib(c14bibtex.url)
 bib <- sort(bib) # sort
 bibrefs.md <- capture.output(print(bib)) # Markdown layout
@@ -96,7 +96,10 @@ bibrefs.md <- paste0(bibrefs.md, collapse = '')
 bibrefs.html <- markdown(bibrefs.md) # to HTML layout
 
 # material life duration, load df
-mat.life.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14_material_life.tsv'
+# mat.life.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14_material_life.tsv'
+# mat.life.url <- '../neonet/c14_material_life.tsv'
+mat.life.url <- 'c14_material_life.tsv'
+# mat.life.url <- paste0(dirname(getwd()), '/neonet/c14_material_life.tsv')
 material.life.duration <- read.csv(mat.life.url, sep = "\t")
 # material.life.duration <- as.data.frame(gsheet2tbl(paste0(xl.url,"#gid=1800523177"))) # 14C_1, the second one
 # material.life.duration <- as.data.frame(gsheet2tbl(paste0(xl.url,"#gid=1417727139"))) # 14C_3, the second one
