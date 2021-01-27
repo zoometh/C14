@@ -21,6 +21,7 @@ library(rcarbon)
 library(shinyWidgets)
 library(gsheet)
 library(leaflet.extras)
+library(bibtex)
 
 # setwd("D:/Cultures_9/Neolithique/web")
 source("functions.R")
@@ -85,8 +86,8 @@ gcalib.bin <- 100 # the chrono granul
 nsites.14C.cal <- 1000 # max of sites calibrated at the same time, panel calib
 
 # setwd("D:/Cultures_9/Neolithique/web")
-
-c14bibtex.url <- paste0(gh.master, 'neonet/references_france.bib')
+c14bibtex.url <- paste0(dirname(getwd()), '/neonet/references_france.bib')
+print(c14bibtex.url)
 bib <- read.bib(c14bibtex.url)
 bib <- sort(bib) # sort
 bibrefs.md <- capture.output(print(bib)) # Markdown layout
@@ -141,7 +142,9 @@ if(neonet){
     select.roi <- (df.tot$Country != 'Spain')# no Spain
     select.italy <- (df.tot$Latitude < 46 | df.tot$Country == 'Italy')# to geo1
     select.france <- (df.tot$Longitude > .7)# no W France
-    df.tot <- df.tot[(select.date & select.roi & select.italy & select.france), ]
+    df.tot <- df.tot[(select.roi & select.italy & select.france), ]
+    # df.tot <- df.tot[(select.date & select.roi & select.italy & select.france), ]
+    
   }
   df.tot <- df.tot[!(is.na(df.tot$Latitude)) & !(is.na(df.tot$Longitude)),] # rm NA
   df.tot <- df.tot[df.tot$Latitude != 'NA' & df.tot$Longitude != 'NA',] # rm NA
@@ -257,31 +260,31 @@ df.tot.sp <- SpatialPointsDataFrame(coords = xy,
 if(euroevol){
   tit <- HTML(paste0('<b>EUROEVOL_R</b></a> ',
                      'Radiocarbon dating by Location, Chronology and Material Life Duration'))
-  # data.credits <- HTML(paste0(' <b> DATA SOURCE: </b> ',
-  #                             '<a href=',shQuote(paste0("http://discovery.ucl.ac.uk/1469811/")),"\ target=\"_blank\"",'> EUROEVOL database </a> ',
-  #                             "(accessed the ",Sys.Date(),')'))
+  data.credits <- HTML(paste0(' <b> DATA SOURCE: </b> ',
+                              '<a href=',shQuote(paste0("http://discovery.ucl.ac.uk/1469811/")),"\ target=\"_blank\"",'> EUROEVOL database </a> ',
+                              "(accessed the ",Sys.Date(),')'))
 }
 if(neonet){
   tit <- HTML(paste0('<b>NeoNet</b> ',
                      'Radiocarbon dating by Location, Chronology and Material Life Duration'))
-#   data.credits <- HTML(paste0(' <b> DATA GATHERING: </b> ',
-#                               '<a href=',shQuote(paste0("https://orcid.org/0000-0002-9315-3625")),"\ target=\"_blank\"",'> Niccolo Mazzucco </a> <nicco.mazzucco@gmail.com>, ',
-#                               '<a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",'> Thomas Huet </a> <thomashuet7@gmail.com>' ))
+  data.credits <- HTML(paste0(' <b> DATA GATHERING: </b> ',
+                              '<a href=',shQuote(paste0("https://orcid.org/0000-0002-9315-3625")),"\ target=\"_blank\"",'> Niccolo Mazzucco </a> <nicco.mazzucco@gmail.com>, ',
+                              '<a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",'> Thomas Huet </a> <thomashuet7@gmail.com>' ))
 }
 # # TODO: add contacts
 if(neonet){
-  # data.contacts <- 'CONTACT: <thomashuet7@gmail.com>, <nicco.mazzucco@gmail.com>'
-  # app.page <- HTML(paste0('<a href=',shQuote(paste0("https://zoometh.github.io/C14/neonet/")),"\ target=\"_blank\"",'><b> NeoNet app </b>website</a>'))
+  data.contacts <- 'CONTACT: <thomashuet7@gmail.com>, <nicco.mazzucco@gmail.com>'
+  app.page <- HTML(paste0('<a href=',shQuote(paste0("https://zoometh.github.io/C14/neonet/")),"\ target=\"_blank\"",'><b> NeoNet app </b>website</a>'))
   b64 <- base64enc::dataURI(file="neonet.png", mime="image/png") # load image
 }
 if(euroevol){
-  # data.contacts <- 'CONTACT: <thomashuet7@gmail.com>'
-  # app.page <- HTML(paste0('<a href=',shQuote(paste0("https://zoometh.github.io/C14/euroevol/")),"\ target=\"_blank\"",'><b> EUROEVOL_R app </b>website</a>'))
+  data.contacts <- 'CONTACT: <thomashuet7@gmail.com>'
+  app.page <- HTML(paste0('<a href=',shQuote(paste0("https://zoometh.github.io/C14/euroevol/")),"\ target=\"_blank\"",'><b> EUROEVOL_R app </b>website</a>'))
   b64 <- base64enc::dataURI(file="euroevol_R.png", mime="image/png") # load image
 }
-# app.credits <- HTML(paste0(' <b> RSHINY APP: </b> ',
-#                            '<a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",'> Thomas Huet </a>'))
-# all.credits <- paste0(data.credits,"<br>",app.credits,"<br><br>","... visit the ", app.page)
+app.credits <- HTML(paste0(' <b> RSHINY APP: </b> ',
+                           '<a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",'> Thomas Huet </a>'))
+all.credits <- paste0(data.credits,"<br>",app.credits,"<br><br>","... visit the ", app.page)
 # # logo
 # if(neonet){
 #   b64 <- base64enc::dataURI(file="neonet.png", mime="image/png") # load image
@@ -535,27 +538,32 @@ ui <- navbarPage(tit,
                             )
                           )
                  ),
+                 tabPanel("biblio",
+                          fluidPage(
+                            htmlOutput("biblio")
+                          )
+                 ),
                  tabPanel("infos",
-                          fluidPage(htmlOutput("webpage")
+                 #          fluidPage(htmlOutput("webpage")
+                 #          )
+                 # )
+                          fluidPage(
+                            tags$head(
+                              tags$style(HTML("
+                    li {
+                    font-size: 14px;
+                    }
+                    li span {
+                    font-size: 18px;
+                    }
+                    ul {
+                    list-style-type: square;
+                    }
+                    "))
+                            ),
+                            HTML(all.credits)
                           )
                  )
-                 #          fluidPage(
-                 #            tags$head(
-                 #              tags$style(HTML("
-                 #    li {
-                 #    font-size: 14px;
-                 #    }
-                 #    li span {
-                 #    font-size: 18px;
-                 #    }
-                 #    ul {
-                 #    list-style-type: square;
-                 #    }
-                 #    "))
-                 #            ),
-                 #            HTML(all.credits)
-                 #          )
-                 # ),
                  # tabPanel("web",
                  #          fluidPage(htmlOutput("webpage")
                  #          )
@@ -1012,13 +1020,9 @@ server <- function(input, output, session) {
     LabCode.selected <- selected@data$LabCode
     inside.geometry$LabCode.selected <- LabCode.selected
   })
-  getPage<-function() {
-    # return((HTML(readLines('http://www.google.com'))))
-    return((HTML(readLines(webpage.app))))
-  }
-  output$webpage<-renderUI({
-    # x <- input$test  
-    getPage()
+  output$biblio <- renderText({ 
+    # bibliographical references
+    bibrefs.html
   })
 }
 shinyApp(ui, server)
