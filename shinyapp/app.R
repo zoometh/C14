@@ -215,10 +215,10 @@ df.tot[df.tot==""]<-"unknown"
 # df.tot$mat.life <- ifelse(df.tot$Material %in%  short.life, "short life",
 #                           ifelse(df.tot$Material %in%  long.life,"long life","others"))
 # Github html pages
-html.root <- '<a href=https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/'
-material.life.html <- paste0(html.root,'material_life.html><span style="color: purple;">material life duration and max accepted SD</span></a>')
-# material.life.html <- paste0(html.root,'material_life.html>14C materials</a>')
-period.abrev.html <- paste0(html.root,'period_abrev.html>periods</a>')
+# html.root <- '<a href=https://raw.github.com/zoometh/C14/master/neonet/'
+# material.life.html <- paste0(html.root,'material_life.html><span style="color: purple;">material life duration and max accepted SD</span></a>')
+# # material.life.html <- paste0(html.root,'material_life.html>14C materials</a>')
+# period.abrev.html <- paste0(html.root,'period_abrev.html>periods</a>')
 #df.tot <- df.tot[!duplicated(df.tot[,c("SiteID","Period")]),] # supprime doublons, useful ?
 df.tot$lbl <- NA
 # labels
@@ -434,7 +434,7 @@ ui <- navbarPage(tit,
                                      # type of material (short,...,long life)
                                      absolutePanel(bottom = 70, right = 40,
                                                    checkboxGroupInput("mater",
-                                                                      label=HTML(material.life.html),
+                                                                      label="material life duration and max accepted SD",
                                                                       # choices=my.fun(),
                                                                       # selected=my.fun(),
                                                                       choiceNames = my.fun(),
@@ -460,7 +460,7 @@ ui <- navbarPage(tit,
                                      # periods
                                      absolutePanel(top = 70, right = 40,
                                                    checkboxGroupInput("cults", 
-                                                                      label=HTML(period.abrev.html),
+                                                                      label="periods",
                                                                       # choiceNames = list(
                                                                       #   tags$span("A", style = "color: red;"),
                                                                       #   tags$span("B", style = "color: red;"), 
