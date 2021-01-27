@@ -45,18 +45,19 @@ We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet databas
 
 # **NeoNet app** {#app}
 
-The app is a [RShiny](https://shiny.rstudio.com/) divided into 4 panels:
+The app is a [RShiny](https://shiny.rstudio.com/) hosted on the [**shinyapps.io**](https://www.shinyapps.io/) server. The app is divided into five (5) panels:
 
 1. [**map** panel](#panel.map): ROI with selection menus
 2. [**calib** panel](#panel.calib): calibration of the selected dates
 3. [**data** panel](#panel.data): the whole dataset
-4. [**infos** panel](#panel.infos): handbook and credits
+4. [**biblio** panel](#panel.biblio): bibliographical references
+5. [**infos** panel](#panel.infos): credits and link to the webpage handbook of the app
 
-The two main panels are **map** and **calib**
+The two main panels are **map** for selection, **calib** for calibration, and **data**: the dataset
 
 
 ## 1. **map** panel {#panel.map}
-![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_map_idx.png){width=15%}
+![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_map_idx.png){width=20%}
   
  
 The panel **map** is a geographical window provided by the [Leaflet](https://rstudio.github.io/leaflet/) package. This panel is used for selection of radiocarbon dates [by location](#panel.map.select.loc), [by chronology](#panel.map.select.chr), [by quality of dates](#panel.map.select.quali) 
@@ -83,7 +84,7 @@ This date will be shown **bolded** on the [**calib** panel](#panel.calib) output
 
 ### select by location {#panel.map.select.loc}
 
-By default only the data within the window extent (ROI) will be selected, but a spatial intersection, inside this ROI with selection shapes, can be done by drawing shapes 
+By default only the data within the window extent (ROI) will be selected. But selection shapes can be drawn inside this ROI to have a spatial intersection 
 
 <center>
 
@@ -91,7 +92,7 @@ By default only the data within the window extent (ROI) will be selected, but a 
 
 </center>
 
-Selection shapes can be ***polygons*** and ***rectanges***. These shapes can be removed with the trash button (Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box). All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated.
+Selection shapes can be ***polygons*** and ***rectanges***. These shapes *freeze* the date selection inside a given ROI. They can be removed with the trash button (Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box). All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated.
 
 #### retrieve coordinates from the map
 
@@ -122,7 +123,7 @@ The bottom-right checkboxes and slider (Fig. \@ref(fig:panel-map1), <span style=
 * below a maximum accepted threshold for the standard deviations (SD) for the dates
 
 ## 2. **calib** panel {#panel.calib}
-![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_calib_idx.png){width=15%}
+![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_calib_idx.png){width=20%}
 
 
 The panel **calib** is used for dates on-the-fly calibration with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). Calibrations are done on the whole dataset of dates displayed in the [table of the **map panel**](#panel.map). If the dates are numerous (eg > 100) the computing time could take times.
@@ -131,9 +132,9 @@ The panel **calib** is used for dates on-the-fly calibration with the R packages
 
 The only selection which can be done is on the top-center radio button  (Fig. \@ref(fig:panel-calib), <span style="color:red"><u>red</u></span> box). The **c14 group by** filter allows to plot dates and to sum their probability densities depending on different levels of grouping:
 
-* **by date**: each date is plot separeltly (by default)
+* **by date**: each date is plot separately (by default)
 
-* **by site and layer**: dates from the same site, having the same archaeological unit (layer, structure, etc.), are summed
+* **by site and layer**: dates from the same site, having the same archaeological unit (layer, structure, etc.), are summed. See the [PhaseCode](#mf.phasecode) field.
 
 * **by site and period**: dates from the same site, having the same period are summed
 
@@ -148,32 +149,123 @@ The only selection which can be done is on the top-center radio button  (Fig. \@
 
 ### plot area *output*
 
-The plot area (Fig. \@ref(fig:panel-calib), <span style="color:orange"><u>orange</u></span> box) shows dynamically the SPD of the cabibrated dates seriated on their weighted means. The top-right  button **Download** (Fig. \@ref(fig:panel-calib),, <span style="color:green"><u>green</u></span> box) allows to export the last plot in a PNG image
+The plot area (Fig. \@ref(fig:panel-calib), <span style="color:orange"><u>orange</u></span> box) shows dynamically the SPD of the cabibrated dates seriated on their weighted means. The top-right  button **Download** (Fig. \@ref(fig:panel-calib), <span style="color:green"><u>green</u></span> box) allows to export the last plot in a PNG image
 
 <p style="text-align: center;">
 ![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/neonet_calib_example.png){width=80%}
 </p>
 
 ## 3. **data** panel {#panel.data}
-![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_data_idx.png){width=15%}
+![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_data_idx.png){width=20%}
 
-The complete database is a datatable ([DT package](https://cran.r-project.org/web/packages/DT/index.html)), with sorting and filtering tools
+The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14data.tsv) file. The first rows are:
 
-## 4. **infos** panel {#panel.infos}
-![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_infos_idx.png){width=15%}
+<table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Country </th>
+   <th style="text-align:right;"> Latitude </th>
+   <th style="text-align:right;"> Longitude </th>
+   <th style="text-align:left;"> SiteName </th>
+   <th style="text-align:left;"> Period </th>
+   <th style="text-align:left;"> PhaseCode </th>
+   <th style="text-align:left;"> LabCode </th>
+   <th style="text-align:right;"> C14BP </th>
+   <th style="text-align:right;"> C14SD </th>
+   <th style="text-align:left;"> Material </th>
+   <th style="text-align:left;"> bib </th>
+   <th style="text-align:left;"> bib_url </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> France </td>
+   <td style="text-align:right;"> 44.74 </td>
+   <td style="text-align:right;"> 1.83 </td>
+   <td style="text-align:left;"> Roucadour </td>
+   <td style="text-align:left;"> LMEN </td>
+   <td style="text-align:left;"> n/a </td>
+   <td style="text-align:left;"> GSY-36A </td>
+   <td style="text-align:right;"> 5940 </td>
+   <td style="text-align:right;"> 140 </td>
+   <td style="text-align:left;"> CE </td>
+   <td style="text-align:left;"> Ammerman et Cavali-Sforza 1971 </td>
+   <td style="text-align:left;"> Ammerman71 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> France </td>
+   <td style="text-align:right;"> 43.29 </td>
+   <td style="text-align:right;"> 2.40 </td>
+   <td style="text-align:left;"> Gazel </td>
+   <td style="text-align:left;"> LM </td>
+   <td style="text-align:left;"> Porche F6 </td>
+   <td style="text-align:left;"> GrN-6704 </td>
+   <td style="text-align:right;"> 7880 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Barbazza et al. 1984 </td>
+   <td style="text-align:left;"> Barbaza84 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> France </td>
+   <td style="text-align:right;"> 44.52 </td>
+   <td style="text-align:right;"> 4.82 </td>
+   <td style="text-align:left;"> Espeluche-Lalo </td>
+   <td style="text-align:left;"> LM </td>
+   <td style="text-align:left;"> St8 </td>
+   <td style="text-align:left;"> AA-32642 </td>
+   <td style="text-align:right;"> 7315 </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> France </td>
+   <td style="text-align:right;"> 44.52 </td>
+   <td style="text-align:right;"> 4.82 </td>
+   <td style="text-align:left;"> Espeluche-Lalo </td>
+   <td style="text-align:left;"> EN </td>
+   <td style="text-align:left;"> St120 </td>
+   <td style="text-align:left;"> AA-32641 </td>
+   <td style="text-align:right;"> 6585 </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> France </td>
+   <td style="text-align:right;"> 44.52 </td>
+   <td style="text-align:right;"> 4.82 </td>
+   <td style="text-align:left;"> Espeluche-Lalo </td>
+   <td style="text-align:left;"> EN </td>
+   <td style="text-align:left;"> St76 </td>
+   <td style="text-align:left;"> AA-32638 </td>
+   <td style="text-align:right;"> 6560 </td>
+   <td style="text-align:right;"> 85 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> France </td>
+   <td style="text-align:right;"> 44.52 </td>
+   <td style="text-align:right;"> 4.82 </td>
+   <td style="text-align:left;"> Espeluche-Lalo </td>
+   <td style="text-align:left;"> EN </td>
+   <td style="text-align:left;"> St73 </td>
+   <td style="text-align:left;"> AA-32639 </td>
+   <td style="text-align:right;"> 6520 </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
+  </tr>
+</tbody>
+</table>
 
-The URL of this webpage (https://zoometh.github.io/C14/neonet) is embedded into this panel
-
-# **NeoNet database** {#bd}
-
-The **NeoNet database** is composed by 3 spreadsheets: [**c14**](#bd.C14), [**material.life**](#bd.material) and [**period.abrev**](#bd.period)
-
-## Database spreadsheets
-
-### c14 {#bd.C14}
-![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/app_neonet_db_c14.png){width=30%}  
-
-This is the complete database. The **mandatory fields** are:
+As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. The database **mandatory fields** are:
 
 * **SiteName**: the site name
 * **Longitude**: in decimal degrees (ex: `1.045`)
@@ -195,7 +287,7 @@ The **recommended** fields are:
 * **MaterialSpecies**: a specification of the field **Material**
 * **Culture**: a specification of the field **Period**
 
-The others fields only concern the **[EUROEVOL_R app](https://zoometh.github.io/C14)** 
+The others fields (if there's any) only concern the **[EUROEVOL_R app](https://zoometh.github.io/C14)** 
 
 #### mandatory fields
 
@@ -203,11 +295,7 @@ Here we explain more precisely some of the mandatory fields
 
 ##### **PhaseCode** {#mf.phasecode}
 
-The PhaseCode field provide a more precise archaeological context than the site name. It is useful for [**layer/structure C14 grouping**](#panel.calib.group). It could be:
-
-* the layer
-
-* the structure
+The PhaseCode field provide a more precise archaeological context than the site name. It is useful for [**layer/structure C14 grouping**](#panel.calib.group). Most of the time, it correspond to an archaeological layer or structure
 
 <table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
@@ -288,15 +376,15 @@ The conventional syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*numb
 
 ##### **bib** and **bib_url** {#mf.bib_all}
 
-Every radiocarbon date should be referenced with a bibliographical reference with a plain text in the [**bib**](#mf.bib) field and and a DOI or a BibTex key in the [**bib_url**](#mf.bib_url) field. We favour the earliest mention of the radiocarbon date
+Every radiocarbon date should be referenced with a bibliographical reference with a plain text in the [**bib**](#mf.bib) field and and a DOI or a BibTex key in the [**bib_url**](#mf.bib_url) field. We favor the earliest mention of the radiocarbon date
 
 ###### **bib** {#mf.bib}
 
-The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the year of the publcation, for example `Guilaine et al. 1993` or `Binder et al. 2018`
+The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the year of the publcation, for example `Guilaine et al. 1993`, `Binder 2018` or `Manen et Sabatier 2013`
 
 ###### **bib_url** {#mf.bib_url}
 
-We favour the DOI as a unique bibliographical reference. For example: 
+We favor the DOI as a unique bibliographical reference. For example: 
 
 <table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
@@ -329,7 +417,7 @@ We favour the DOI as a unique bibliographical reference. For example:
 </tbody>
 </table>
 
-When the DOI is lacking, the bibliographical reference should be include into the BibTex document \texttt{references.bib} with the name of the first author and the two last digits of the year:
+When the DOI is lacking, the bibliographical reference should be include into the BibTex document [references.bib](https://raw.githubusercontent.com/zoometh/C14/master/neonet/references_france.bib) with the name of the first author and the two last digits of the year:
 
 
 ```r
@@ -374,10 +462,13 @@ The key of this reference is added to the **bib_url** field. For example, the ke
 </tbody>
 </table>
 
-### material.life {#bd.material}
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_material.png){width=30%}
+### correspondance tables
 
-The two fields show the material type and the material life duration, for example: 
+The NeoNet app makes joins to two tables in order to retrieve information and to provide a handy user interface
+
+#### material.life {#bd.material}
+
+Material life duration are read from the GitHub  [c14_material_life.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14_material_life.tsv) file. The two fields show the material type (column 1) and the material life duration (column 2), for example: 
 
 <table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
@@ -388,42 +479,59 @@ The two fields show the material type and the material life duration, for exampl
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> bone </td>
-   <td style="text-align:left;"> short life </td>
+   <td style="text-align:left;"> Drusch - trilladura </td>
+   <td style="text-align:left;"> long.life </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> seed </td>
-   <td style="text-align:left;"> short life </td>
+   <td style="text-align:left;"> Agla </td>
+   <td style="text-align:left;"> long.life </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> wood </td>
-   <td style="text-align:left;"> long life </td>
+   <td style="text-align:left;"> Angiosperma </td>
+   <td style="text-align:left;"> long.life </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> ... </td>
-   <td style="text-align:left;"> ... </td>
+   <td style="text-align:left;"> animal bone </td>
+   <td style="text-align:left;"> short.life </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> animal hair </td>
+   <td style="text-align:left;"> short.life </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> antler </td>
+   <td style="text-align:left;"> short.life </td>
   </tr>
 </tbody>
 </table>
 
-You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/material_life.html)
+#### period.abrev {#bd.period}
 
-### period.abrev {#bd.period}
-![](https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/app_neonet_db_period.png){width=30%}
-
-The two fields show the period abreviation and the period full label, for example:
+Periods and periods abbreviations are read from the GitHub  [c14_period_abrev.tsv](https://raw.githubusercontent.com/zoometh/C14/master/neonet/c14_period_abrev.tsv) file. The two fields show the period abbreviation (column 1) and the period full label (column 2), for example:
 
 <table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;"> period.abrev </th>
+   <th style="text-align:left;"> period.brev </th>
    <th style="text-align:left;"> period </th>
   </tr>
  </thead>
 <tbody>
   <tr>
+   <td style="text-align:left;"> EM </td>
+   <td style="text-align:left;"> Early Mesolithic </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> MM </td>
+   <td style="text-align:left;"> Middle Mesolithic </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> LM </td>
    <td style="text-align:left;"> Late Mesolithic </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> UM </td>
+   <td style="text-align:left;"> Undefined Mesolithic </td>
   </tr>
   <tr>
    <td style="text-align:left;"> LMEN </td>
@@ -433,36 +541,77 @@ The two fields show the period abreviation and the period full label, for exampl
    <td style="text-align:left;"> EN </td>
    <td style="text-align:left;"> Early Neolithic </td>
   </tr>
+</tbody>
+</table>
+
+
+In the NeoNet app, this database is rendered with the ([DT package](https://cran.r-project.org/web/packages/DT/index.html)) allowing sorting and filtering tools
+
+## 4. **biblio** panel {#panel.biblio}
+![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_biblio_idx.png){width=20%}
+
+Bibliographical references from the GitHub [c14refs.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14refs.tsv) file. The first rows are:
+
+<table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
   <tr>
-   <td style="text-align:left;"> ... </td>
-   <td style="text-align:left;"> ... </td>
+   <th style="text-align:left;"> short.ref </th>
+   <th style="text-align:left;"> key.or.doi </th>
+   <th style="text-align:left;"> long.ref </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Ammerman et Cavali-Sforza 1971 </td>
+   <td style="text-align:left;"> Ammerman71 </td>
+   <td style="text-align:left;"> Ammerman AJ, Cavalli-Sforza LL (1971). “Measuring the rate of spread of early farming in Europe.” _Man_, 674-688. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Barbazza et al. 1984 </td>
+   <td style="text-align:left;"> Barbaza84 </td>
+   <td style="text-align:left;"> Barbaza M, Guilaine J, Vaquer J (1984). “Fondements chrono-culturels du mésolithique en Languedoc occidental.” _Anthropologie (L')(Paris)_, *88*(3), 345-365. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
+   <td style="text-align:left;"> Beeching A, Brochier J, Cordier F (2000). “La transition Mésolithique-Néolithique entre la plaine du Rhône moyen et ses bordures préalpines.” _Les Paléoalpins e Hommagea Pierre Bintz, Géologie Alpine e Mémoire Hs_, *31*, 201-210. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Binder 1987 </td>
+   <td style="text-align:left;"> Binder87 </td>
+   <td style="text-align:left;"> Binder D (1987). _Le Néolithique ancien provençal. Typologie et technologie des outillages lithiques_, volume 24 number 1. Pers\'ee-Portail des revues scientifiques en SHS. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Binder 1995 </td>
+   <td style="text-align:left;"> Binder95 </td>
+   <td style="text-align:left;"> Binder D (1995). “Éléments pour la chronologie du Néolithique ancien à céramique imprimée dans le Midi.” _Chronologies néolithiques. De_, *6000*, 55-65. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Binder et al. 2002 </td>
+   <td style="text-align:left;"> Binder02 </td>
+   <td style="text-align:left;"> Binder D, Jallot L, Thiebault S, others (2002). “Les occupations néolithiques des Petites Bâties (Lamotte-du-Rhône, Vaucluse).” _Archéologie du TGV Méditerranée: fiches de synthèse_, *1*, 103-122. </td>
   </tr>
 </tbody>
 </table>
 
-You can also [see the entire dataframe ](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/period_abrev.html)
+In the NeoNet app, these bibliographical references are rendered in APA citation format (field `long.ref`) 
+
+## 5. **infos** panel {#panel.infos}
+![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_infos_idx.png){width=20%}
+
+Infos, credits and link to this webpage (https://zoometh.github.io/C14/neonet)
 
 # **Objectives** {#particip}
-
-Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean. As data came from various publications, an homogenisation the different values (material, cultures, bibliographical references, etc.) must be done
-
-Contact <nicco.mazzucco@gmail.com> for database and data integration
-
-## Short-term objectives {#next.publish}
 
 Today, the **NeoNet app** release is online. At the short-term, and in the frame of [**FAIR** Open Science principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*), our publication plan is:
 
 1. publish the **NeoNet database** in a Open Data repository (ex: [Zenodo](https://zenodo.org/))
-2. publish the **NeoNet database** reference in a data paper (ex: [JOAD](https://openarchaeologydata.metajnl.com/))
+2. reference the **NeoNet database**  in a data paper (ex: [JOAD](https://openarchaeologydata.metajnl.com/))
 3. publish the RShiny **NeoNet app** source code in a Open digital humanities paper (ex: [JOSS](https://joss.theoj.org/))
   
-Beside this publication plan, we will also:
+Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean. Beside the database and the app publications, we will also:
 
 * publish the archaeological result(s) in scientific paper(s) (*journal to be defined*)
 * present the results and the app in conferences, seminars, etc.
 
-## Mid-term objectives {#next.server}
-
-Today the **NeoNet app** is hosted on the [**shinyapps.io**](https://www.shinyapps.io/) server, an opensource but limited solution. For example, no direct connection can be done between the app and the database (ie the Google Sheet), so the app have to be *pushed* regularly on the **shinyapps.io** server after the database have been updated. After publishing the various facets of this work (see [short-term objectives](#next.publish)), we plan to host the new releases of the app/database on a R server hosted in a research institution (University, Laboratory) and to developp a *real* database on [PostgreSQL/PostGIS](https://www.postgresql.org/) integrating other *proxys* in addition to radiocarbon dates
-
-Contact <thomashuet7@gmail.com> for app updates
+Contact <nicco.mazzucco@gmail.com> for database and data integration, and <thomashuet7@gmail.com> for app updates and IT integration

@@ -48,6 +48,7 @@ webpage.app <- "https://zoometh.github.io/C14/neonet"
 # inside.geometry <- F
 
 # xl.url <- 'docs.google.com/spreadsheets/d/1fObKeXF7JdL4MX0PQliHfL82e2cg9KO8/edit' # 14C_1
+# useful for EUROEVOL_R
 xl.url <- 'docs.google.com/spreadsheets/d/1A85x9wnWGpAhcdQbg1_RKa-OyYj64zqn3-vhkcIgOn8/edit' # 14C_3
 ggschol.h <- "https://scholar.google.com/scholar"
 
@@ -95,12 +96,11 @@ bibrefs.md <- replace(bibrefs.md, bibrefs.md == "", "<br><br>")
 bibrefs.md <- paste0(bibrefs.md, collapse = '')
 bibrefs.html <- markdown(bibrefs.md) # to HTML layout
 
-# material life, load df
-# load("material_life.R")
-#gid=1417727139
+# material life duration, load df
+mat.life.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14_material_life.tsv'
+material.life.duration <- read.csv(mat.life.url, sep = "\t")
 # material.life.duration <- as.data.frame(gsheet2tbl(paste0(xl.url,"#gid=1800523177"))) # 14C_1, the second one
-# TODO: change 'material' location
-material.life.duration <- as.data.frame(gsheet2tbl(paste0(xl.url,"#gid=1417727139"))) # 14C_3, the second one
+# material.life.duration <- as.data.frame(gsheet2tbl(paste0(xl.url,"#gid=1417727139"))) # 14C_3, the second one
 short.life <- subset(material.life.duration, life.duration == 'short.life')
 long.life <- subset(material.life.duration, life.duration == 'long.life')
 other.life <- material.life.duration[is.na(material.life.duration$life.duration),]
