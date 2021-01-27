@@ -88,7 +88,6 @@ nsites.14C.cal <- 1000 # max of sites calibrated at the same time, panel calib
 
 # setwd("D:/Cultures_9/Neolithique/web")
 c14bibtex.url <- paste0(dirname(getwd()), '/neonet/references_france.bib')
-print(c14bibtex.url)
 bib <- read.bib(c14bibtex.url)
 bib <- sort(bib) # sort
 bibrefs.md <- capture.output(print(bib)) # Markdown layout
