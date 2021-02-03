@@ -17,6 +17,14 @@ Classical operators of time modeling are those coming from the temporal logic (L
 
 <img src="docs/imgs/events_duration.png" alt="drawing" width="50%"/>
 
+<center>
+
+<figure>
+    <img src='docs/imgs/events_duration.png' alt='missing' width="500"/>
+    <figcaption>The French Revolution times</figcaption>
+</figure>
+
+</center>
 
 ## Absolute *or* relative dating ?
 
