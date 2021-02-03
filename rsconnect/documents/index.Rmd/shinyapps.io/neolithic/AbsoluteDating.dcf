@@ -1,0 +1,12 @@
+name: AbsoluteDating
+title: AbsoluteDating
+username:
+account: neolithic
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3551330
+bundleId: 4161034
+url: https://neolithic.shinyapps.io/AbsoluteDating/
+when: 1612023904.84677
+asMultiple: FALSE
+asStatic: FALSE
