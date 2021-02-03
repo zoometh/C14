@@ -6,34 +6,11 @@ A dating is the positioning of an ***event*** or ***duration*** on a timeline co
 
 Classical operators of time modeling are those coming from the temporal logic (Linear Temporal Logic, Interval Temporal Logic, etc.). When the *starting* and *ending* events are known -- for example, 1870 to 1940 AD for the French Third Republic -- maybe one the most interesting model is the [Allen's interval algebra](https://en.wikipedia.org/wiki/Allen%27s_interval_algebra) where events are discrete 0-dimension features modeled with `POINTS`, and duration are continuous 1-dimension features modeled with `LINES` (more precisely: segments). 
 
-<center>
-
-![The French Revolution times](docs/imgs/events_duration.png =500x)
-
-</center>
-
-  
-<img src="docs/imgs/events_duration.png" width="500">
-
-<img src="docs/imgs/events_duration.png" alt="drawing" width="50%"/>
-
-<center>
-
-<figure>
-    <img src='docs/imgs/events_duration.png' alt='missing' width="500"/>
-    <figcaption>The French Revolution times</figcaption>
-</figure>
-
-</center>
-
 <p align="center">
-  <img width="500" src="docs/imgs/events_duration.png">
-  <figcaption>The French Revolution times</figcaption>
+  <img alt="img-name" src="docs/imgs/events_duration.png" width="500">
+  <br>
+    <em>The French Revolution times</em>
 </p>
-
-| ![space-1.jpg](http://www.storywarren.com/wp-content/uploads/2016/09/space-1.jpg) | 
-|:--:| 
-| *Space* |
 
 ## Absolute *or* relative dating ?
 
