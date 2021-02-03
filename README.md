@@ -1,6 +1,6 @@
 # Time modeling
 
-A dating is the positioning of an ***event*** or ***duration*** on a timeline correlatively to the positioning of another event or duration. A dating makes it possible to say *this happened before*, or *this happened after*, or *this happened during*. Important difficulties can come from the uncertainty of the dating (*date* ± *delta*) and the need of class interval for comparison (First Republic, Empire, etc.). Statistics (randomization, confidence intervals, bayesian modeling, etc.)   
+A dating is the positioning of an ***event*** or ***duration*** on a timeline correlatively to the positioning of another event or duration. A dating makes it possible to say *this happened before*, or *this happened after*, or *this happened during*. Important difficulties can come from the uncertainty of the dating (*date* ± *delta*) and the need of class interval for comparison (First Republic, Empire, etc.). To manage this uncertainty, statistics are required (randomization, confidence intervals, bayesian modeling, etc.)   
   
 ## Notions and operators
 
@@ -8,7 +8,7 @@ Classical operators of time modeling are those coming from the temporal logic (L
 
 <center>
 
-![The French Revolution times](docs/imgs/events_duration.png){width=600px}
+![The French Revolution times](docs/imgs/events_duration.png){width=500px}
 
 </center>
 
@@ -45,5 +45,5 @@ The NeoNet webpage explains [how to use](https://zoometh.github.io/C14/neonet) t
 Relative dating is another name for chronological sequences. Relative dating reflects the fact that some events are known to be more ancient, or more recent, or contemporaneous to other events. In archaeology, the **stratigraphy** is the main method to infer relative chronology between cultural layers. Nicholas Steno has established its theoretical principles. The main ones are:
 
 * **principle of original horizontality**: the oldest layers are underneath
-* **original unit of deposits**: one layer = One event
+* **original unit of deposits**: one layer = one geological event
 
