@@ -8,9 +8,15 @@ Classical operators of time modeling are those coming from the temporal logic (L
 
 <center>
 
-![The French Revolution times](docs/imgs/events_duration.png){width=500px}
+![The French Revolution times](docs/imgs/events_duration.png =500x)
 
 </center>
+
+  
+<img src="docs/imgs/events_duration.png" width="500">
+
+<img src="docs/imgs/events_duration.png" alt="drawing" width="50%"/>
+
 
 ## Absolute *or* relative dating ?
 
