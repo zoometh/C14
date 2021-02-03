@@ -7,7 +7,7 @@ A dating is the positioning of an ***event*** or ***duration*** on a timeline co
 Classical operators of time modeling are those coming from the temporal logic (Linear Temporal Logic, Interval Temporal Logic, etc.). When the *starting* and *ending* events are known -- for example, 1870 to 1940 AD for the French Third Republic -- maybe one the most interesting model is the [Allen's interval algebra](https://en.wikipedia.org/wiki/Allen%27s_interval_algebra) where events are discrete 0-dimension features modeled with `POINTS`, and duration are continuous 1-dimension features modeled with `LINES` (more precisely: segments). 
 
 <p align="center">
-  <img alt="img-name" src="docs/imgs/events_duration.png" width="500">
+  <img alt="img-name" src="docs/imgs/events_duration.png" width="600">
   <br>
     <em>The French Revolution times</em>
 </p>
@@ -32,11 +32,12 @@ Radiocarbon (<sup>14</sup>C) and dendrochronological dates are one of the most s
 
 We started to develop a RShiny app for interactive selection, mapping and calibration for the Mesolithic/Neolithic transition in Central and Western Mediterranean, the [NeoNet app](https://neolithic.shinyapps.io/NeoNet2/)
 
-<center>
+<p align="center">
+  <img alt="img-name" src="docs/imgs/panel_map.png" width="600">
+  <br>
+    <em>The NeoNet app</em>
+</p>
 
-[<img src="docs/imgs/panel_map.png" width="500"/>](https://neolithic.shinyapps.io/NeoNet2/)
-
-</center>
   
 The NeoNet webpage explains [how to use](https://zoometh.github.io/C14/neonet) this app. The canvas of this RShiny app allows to use another database: the [Euroevol database](http://discovery.ucl.ac.uk/1469811/), and to create the [EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)  
 
