@@ -506,7 +506,7 @@ ui <- navbarPage(tit,
                                    radioButtons(
                                      inputId = "C14group",
                                      label = "C14 grouped by site and/ or period",
-                                     choices = c("by datation" = "C14ungroup",
+                                     choices = c("by dates" = "C14ungroup",
                                                  # TODO
                                                  "by site and layer" =  "C14groupsl",
                                                  "by site and period" = "C14groupsp",
@@ -586,8 +586,8 @@ server <- function(input, output, session) {
   output$calib.presentation <- renderUI({
     HTML(paste0(" in the <b>map panel</b>, click on a site to get its C14 calibration ",
                 "and those of all sites within the region of interest ('Intcal13' calibration curve, limited to <b><font color= green >",
-                nsites.14C.cal," datations</font></b>) | ",
-                "<b>check/uncheck</b> by datation, by site and/or stratigraphical layer and/or period, all C14 to (un)group datations | ",
+                nsites.14C.cal," dates</font></b>) | ",
+                "<b>check/uncheck</b> by dates, by site and/or stratigraphical layer and/or period, all C14 to (un)group dates | ",
                 "<b>download</b> the plot with the button"))
   })
   # TODO: loading message
@@ -766,7 +766,7 @@ server <- function(input, output, session) {
   output$nb.dat <- renderUI({
     HTML(paste0("Dataset within the region of interest and the selected parameters: ",
                 "<b>",data_count()[2],"</b> sites, ",
-                "<b>",data_count()[1],"</b> datations "))
+                "<b>",data_count()[1],"</b> dates "))
   })
   observe({
     # print(input$sds)

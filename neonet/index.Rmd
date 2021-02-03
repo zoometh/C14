@@ -1,5 +1,7 @@
 ---
-title: "**NeoNet app**, mapping radiocarbon dating online"
+title: | 
+  | **NeoNet app** 
+  | mapping radiocarbon dating online
 author: "Thomas Huet, Niccolo Mazzucco"
 # date: "11/12/2020"
 header-includes:
@@ -89,14 +91,22 @@ The app is a [RShiny](https://shiny.rstudio.com/) hosted on the [**shinyapps.io*
 4. [**biblio** panel](#panel.biblio): bibliographical references
 5. [**infos** panel](#panel.infos): credits and link to the webpage handbook of the app
 
-The two main panels are **map** for selection, **calib** for calibration, and **data**: the dataset
+To calibrate one or various dates in the [**calib** panel](#panel.calib), a date has to be clicked in the [**map** panel](#panel.map).
 
+<center>
+
+![click on a date to calibrate a selected group of dates](`r panel.map.select`){width=250px}
+
+</center>
+
+This date will be shown **bolded** on the [**calib** panel](#panel.calib) output figure
 
 ## 1. **map** panel {#panel.map}
 ![](`r panel.map.idx`){width=20%}
   
  
-The panel **map** is a geographical window provided by the [Leaflet](https://rstudio.github.io/leaflet/) package. This panel is used for selection of radiocarbon dates [by location](#panel.map.select.loc), [by chronology](#panel.map.select.chr), [by quality of dates](#panel.map.select.quali) 
+The panel **map** is a geographical window provided by the [Leaflet](https://rstudio.github.io/leaflet/) package. This panel is used for selection of radiocarbon dates [by location](#panel.map.select.loc), [by chronology](#panel.map.select.chr), [by quality of dates](#panel.map.select.quali).  
+
 
 ```{r panel-map1,echo=FALSE,message=FALSE,fig.align="center", fig.fullwidth=TRUE, fig.cap="The different menus of the map panel"}
 par(mar = c(0, 0, 0, 0))
@@ -134,60 +144,52 @@ invisible(dev.off())
 plot(map.group.c14)
 ```
   
-  
-The top-left button ***group C14 on map*** (Fig. \@ref(fig:panel-map1), <span style="color:red"><u>red</u></span> box), allows to cluster dates by spatial proximities (see [Marker Clusters](http://rstudio.github.io/leaflet/markers.html)). The top-right layer button (Fig. \@ref(fig:panel-map1), <span style="color:pink"><u>pink</u></span> box), allows to change the basemap. By default, the basemap is **OSM**, an [OpenStreetMap general basemap](https://leaflet-extras.github.io/leaflet-providers/preview/#filter=OpenStreetMap.Mapnik) , but it can be switch to **Topo**, an [ESRI topographical basemap](https://leaflet-extras.github.io/leaflet-providers/preview/#filter=Esri.WorldImagery).
+The current functions are:
 
-The count of selected dates and sites (Fig. \@ref(fig:panel-map1), <span style="color:darkgrey"><u>grey</u></span> box) is dynamically calculated below the [tpq/taq slider](#panel.map.tapq) and above the bottom table of the selected dates. This table (Fig. \@ref(fig:panel-map1), <span style="color:green"><u>green</u></span> box) is a reactive a datatable (see [DT package](https://cran.r-project.org/web/packages/DT/index.html)) listing all the dates within the map extent (ROI) and the optional selection menus (tpq/taq, material life duration, maximum SD, periods, selection shapes).
-  
-To calibrate one or various dates in the [**calib** panel](#panel.calib), a date has to be clicked in this panel
+* Fig. \@ref(fig:panel-map1), <span style="color:red"><u>red</u></span> box, top-left button ***group C14 on map***: allows to cluster dates by spatial proximities ([Marker Clusters](http://rstudio.github.io/leaflet/markers.html)) 
 
-<center>
+* Fig. \@ref(fig:panel-map1), <span style="color:pink"><u>pink</u></span> box, top-right layer button: allows to change the basemap. By default, the basemap is **OSM**, an [OpenStreetMap general basemap](https://leaflet-extras.github.io/leaflet-providers/preview/#filter=OpenStreetMap.Mapnik), but it can be switch to **Topo**, an [ESRI topographical basemap](https://leaflet-extras.github.io/leaflet-providers/preview/#filter=Esri.WorldImagery)
 
-![a click on a date to calibrate a selected group of dates](`r panel.map.select`){width=250px}
+* Fig. \@ref(fig:panel-map1), <span style="color:darkgrey"><u>grey</u></span> box, bottom inline text: reactive count of selected dates and select sites 
 
-</center>
-
-This date will be shown **bolded** on the [**calib** panel](#panel.calib) output figure
+* Fig. \@ref(fig:panel-map1), <span style="color:green"><u>green</u></span> box, bottom table: reactive datatable ([DT package](https://cran.r-project.org/web/packages/DT/index.html)) listing all the dates within the map extent (ROI) and the optional selection menus (tpq/taq, material life duration, maximum SD, periods, selection shapes)
 
 ### select by location {#panel.map.select.loc}
 
-By default only the data within the window extent (ROI) will be selected. But selection shapes can be drawn inside this ROI to have a spatial intersection 
+By default only the data within the window extent (ROI) will be selected. But selection shapes can be drawn inside this ROI to have a spatial intersection:
+  
+* Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box, top-left draw toolbar: selection shapes, ***polygons*** and ***rectanges***, can *freeze* the date selection inside a given ROI. They can be removed with the trash button. All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated  
 
 <center>
 
-![selection inside a shape, here a single polygon](`r panel.map.shape`){width=600px}
+![selection inside a shape, here a single polygon. Before shape selection: 190 sites and 895 dates. After shape selection: 13 sites and 68 dates](`r panel.map.shape`){width=700px}
 
 </center>
 
-Selection shapes can be ***polygons*** and ***rectanges***. These shapes *freeze* the date selection inside a given ROI. They can be removed with the trash button (Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box). All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated.
-
 #### retrieve coordinates from the map
 
-The default basemap of the app is OSM. It offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the NeoNet app map show the lat/long coordinates of the current point (under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database
+As said, the default basemap of the app is OSM. It offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the map show the lat/long coordinates of the current point (under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database
 
 <center>
 
-![get coordinates by clicking on the map](`r panel.map.coords`){width=350px}
+![get coordinates by clicking on the map](`r panel.map.coords`){width=250px}
 
 </center>
 
 ### select by chronology {#panel.map.select.chr}
 
-#### periods *filter*
+* Fig. \@ref(fig:panel-map1), <span style="color:brown"><u>brown</u></span> box, top-right checkboxes: allow to select dating by periods
 
-Top-right checkboxes (Fig. \@ref(fig:panel-map1), <span style="color:brown"><u>brown</u></span> box) allow to select datations by periods. A hyperlink on the title of the checkboxes open the [correspondance table](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/period_abrev.html) between abrevations and period full names. Bottom-left legend **periods** (Fig. \@ref(fig:panel-map1), <span style="color:orange"><u>orange</u></span> box) is a dynamic list of periods which exist in the selected periods (see **periods** checkboxes)
+* Fig. \@ref(fig:panel-map1), <span style="color:orange"><u>orange</u></span> box, bottom-left legend: reactive legend periods is a dynamic list of periods which exist in the selected periods
 
-#### tpq/taq *filter* {#panel.map.tapq}
-
-bottom-left slider (Fig. \@ref(fig:panel-map1), <span style="color:blue"><u>blue</u></span> box) allows to subset a range of accepted dates between a *tpq* and a *taq* (in cal BC) 
+* Fig. \@ref(fig:panel-map1), <span style="color:blue"><u>blue</u></span> box, bottom-left slider: allows to subset a range of accepted dates between a *tpq* and a *taq* (in cal BC)
 
 ### select by dates quality {#panel.map.select.quali}
 
-The bottom-right checkboxes and slider (Fig. \@ref(fig:panel-map1), <span style="color:purple">purple</span> box) form a group of menus for selection on the material life duration and max accepted SD:
+* Fig. \@ref(fig:panel-map1), <span style="color:purple">purple</span> box, bottom-right checkboxes and slider: a group of menus for selection on the material life duration and max accepted SD:
+  + relatively to the duration of their material (short to long-life material)
+  + below a maximum accepted threshold for the standard deviations (SD) for the dates
 
-* relatively to the duration of their material (short to long-life material). An hyperlink open the [correspondance table](https://htmlpreview.github.io/?https://github.com/zoometh/C14/blob/main/docs/material_life.html) between the classes of the material life duration (short, long, etc.) and their material (wood, shell, etc.) categories  
-
-* below a maximum accepted threshold for the standard deviations (SD) for the dates
 
 ## 2. **calib** panel {#panel.calib}
 ![](`r panel.calib.idx`){width=20%}
@@ -201,7 +203,7 @@ The only selection which can be done is on the top-center radio button  (Fig. \@
 
 * **by date**: each date is plot separately (by default)
 
-* **by site and layer**: dates from the same site, having the same archaeological unit (layer, structure, etc.), are summed. See the [PhaseCode](#mf.phasecode) field.
+* **by PhaseCode**: dates from the same site, having the same archaeological unit (layer, structure, etc.), are summed. See the [PhaseCode](#mf.phasecode) field.
 
 * **by site and period**: dates from the same site, having the same period are summed
 
@@ -237,7 +239,7 @@ The plot area (Fig. \@ref(fig:panel-calib), <span style="color:orange"><u>orange
 ## 3. **data** panel {#panel.data}
 ![](`r panel.data.idx`){width=20%}
 
-The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14data.tsv) file. The first rows are:
+The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14data.tsv) file (a dataframe with tab-separated values). The first rows are:
 
 ```{r panel-data, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the radiocarbon dataset"}
 c14data.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14data.tsv'
@@ -246,7 +248,7 @@ kable(head(C14data),"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. The database **mandatory fields** are:
+At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. The database **mandatory fields** are:
 
 * **SiteName**: the site name
 * **Longitude**: in decimal degrees (ex: `1.045`)
@@ -313,11 +315,11 @@ Every radiocarbon date should be referenced with a bibliographical reference wit
 
 ###### **bib** {#mf.bib}
 
-The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the year of the publcation, for example `Guilaine et al. 1993`, `Binder 2018` or `Manen et Sabatier 2013`
+The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the publication year, for example `Guilaine et al. 1993`, `Binder 2018` or `Manen et Sabatier 2013`
 
 ###### **bib_url** {#mf.bib_url}
 
-We favor the DOI as a unique bibliographical reference. For example: 
+Either a DOI (starting with "`10`") or a unique BibTeX key. We favor the DOI as a unique bibliographical reference. For example: 
 
 ```{r bib_url, echo=FALSE}
 df.bib <- data.frame(tpq = c("-6086","..."),
@@ -343,7 +345,7 @@ When the DOI is lacking, the bibliographical reference should be include into th
 }
 ```
 
-The key of this reference is added to the **bib_url** field. For example, the key value **Guilaine93** from the c14 spreadsheet will match this complete reference. 
+The key of this reference is added to the **bib_url** field. For example, the key value **Guilaine93** from the c14 spreadsheet will match this complete reference 
 
 ```{r bib_url2, echo=FALSE}
 df.bib <- data.frame(tpq = c("-3330","..."),
@@ -390,7 +392,7 @@ In the NeoNet app, this database is rendered with the ([DT package](https://cran
 ## 4. **biblio** panel {#panel.biblio}
 ![](`r panel.biblio.idx`){width=20%}
 
-Bibliographical references from the GitHub [c14refs.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14refs.tsv) file. The first rows are:
+Bibliographical references from the GitHub [c14refs.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14refs.tsv) file. If only exist a BibTeX key, and no DOI, this file results of the join between the *bib_url* field of the C14 spreadsheet and the *references.bib*. If the DOI exists, the full bibliographical reference is  file The first rows are:
 
 ```{r panel-biblio, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the radiocarbon bibliographical references"}
 c14refs.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14refs.tsv'
