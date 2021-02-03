@@ -26,6 +26,11 @@ Classical operators of time modeling are those coming from the temporal logic (L
 
 </center>
 
+<p align="center">
+  <img width="500" src="docs/imgs/events_duration.png">
+  <figcaption>The French Revolution times</figcaption>
+</p>
+
 ## Absolute *or* relative dating ?
 
 Whether a partition between absolute and relative dating can be done, different techniques form an in-between. **Age-depth models**, often used by paleo-environmentalists, and **seriation** are relative chronology fixed to an absolute reference timeline with a sample of known absolute chronological events. The **cross-dating** is the same but instead of absolute chronological events, the reference grid is a reference series (*master series*). Cross-dating can mix absolute and relative dating.
