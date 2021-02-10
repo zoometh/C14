@@ -58,14 +58,16 @@ app.neonet.db.c14 <- paste0(path.img, "app_neonet_db_c14.png")
 ```
 
 <p style="text-align: center;"> <font size="5">
-[![](`r panel.map`){width=50%}](https://neolithic.shinyapps.io/neonet/)<br>
-the [**NeoNet app**](https://neolithic.shinyapps.io/neonet/)</font>
+[![](`r panel.map`){width=50%}](https://neolithic.shinyapps.io/NeoNet2/)<br>
+the [**NeoNet app**](https://neolithic.shinyapps.io/NeoNet2/)</font>
 </p>  
+
+The NeoNet app is part of the [Time modeling project](https://github.com/zoometh/C14#time-modeling)
 
 
 # **Presentation**
 
-The **NeoNet app** allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
+The [NeoNet app](https://neolithic.shinyapps.io/neonet/) allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
 
 * a geographical region of interest (ROI) and a selection shape
 * a time span between a *tpq* and a *taq* in cal BC
