@@ -9,9 +9,10 @@ library(Bchron)
 ## - - - - - - - - - - - - - - - - - - - - - - - 
 ## Create Rshiny app data
 
-c14data.to.github <- T # create .tsv from .xlsx
-c14ref.to.github <- F
-join.c14data.and.c14ref <- F
+
+c14data.to.github <- F # from .xlsx, create c14data.tsv -> GitHub 
+c14ref.to.github <- F # 
+join.c14data.and.c14ref <- T
 
 gh.master <- 'https://raw.github.com/zoometh/C14/master/' # github 'C14' folder
 #gh.master <- paste0(getwd(),"/") # working folder
@@ -62,8 +63,9 @@ if(join.c14data.and.c14ref){
     df.tot[i,"tpq"] <- -(min(ages1$Date1$ageGrid)-1950)  
     df.tot[i,"taq"] <- -(max(ages1$Date1$ageGrid)-1950) 
   }
-  # save in the Shiny app folder
-  write.table(df.tot, paste0(out.folder,"df_tot.csv"), sep="\t", row.names=FALSE)
+  # save in the Shiny app folder (git folder)
+  getwd()
+  write.table(df.tot, paste0(getwd(),"/shinyapp/df_tot.csv"), sep="\t", row.names=FALSE)
 }
 if(c14data.to.github){
   # create .tsv from the .xlsx file to be
@@ -88,12 +90,12 @@ if(c14ref.to.github){
   # - - - - - - - - - - - -
   uniq.refs$long.ref <- uniq.refs$key.or.doi # by default
   for(i in 1:nrow(uniq.refs)){
-    # i <- 31
+    # i <- 70
     flag <- 0
     a.ref <- uniq.refs[i,"key.or.doi"]
-    print(a.ref)
+    print(paste(as.character(i), a.ref))
     # bibtex - - - - - - - - - - - - - - - - - -
-    if(grepl("^[[:upper:]]", a.ref)){
+    if(grepl("^[[:upper:]]", a.ref)){ch
       a.bibref <- capture.output(print(bib[c(a.ref)]))
       a.citation <- paste0(a.bibref, collapse = " ")
       uniq.refs[i, "long.ref"] <- a.citation

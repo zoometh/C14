@@ -6,16 +6,20 @@ library(purrr)
 library(dplyr)
 library(Bchron)
 
-c14data.to.github <- F
+## - - - - - - - - - - - - - - - - - - - - - - - 
+## Create Rshiny app data
+
+c14data.to.github <- T # create .tsv from .xlsx
 c14ref.to.github <- F
-join.c14data.and.c14ref <- T
+join.c14data.and.c14ref <- F
 
 gh.master <- 'https://raw.github.com/zoometh/C14/master/' # github 'C14' folder
 #gh.master <- paste0(getwd(),"/") # working folder
 out.folder <- "D:/Cultures_9/Neolithique/web/" # app folder
 ggschol.h <- "https://scholar.google.com/scholar"
 path.data <- "C:/Users/supernova/Dropbox/My PC (supernova-pc)/Desktop/NeoNet/"
-fich <- "14C_DATES_v3_France_8.xlsx"
+# fich <- "14C_DATES_v3_France_8.xlsx"
+fich <- "14C_DATES_v3_France_11.xlsx"
 df <- openxlsx::read.xlsx(paste0(path.data, fich), skipEmptyRows=TRUE)
 
 if(join.c14data.and.c14ref){
