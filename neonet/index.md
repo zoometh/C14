@@ -324,7 +324,7 @@ The PhaseCode field provide a more precise archaeological context than the site 
 </tbody>
 </table>
 
-This values of this field needs to be homogeneized (for example: `C.5` -> `C5`), at first for the same sites, then for the whole dataset 
+Values of this field need to be homogeneized (for example: `C.5` or `layer 5` -> `C5`) -- at first for the same sites, in order to group them -- then for the whole dataset. The `n/a` value (i.e., not available) is reserved to dates without intra-site contextual information
 
 ##### **LabCode** {#mf.labcode}
 

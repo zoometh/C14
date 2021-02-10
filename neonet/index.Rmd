@@ -291,7 +291,7 @@ kable(df.ex.phasecode,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-This values of this field needs to be homogeneized (for example: `C.5` -> `C5`), at first for the same sites, then for the whole dataset 
+Values of this field need to be homogeneized (for example: `C.5` or `layer 5` -> `C5`) -- at first for the same sites, in order to group them -- then for the whole dataset. The `n/a` value (i.e., not available) is reserved to dates without intra-site contextual information
 
 ##### **LabCode** {#mf.labcode}
 
@@ -374,6 +374,18 @@ c14mater <- read.csv(c14mater.url, sep = "\t")
 kable(head(c14mater),"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
+
+This thesaurus is used both by the NeoNet app and the EUROEVOL_R app. Specifically, the NeoNet uses these values:
+
+```{r material.life.neonet, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the material life duration equivalences"}
+c14mater.neonet <- data.frame(material.type=c("CE", "F", "H", "OR", "SE", "SH", "WC"),
+                                 description=c("Cerealia", "Fauna", "Human", "Organic",
+                                               "Seed", "??", "Wood charchoal"),
+                              stringsAsFactors = F)
+kable(c14mater.neonet,"html") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=12)
+```
+
 
 #### period.abrev {#bd.period}
 

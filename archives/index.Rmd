@@ -95,7 +95,7 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
-Beside [Bchron](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html), other R packages allows calibration and management of radiocarbon dates like  [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html) and  [OxcAAR](https://cran.r-project.org/web/packages/oxcAAR/index.html). The main dedicated apps for calibration are: [OxCal](https://c14.arch.ox.ac.uk/oxcal/),        [CalPal](http://www.calpal-online.de/) and [Calib](http://calib.org/calib/)
+Beside [Bchron](https://cran.r-project.org/web/packages/Bchron/vignettes/Bchron.html), other R packages allows calibration and management of radiocarbon dates like  [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html),  [OxcAAR](https://cran.r-project.org/web/packages/oxcAAR/index.html), [RChronoModel](https://cran.r-project.org/web/packages/RChronoModel/index.html), [stratigraphr](https://stratigraphr.joeroe.io/), [rbacon](https://cran.r-project.org/web/packages/rbacon/index.html), [ArchaeoPhases](https://cran.r-project.org/web/packages/ArchaeoPhases/index.html). The main dedicated apps for calibration are: [OxCal](https://c14.arch.ox.ac.uk/oxcal/), [CalPal](http://www.calpal-online.de/) and [Calib](http://calib.org/calib/), [BCal](https://bcal.shef.ac.uk/)
 
 [c14bazAAR](https://github.com/ropensci/c14bazAAR) is a polyvalent package, allowing numerous operations. Using this package with [Leaflet](https://rstudio.github.io/leaflet/) allow to create interactive map of radiocarbon dates coming from different databases. 
 

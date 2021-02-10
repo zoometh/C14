@@ -508,7 +508,7 @@ ui <- navbarPage(tit,
                                      label = "C14 grouped by site and/ or period",
                                      choices = c("by dates" = "C14ungroup",
                                                  # TODO
-                                                 "by site and layer" =  "C14groupsl",
+                                                 "by PhaseCode" =  "C14groupsl",
                                                  "by site and period" = "C14groupsp",
                                                  "by period" = "C14groupp",
                                                  "all C14" = "C14all"),
