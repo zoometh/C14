@@ -23,55 +23,12 @@ path.data <- "C:/Users/supernova/Dropbox/My PC (supernova-pc)/Desktop/NeoNet/"
 fich <- "14C_DATES_v3_France_11.xlsx"
 df <- openxlsx::read.xlsx(paste0(path.data, fich), skipEmptyRows=TRUE)
 
-if(join.c14data.and.c14ref){
-  # load .tsv from GitHub
-  c14data.url <- paste0(gh.master, 'neonet/c14data.tsv')
-  c14data <- read.csv(c14data.url, sep = "\t")
-  c14ref.url <- paste0(gh.master, 'neonet/c14refs.tsv')
-  c14ref <- read.csv(c14ref.url, sep = "\t")
-  # merge on key
-  df.tot <- merge(c14data, c14ref, by.x="bib_url", by.y="key.or.doi", all.x = T)
-  # renames before run app ()
-  colnames(df.tot)[which(names(df.tot) == "long.ref")] <- "bib"
-  colnames(df.tot)[which(names(df.tot) == "C14BP")] <- "C14Age"
-  # df.tot$bib_url[df.tot$bib_url == ''] <- "https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Engedal+radiocarbon&btnG="
-  # df.tot$bib[df.tot$bib == ''] <- "v. Google Scholar"
-  # calculate tpq/taq
-  df.tot$taq <- df.tot$tpq <- NA
-  for (i in 1:nrow(df.tot)){
-    # i <- 1
-    if(i %% 100 == 0) print(paste0(as.character(i),"/", as.character(nrow(df.tot))))
-    ## ref bib - - - - - - - - - - -
-    # non DOIs
-    if (!grepl("^10\\.", df.tot[i, "bib_url"])){
-      df.tot[i, "bib_url"] <- paste0(ggschol.h,
-                                     "?hl=en&as_sdt=0%2C5&q=",
-                                     df.tot[i, "SiteName"],
-                                     "+radiocarbon+",
-                                     df.tot[i, "LabCode"],
-                                     "&btnG= ")
-    }
-    # DOIs
-    if (grepl("^10\\.", df.tot[i, "bib_url"])){
-      df.tot[i, "bib_url"] <- paste0("https://doi.org/",df.tot[i, "bib_url"])
-    }
-    # calibration
-    ages1 = BchronCalibrate(ages=df.tot[i,"C14Age"],
-                            ageSds=df.tot[i,"C14SD"],
-                            calCurves='intcal13',
-                            ids='Date1')
-    df.tot[i,"tpq"] <- -(min(ages1$Date1$ageGrid)-1950)  
-    df.tot[i,"taq"] <- -(max(ages1$Date1$ageGrid)-1950) 
-  }
-  # save in the Shiny app folder (git folder)
-  getwd()
-  write.table(df.tot, paste0(getwd(),"/shinyapp/df_tot.csv"), sep="\t", row.names=FALSE)
-}
 if(c14data.to.github){
   # create .tsv from the .xlsx file to be
   # put file on GitHub
   write.table(df,"neonet/c14data.tsv", sep="\t", row.names=FALSE)
 }
+
 if(c14ref.to.github){
   # for a .xlsx file of 14C
   # recalcultate the "long.ref" value from BibTex entries (file 'references_france.bib')
@@ -128,5 +85,50 @@ if(c14ref.to.github){
   write.table(uniq.refs,"neonet/c14refs.tsv", sep="\t", row.names=FALSE)
   references.df <- read.csv("neonet/c14ref.tsv", sep = "\t")
   View(references.df)
+}
+
+if(join.c14data.and.c14ref){
+  # load .tsv from GitHub
+  c14data.url <- paste0(gh.master, 'neonet/c14data.tsv')
+  c14data <- read.csv(c14data.url, sep = "\t")
+  c14ref.url <- paste0(gh.master, 'neonet/c14refs.tsv')
+  c14ref <- read.csv(c14ref.url, sep = "\t")
+  # merge on key
+  df.tot <- merge(c14data, c14ref, by.x="bib_url", by.y="key.or.doi", all.x = T)
+  # renames before run app ()
+  colnames(df.tot)[which(names(df.tot) == "long.ref")] <- "bib"
+  colnames(df.tot)[which(names(df.tot) == "C14BP")] <- "C14Age"
+  # df.tot$bib_url[df.tot$bib_url == ''] <- "https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Engedal+radiocarbon&btnG="
+  # df.tot$bib[df.tot$bib == ''] <- "v. Google Scholar"
+  # calculate tpq/taq
+  df.tot$taq <- df.tot$tpq <- NA
+  for (i in 1:nrow(df.tot)){
+    # i <- 1
+    if(i %% 100 == 0) print(paste0(as.character(i),"/", as.character(nrow(df.tot))))
+    ## ref bib - - - - - - - - - - -
+    # non DOIs
+    # if (!grepl("^10\\.", df.tot[i, "bib_url"])){
+    #   df.tot[i, "bib_url"] <- paste0(ggschol.h,
+    #                                  "?hl=en&as_sdt=0%2C5&q=",
+    #                                  df.tot[i, "SiteName"],
+    #                                  "+radiocarbon+",
+    #                                  df.tot[i, "LabCode"],
+    #                                  "&btnG= ")
+    # }
+    # DOIs
+    if (grepl("^10\\.", df.tot[i, "bib_url"])){
+      df.tot[i, "bib_url"] <- paste0("https://doi.org/",df.tot[i, "bib_url"])
+    }
+    # calibration
+    ages1 = BchronCalibrate(ages=df.tot[i,"C14Age"],
+                            ageSds=df.tot[i,"C14SD"],
+                            calCurves='intcal13',
+                            ids='Date1')
+    df.tot[i,"tpq"] <- -(min(ages1$Date1$ageGrid)-1950)  
+    df.tot[i,"taq"] <- -(max(ages1$Date1$ageGrid)-1950) 
+  }
+  # save in the Shiny app folder (git folder)
+  getwd()
+  write.table(df.tot, paste0(getwd(),"/shinyapp/df_tot.csv"), sep="\t", row.names=FALSE)
 }
 

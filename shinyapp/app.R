@@ -74,8 +74,7 @@ lcul_col <- list(# colors
 ) # Rose /!\ nom variable != nom valeur
 # unique(df.tot$Period)
 lcul_col <- lapply(lcul_col,toupper)
-# restrict on recorded period
-lcul_col <- lcul_col[names(lcul_col) %in% unique(df.tot$Period)]
+
 
 ## graphical param
 gcalib.w <- 1500 # abs, px
@@ -90,9 +89,8 @@ gcalib.bin <- 100 # the chrono granul
 
 nsites.14C.cal <- 1000 # max of sites calibrated at the same time, panel calib
 
-# setwd("D:/Cultures_9/Neolithique/web")
-# c14bibtex.url <- '/references_france.bib'
-c14bibtex.url <- '../neonet/references_france.bib'
+c14bibtex.url <- 'references_france.bib'
+# c14bibtex.url <- '../neonet/references_france.bib'
 # c14bibtex.url <- 'shinyapp/references_france.bib'
 bib <- read.bib(c14bibtex.url)
 bib <- sort(bib) # sort
@@ -103,8 +101,8 @@ bibrefs.html <- markdown(bibrefs.md) # to HTML layout
 
 # material life duration, load df
 # mat.life.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14_material_life.tsv'
-mat.life.url <- '../neonet/c14_material_life.tsv'
-# mat.life.url <- 'c14_material_life.tsv'
+# mat.life.url <- '../neonet/c14_material_life.tsv'
+mat.life.url <- 'c14_material_life.tsv'
 # mat.life.url <- 'shinyapp/c14_material_life.tsv'
 # mat.life.url <- paste0(dirname(getwd()), '/neonet/c14_material_life.tsv')
 material.life.duration <- read.csv(mat.life.url, sep = "\t")
@@ -258,6 +256,8 @@ df.tot$idf <- seq(1,nrow(df.tot))
 # colors
 Periods <- as.factor(unique(df.tot$Period))
 myColors <- c()
+# restrict on recorded period
+lcul_col <- lcul_col[names(lcul_col) %in% unique(df.tot$Period)]
 for (i in names(lcul_col)){
   myColors <- c(myColors,as.character(lcul_col[i]))
 }
