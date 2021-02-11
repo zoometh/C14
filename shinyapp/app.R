@@ -24,6 +24,7 @@ library(leaflet.extras)
 library(bibtex)
 
 # setwd("D:/Cultures_9/Neolithique/web")
+# setwd("C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/shinyapp")
 source("functions.R")
 
 # data(intcal13)
@@ -71,7 +72,10 @@ lcul_col <- list(# colors
   # EIA = "#c4c4c4", # Gris
   NoPeriod ="#000000" # Noir
 ) # Rose /!\ nom variable != nom valeur
+# unique(df.tot$Period)
 lcul_col <- lapply(lcul_col,toupper)
+# restrict on recorded period
+lcul_col <- lcul_col[names(lcul_col) %in% unique(df.tot$Period)]
 
 ## graphical param
 gcalib.w <- 1500 # abs, px
@@ -87,7 +91,9 @@ gcalib.bin <- 100 # the chrono granul
 nsites.14C.cal <- 1000 # max of sites calibrated at the same time, panel calib
 
 # setwd("D:/Cultures_9/Neolithique/web")
-c14bibtex.url <- 'references_france.bib'
+# c14bibtex.url <- '/references_france.bib'
+c14bibtex.url <- '../neonet/references_france.bib'
+# c14bibtex.url <- 'shinyapp/references_france.bib'
 bib <- read.bib(c14bibtex.url)
 bib <- sort(bib) # sort
 bibrefs.md <- capture.output(print(bib)) # Markdown layout
@@ -97,8 +103,9 @@ bibrefs.html <- markdown(bibrefs.md) # to HTML layout
 
 # material life duration, load df
 # mat.life.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14_material_life.tsv'
-# mat.life.url <- '../neonet/c14_material_life.tsv'
-mat.life.url <- 'c14_material_life.tsv'
+mat.life.url <- '../neonet/c14_material_life.tsv'
+# mat.life.url <- 'c14_material_life.tsv'
+# mat.life.url <- 'shinyapp/c14_material_life.tsv'
 # mat.life.url <- paste0(dirname(getwd()), '/neonet/c14_material_life.tsv')
 material.life.duration <- read.csv(mat.life.url, sep = "\t")
 # material.life.duration <- as.data.frame(gsheet2tbl(paste0(xl.url,"#gid=1800523177"))) # 14C_1, the second one
@@ -204,11 +211,17 @@ df.tot$taq <- as.numeric(df.tot$taq)
 mat.type.life <- c("short life","long life","others")
 df.tot$mat.life <- ifelse(df.tot$Material %in%  short.life, "short life",
                           ifelse(df.tot$Material %in%  long.life,"long life","others"))
-refcols <- c("SiteName","Period", "PhaseCode", # "Culture",
+hotcols <- c("SiteName","Period", "PhaseCode", # "Culture",
              "Longitude","Latitude",
              "tpq","taq",
              "LabCode", "C14Age","C14SD","Material","mat.life",
-             "bib","bib_url","locationID", "secondLocationID")
+             "bib","bib_url")
+# refcols <- c("SiteName","Period", "PhaseCode", # "Culture",
+#              "Longitude","Latitude",
+#              "tpq","taq",
+#              "LabCode", "C14Age","C14SD","Material","mat.life",
+#              "bib","bib_url","locationID", "secondLocationID")
+refcols <- c(hotcols, c("locationID", "secondLocationID"))
 df.tot <- df.tot[ , c(refcols, setdiff(names(df.tot), refcols))]
 df.tot <- df.tot[ ,refcols] # exclude other columns
 # replace values
@@ -225,17 +238,20 @@ df.tot[df.tot==""]<-"unknown"
 #df.tot <- df.tot[!duplicated(df.tot[,c("SiteID","Period")]),] # supprime doublons, useful ?
 df.tot$lbl <- NA
 # labels
-for (i in seq(1,nrow(df.tot))){
+for (i in seq(1, nrow(df.tot))){
   #desc <- df.tot[i,"SiteID"]
+  # i <- 1
   desc <- paste(sep = "<br/>",
                 paste0("<b>",df.tot[i,"SiteName"],"</b> / ",df.tot[i,"Material"]," (",df.tot[i,"mat.life"],")"),
                 paste0("dating: ",df.tot[i,"C14Age"]," +/- ",df.tot[i,"C14SD"]," BP [",df.tot[i,"LabCode"],"]"),
                 paste0("tpq/taq: ",df.tot[i,"tpq"]," to ",df.tot[i,"taq"]," cal BC"),
-                paste0("period: ", df.tot[i,"Period"]," <b>|</b> PhaseCode: <i>",df.tot[i,"PhaseCode"],"</i>"),
-                # paste0("ref: ", df.tot[i,"bib"]," -- ",df.tot[i,"bib_url"]),
-                paste0("ref: ", "<a href = \"",df.tot[i,"bib_url"],"\">", df.tot[i,"bib"],"</a>")
-                # paste0("ref: ", "<a href = \"",df.tot[i,"bib_url"],"\ target=\"_blank\">",df.tot[i,"bib"],"</a>")
-  )
+                paste0("period: ", df.tot[i,"Period"]," <b>|</b> PhaseCode: <i>",df.tot[i,"PhaseCode"],"</i> <br/>"))
+  if(grepl("^http", df.tot[i,"bib_url"])){
+    # TODO: open in new window
+    desc <- paste0(desc, paste0("ref: ", "<a href = \"",df.tot[i,"bib_url"],"\">", df.tot[i,"bib"],"</a>"))
+    # desc <- paste0(desc, paste0("ref: ", "<a href = \"",df.tot[i,"bib_url"],"\ target=\"_blank\">",df.tot[i,"bib"],"</a>"))
+  } else {desc <- paste0(desc, "ref: ", df.tot[i,"bib"])}
+  # paste0("ref: ", df.tot[i,"bib"]," -- ",df.tot[i,"bib_url"]),
   df.tot[i,"lbl"]  <- desc
 }
 df.tot$idf <- seq(1,nrow(df.tot))
@@ -267,11 +283,17 @@ if(euroevol){
                               "(accessed the ",Sys.Date(),')'))
 }
 if(neonet){
-  tit <- HTML(paste0('<b>NeoNet</b> ',
+  tit <- HTML(paste0('NEONET ',
                      'Radiocarbon dating by Location, Chronology and Material Life Duration'))
-  data.credits <- HTML(paste0(' <b> DATA GATHERING: </b> ',
-                              '<a href=',shQuote(paste0("https://orcid.org/0000-0002-9315-3625")),"\ target=\"_blank\"",'> Niccolo Mazzucco </a> <nicco.mazzucco@gmail.com>, ',
-                              '<a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",'> Thomas Huet </a> <thomashuet7@gmail.com>' ))
+  data.credits <- HTML(paste0(' <b> Data gathering: </b>',
+                              '<ul>',
+                              '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-9315-3625")),"\ target=\"_blank\"",
+                              '> Niccolo Mazzucco </a>: nicco.mazzucco@gmail.com </li>',
+                              '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-2386-8473")),"\ target=\"_blank\"",
+                              '> Miriam Cubas Morera </a>: mcubas.morera@gmail.com, </li>',
+                              '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",
+                              '> Thomas Huet </a>: thomashuet7@gmail.com </li>',
+                              '</ul>'))
 }
 # # TODO: add contacts
 if(neonet){
@@ -284,8 +306,11 @@ if(euroevol){
   app.page <- HTML(paste0('<a href=',shQuote(paste0("https://zoometh.github.io/C14/euroevol/")),"\ target=\"_blank\"",'><b> EUROEVOL_R app </b>website</a>'))
   b64 <- base64enc::dataURI(file="euroevol_R.png", mime="image/png") # load image
 }
-app.credits <- HTML(paste0(' <b> RSHINY APP: </b> ',
-                           '<a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",'> Thomas Huet </a>'))
+app.credits <- HTML(paste0(' <b> Rshiny developments: </b> ',
+                           '<ul>',
+                           '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",
+                           '> Thomas Huet </a> </li>',
+                           '</ul>'))
 all.credits <- paste0(data.credits,"<br>",app.credits,"<br><br>","... visit the ", app.page)
 # # logo
 # if(neonet){
@@ -546,9 +571,9 @@ ui <- navbarPage(tit,
                           )
                  ),
                  tabPanel("infos",
-                 #          fluidPage(htmlOutput("webpage")
-                 #          )
-                 # )
+                          #          fluidPage(htmlOutput("webpage")
+                          #          )
+                          # )
                           fluidPage(
                             tags$head(
                               tags$style(HTML("
@@ -595,7 +620,7 @@ server <- function(input, output, session) {
   # the 'big' table
   output$hot <- renderDataTable({
     datatable(
-      df.tot,
+      df.tot[ , hotcols],
       rownames = FALSE,
       width = "100%",
       editable=FALSE,
@@ -672,11 +697,11 @@ server <- function(input, output, session) {
       # a shape has been traced
       # print(inside.geometry$LabCode.selected)
       # print(colnames(data.f))
-      print("SHAPE")
+      # print("SHAPE")
       data.f %>%
         dplyr::filter(
           LabCode %in% inside.geometry$LabCode.selected &
-          lat >= bounds$south &
+            lat >= bounds$south &
             lat <= bounds$north &
             long <= bounds$east & 
             long >= bounds$west &
@@ -783,13 +808,23 @@ server <- function(input, output, session) {
         addTiles(group = 'OSM') %>%
         # addWMSTiles(nhd_wms_url, layers = "0", group='Topo')
         addProviderTiles(providers$Esri.WorldImagery, group='Topo')
+      #   # QQQ
+      #   addLegend("bottomleft",
+      #             colors = as.vector(legende_ord$colors),
+      #             labels= as.vector(legende_ord$Period),
+      #             # pal = pal,
+      #             # values = ~Period,
+      #             title = "Periods",
+      #             opacity = 1)
+      # # QQQ
       # addProviderTiles(providers$OpenTopoMap, group='Topo') 
       proxy.sites %>% clearControls() %>% clearShapes() %>% clearMarkers()
+      # clustered - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if(input$hover == TRUE){
-        # clustered
         proxy.sites %>% removeMarkerFromCluster(layerId = ~LabCode,
                                                 clusterId  = "grouped")
-        proxy.sites <- proxy.sites %>% clearControls() %>% clearShapes() %>% clearMarkers() %>%
+        # proxy.sites <- proxy.sites %>% clearControls() %>% clearShapes() %>% clearMarkers() %>%
+        proxy.sites <- proxy.sites %>%
           addCircleMarkers(layerId = ~LabCode, # to get the info on df.tot
                            lng = ~Longitude,
                            lat = ~Latitude,
@@ -805,10 +840,10 @@ server <- function(input, output, session) {
                            clusterOptions = markerClusterOptions(showCoverageOnHover = T,
                                                                  zoomToBoundsOnClick = T),
                            options = pathOptions(pane = "sites_", markerOptions(riseOnHover = TRUE))) %>%
-                           # highlightOptions = highlightOptions(color = "mediumseagreen",
-                           #                                     opacity = 1.0,
-                           #                                     weight = 2,
-                           #                                     bringToFront = TRUE)) %>%
+          # highlightOptions = highlightOptions(color = "mediumseagreen",
+          #                                     opacity = 1.0,
+          #                                     weight = 2,
+          #                                     bringToFront = TRUE)) %>%
           addDrawToolbar(
             targetGroup='Selected',
             polylineOptions=FALSE,
@@ -828,8 +863,8 @@ server <- function(input, output, session) {
             editOptions = editToolbarOptions(edit = FALSE, 
                                              selectedPathOptions = selectedPathOptions()))
       }
+      # non clustered - - - - - - - - - - - - - - - - - - - - -  - - - - - - - -
       if(input$hover == FALSE){
-        # non clustered
         proxy.sites %>% removeMarkerFromCluster(layerId = df.tot$LabCode,
                                                 # proxy.sites %>% removeMarkerFromCluster(layerId = ~LabCode,
                                                 clusterId  = "grouped")
@@ -850,10 +885,10 @@ server <- function(input, output, session) {
                                            htmltools::HTML),
                            group = df.tot.sp$Period,
                            options = pathOptions(pane = "sites_")) %>%
-                           # highlightOptions = highlightOptions(color = "mediumseagreen",
-                           #                                     opacity = 1.0,
-                           #                                     weight = 2,
-                           #                                     bringToFront = TRUE)) %>%
+          # highlightOptions = highlightOptions(color = "mediumseagreen",
+          #                                     opacity = 1.0,
+          #                                     weight = 2,
+          #                                     bringToFront = TRUE)) %>%
           addDrawToolbar(
             targetGroup='Selected',
             polylineOptions=FALSE,
@@ -872,6 +907,7 @@ server <- function(input, output, session) {
             #                                                                   ,weight = 3)),
             editOptions = editToolbarOptions(edit = FALSE, selectedPathOptions = selectedPathOptions()))
       }
+      # for both, cluster or uncluster: legend & map
       proxy.sites %>%
         addLayersControl(
           baseGroups = c('OSM', 'Topo')) %>%

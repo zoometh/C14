@@ -93,7 +93,7 @@ The current functions are:
 
 By default only the data within the window extent (ROI) will be selected. But selection shapes can be drawn inside this ROI to have a spatial intersection:
   
-* Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box, top-left draw toolbar: selection shapes, ***polygons*** and ***rectanges***, can *freeze* the date selection inside a given ROI. They can be removed with the trash button. All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated  
+Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box, top-left draw toolbar: selection shapes, ***polygons*** and ***rectanges***, can *freeze* the date selection inside a given ROI. They can be removed with the trash button. All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated  
 
 <center>
 
@@ -101,7 +101,7 @@ By default only the data within the window extent (ROI) will be selected. But se
 
 </center>
 
-#### retrieve coordinates from the map
+#### retrieve coordinates from the map {#panel.map.select.loc.get}
 
 As said, the default basemap of the app is OSM. It offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the map show the lat/long coordinates of the current point (under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database
 
@@ -113,9 +113,7 @@ As said, the default basemap of the app is OSM. It offers a well documented base
 
 ### select by chronology {#panel.map.select.chr}
 
-* Fig. \@ref(fig:panel-map1), <span style="color:brown"><u>brown</u></span> box, top-right checkboxes: allow to select dating by periods
-
-* Fig. \@ref(fig:panel-map1), <span style="color:orange"><u>orange</u></span> box, bottom-left legend: reactive legend periods is a dynamic list of periods which exist in the selected periods
+* Fig. \@ref(fig:panel-map1), <span style="color:brown"><u>brown</u></span> box, top-right checkboxes: allow to select dating by periods. The <span style="color:orange"><u>orange</u></span> box, bottom-left legend, is reactive and update depending on selected periods
 
 * Fig. \@ref(fig:panel-map1), <span style="color:blue"><u>blue</u></span> box, bottom-left slider: allows to subset a range of accepted dates between a *tpq* and a *taq* (in cal BC)
 
@@ -184,87 +182,87 @@ The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/
 <tbody>
   <tr>
    <td style="text-align:left;"> France </td>
-   <td style="text-align:right;"> 43.38000 </td>
-   <td style="text-align:right;"> 5.160000 </td>
-   <td style="text-align:left;"> Font-des-Pigeons </td>
+   <td style="text-align:right;"> 44.74 </td>
+   <td style="text-align:right;"> 1.83 </td>
+   <td style="text-align:left;"> Roucadour </td>
+   <td style="text-align:left;"> LMEN </td>
+   <td style="text-align:left;"> n/a </td>
+   <td style="text-align:left;"> GSY-36A </td>
+   <td style="text-align:right;"> 5940 </td>
+   <td style="text-align:right;"> 140 </td>
+   <td style="text-align:left;"> CE </td>
+   <td style="text-align:left;"> Ammerman et Cavali-Sforza 1971 </td>
+   <td style="text-align:left;"> Ammerman71 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> France </td>
+   <td style="text-align:right;"> 43.29 </td>
+   <td style="text-align:right;"> 2.40 </td>
+   <td style="text-align:left;"> Gazel </td>
    <td style="text-align:left;"> LM </td>
-   <td style="text-align:left;"> US 18G3 </td>
-   <td style="text-align:left;"> LTL-15419A </td>
-   <td style="text-align:right;"> 7382 </td>
-   <td style="text-align:right;"> 50 </td>
-   <td style="text-align:left;"> CE </td>
-   <td style="text-align:left;"> Binder et al. 2017 </td>
-   <td style="text-align:left;"> 10.15184/aqy.2017.65 </td>
+   <td style="text-align:left;"> Porche F6 </td>
+   <td style="text-align:left;"> GrN-6704 </td>
+   <td style="text-align:right;"> 7880 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Barbazza et al. 1984 </td>
+   <td style="text-align:left;"> Barbaza84 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> France </td>
-   <td style="text-align:right;"> 43.38000 </td>
-   <td style="text-align:right;"> 5.160000 </td>
-   <td style="text-align:left;"> Font-des-Pigeons </td>
+   <td style="text-align:right;"> 44.52 </td>
+   <td style="text-align:right;"> 4.82 </td>
+   <td style="text-align:left;"> Espeluche-Lalo </td>
+   <td style="text-align:left;"> EN </td>
+   <td style="text-align:left;"> St. 76 </td>
+   <td style="text-align:left;"> AA-32638 </td>
+   <td style="text-align:right;"> 6560 </td>
+   <td style="text-align:right;"> 85 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> France </td>
+   <td style="text-align:right;"> 44.52 </td>
+   <td style="text-align:right;"> 4.82 </td>
+   <td style="text-align:left;"> Espeluche-Lalo </td>
    <td style="text-align:left;"> LM </td>
-   <td style="text-align:left;"> US 18G </td>
-   <td style="text-align:left;"> Beta-267434 </td>
-   <td style="text-align:right;"> 6250 </td>
-   <td style="text-align:right;"> 40 </td>
-   <td style="text-align:left;"> CE </td>
-   <td style="text-align:left;"> Binder et al. 2017 </td>
-   <td style="text-align:left;"> 10.15184/aqy.2017.65 </td>
+   <td style="text-align:left;"> St. 8 </td>
+   <td style="text-align:left;"> AA-32642 </td>
+   <td style="text-align:right;"> 7315 </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> France </td>
-   <td style="text-align:right;"> 43.81030 </td>
-   <td style="text-align:right;"> 4.336482 </td>
-   <td style="text-align:left;"> Mas de Vignoles X </td>
+   <td style="text-align:right;"> 44.52 </td>
+   <td style="text-align:right;"> 4.82 </td>
+   <td style="text-align:left;"> Espeluche-Lalo </td>
    <td style="text-align:left;"> EN </td>
-   <td style="text-align:left;"> US 1005 </td>
-   <td style="text-align:left;"> Erl-9579 </td>
-   <td style="text-align:right;"> 6048 </td>
-   <td style="text-align:right;"> 56 </td>
-   <td style="text-align:left;"> CE </td>
-   <td style="text-align:left;"> Mazzucco et al. 2020 </td>
-   <td style="text-align:left;"> 10.1371/journal.pone.0232455 </td>
+   <td style="text-align:left;"> St. 73 </td>
+   <td style="text-align:left;"> AA-32639 </td>
+   <td style="text-align:right;"> 6520 </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> France </td>
-   <td style="text-align:right;"> 43.80672 </td>
-   <td style="text-align:right;"> 7.497243 </td>
-   <td style="text-align:left;"> Pendimoun </td>
+   <td style="text-align:right;"> 44.52 </td>
+   <td style="text-align:right;"> 4.82 </td>
+   <td style="text-align:left;"> Espeluche-Lalo </td>
    <td style="text-align:left;"> EN </td>
-   <td style="text-align:left;"> US 41678 </td>
-   <td style="text-align:left;"> LTL-8006A </td>
-   <td style="text-align:right;"> 6649 </td>
-   <td style="text-align:right;"> 45 </td>
-   <td style="text-align:left;"> CE </td>
-   <td style="text-align:left;"> Binder et al. 2018 </td>
-   <td style="text-align:left;"> 10.4312/dp.44.4 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> France </td>
-   <td style="text-align:right;"> 43.80672 </td>
-   <td style="text-align:right;"> 7.497243 </td>
-   <td style="text-align:left;"> Pendimoun </td>
-   <td style="text-align:left;"> EN </td>
-   <td style="text-align:left;"> US 41678 </td>
-   <td style="text-align:left;"> LTL-8005A </td>
-   <td style="text-align:right;"> 6599 </td>
-   <td style="text-align:right;"> 45 </td>
-   <td style="text-align:left;"> CE </td>
-   <td style="text-align:left;"> Binder et al. 2018 </td>
-   <td style="text-align:left;"> 10.4312/dp.44.4 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> France </td>
-   <td style="text-align:right;"> 43.80672 </td>
-   <td style="text-align:right;"> 7.497243 </td>
-   <td style="text-align:left;"> Pendimoun </td>
-   <td style="text-align:left;"> EN </td>
-   <td style="text-align:left;"> US 28781-sup </td>
-   <td style="text-align:left;"> LTL-15940A </td>
-   <td style="text-align:right;"> 6399 </td>
-   <td style="text-align:right;"> 45 </td>
-   <td style="text-align:left;"> CE </td>
-   <td style="text-align:left;"> Binder et al. 2018 </td>
-   <td style="text-align:left;"> 10.4312/dp.44.4 </td>
+   <td style="text-align:left;"> St. 120 </td>
+   <td style="text-align:left;"> AA-32641 </td>
+   <td style="text-align:right;"> 6585 </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:left;"> WC </td>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
   </tr>
 </tbody>
 </table>
@@ -272,8 +270,9 @@ The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/
 At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. The database **mandatory fields** are:
 
 * **SiteName**: the site name
-* **Longitude**: in decimal degrees (ex: `1.045`)
-* **Latitude**: in decimal degrees (ex: `43.921`)
+* [coordinates (two fields)](#mf.coords)
+  + **Longitude**: in decimal degrees (ex: `1.045`)
+  + **Latitude**: in decimal degrees (ex: `43.921`)
 * **Period**: a value from the [**period.abrev**](#bd.period) spreadsheet
 * [**PhaseCode**](#mf.phasecode): a code for the dating stratigaphical unit and/or structure
 * **C14Age**: a numerical radiocarbon dating in BP
@@ -296,6 +295,10 @@ The others fields (if there's any) only concern the **[EUROEVOL_R app](https://z
 #### mandatory fields
 
 Here we explain more precisely some of the mandatory fields
+
+##### **Longitude** and **Latitude** {mf.coords}
+
+In in decimal degrees (ex: `1.045, 43.921`). Since the modeling is supra-regional, the app does not need to record dates with high accuracy geographical coordinates. At the minimum, this accuracy can be a location inside the departmental/county boundaries ([how to retrieve better coordinates from the map](#panel.map.select.loc.get))
 
 ##### **PhaseCode** {#mf.phasecode}
 
@@ -608,34 +611,34 @@ Bibliographical references from the GitHub [c14refs.tsv](https://github.com/zoom
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> Binder et al. 2017 </td>
-   <td style="text-align:left;"> 10.15184/aqy.2017.65 </td>
-   <td style="text-align:left;"> Binder, D., Battentier, J., Delhon, C., &amp; Sénépart, I. (2017). In pursuit of a missing transition: the Mesolithic and Neolithic radiocarbon chronology at La Font-aux-Pigeons rockshelter. Antiquity, 91(357), 605–620. doi:10.15184/aqy.2017.65 </td>
+   <td style="text-align:left;"> Ammerman et Cavali-Sforza 1971 </td>
+   <td style="text-align:left;"> Ammerman71 </td>
+   <td style="text-align:left;"> Ammerman AJ, Cavalli-Sforza LL (1971). “Measuring the rate of spread of early farming in Europe.” _Man_, 674-688. </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Mazzucco et al. 2020 </td>
-   <td style="text-align:left;"> 10.1371/journal.pone.0232455 </td>
-   <td style="text-align:left;"> Mazzucco, N., Ibáñez, J. J., Capuzzo, G., Gassin, B., Mineo, M., &amp; Gibaja, J. F. (2020). Migration, adaptation, innovation: The spread of Neolithic harvesting technologies in the Mediterranean. PLOS ONE, 15(4), e0232455. doi:10.1371/journal.pone.0232455 </td>
+   <td style="text-align:left;"> Barbazza et al. 1984 </td>
+   <td style="text-align:left;"> Barbaza84 </td>
+   <td style="text-align:left;"> Barbaza M, Guilaine J, Vaquer J (1984). “Fondements chrono-culturels du mésolithique en Languedoc occidental.” _Anthropologie (L')(Paris)_, *88*(3), 345-365. </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Binder et al. 2018 </td>
-   <td style="text-align:left;"> 10.4312/dp.44.4 </td>
-   <td style="text-align:left;"> Binder, D., Lanos, P., Angeli, L., Gomart, L., Guilaine, J., Manen, C., … Thiébault, S. (2017). Modelling the earliest north-western dispersal of Mediterranean Impressed Wares: new dates and Bayesian chronological model. Documenta Praehistorica, 44, 54–77. doi:10.4312/dp.44.4 </td>
+   <td style="text-align:left;"> Beeching et al. 2000 </td>
+   <td style="text-align:left;"> Beeching00 </td>
+   <td style="text-align:left;"> Beeching A, Brochier J, Cordier F (2000). “La transition Mésolithique-Néolithique entre la plaine du Rhône moyen et ses bordures préalpines.” _Les Paléoalpins e Hommage à Pierre Bintz, Géologie Alpine e Mémoire Hs_, *31*, 201-210. </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Binder et Sénépart 2010 </td>
-   <td style="text-align:left;"> Binder10 </td>
-   <td style="text-align:left;"> Binder D, Sénépart I (2010). “La séquence de l'Impresso-Cardial de l'abri Pendimoun et l'évolution des assemblages céramiques en Provence.” _Premières societés paysannes de Méditerrannée occidental. Structures des productions céramiques. Mémoire_, *51*, 149-167. </td>
+   <td style="text-align:left;"> Binder 1987 </td>
+   <td style="text-align:left;"> Binder87 </td>
+   <td style="text-align:left;"> Binder D (1987). _Le Néolithique ancien provençal. Typologie et technologie des outillages lithiques_, volume 24 number 1. Pers\'ee-Portail des revues scientifiques en SHS. </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Manen et al. 2018 </td>
-   <td style="text-align:left;"> 10.1017/RDC.2018.98 </td>
-   <td style="text-align:left;"> Manen, C., Perrin, T., Guilaine, J., Bouby, L., Bréhard, S., Briois, F., … Vigne, J.-D. (2018). The Neolithic Transition in the Western Mediterranean: a Complex and Non-Linear Diffusion Process—The Radiocarbon Record Revisited. Radiocarbon, 61(2), 531–571. doi:10.1017/rdc.2018.98 </td>
+   <td style="text-align:left;"> Binder 1995 </td>
+   <td style="text-align:left;"> Binder95 </td>
+   <td style="text-align:left;"> Binder D (1995). “Éléments pour la chronologie du Néolithique ancien à céramique imprimée dans le Midi.” _Chronologies néolithiques. De_, *6000*, 55-65. </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Martins et al. 2015 </td>
-   <td style="text-align:left;"> 10.1558/jmea.v28i1.27503 </td>
-   <td style="text-align:left;"> Martins, H., Oms, F. X., Pereira, L., Pike, A. W. G., Rowsell, K., &amp; Zilhão, J. (2015). Radiocarbon Dating the Beginning of the Neolithic in Iberia: New Results, New Problems. Journal of Mediterranean Archaeology, 28(1), 105–131. doi:10.1558/jmea.v28i1.27503 </td>
+   <td style="text-align:left;"> Binder et al. 2002 </td>
+   <td style="text-align:left;"> Binder02 </td>
+   <td style="text-align:left;"> Binder D, Jallot L, Thiebault S, others (2002). “Les occupations néolithiques des Petites Bâties (Lamotte-du-Rhône, Vaucluse).” _Archéologie du TGV Méditerranée: fiches de synthèse_, *1*, 103-122. </td>
   </tr>
 </tbody>
 </table>

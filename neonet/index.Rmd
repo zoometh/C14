@@ -160,7 +160,7 @@ The current functions are:
 
 By default only the data within the window extent (ROI) will be selected. But selection shapes can be drawn inside this ROI to have a spatial intersection:
   
-* Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box, top-left draw toolbar: selection shapes, ***polygons*** and ***rectanges***, can *freeze* the date selection inside a given ROI. They can be removed with the trash button. All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated  
+Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box, top-left draw toolbar: selection shapes, ***polygons*** and ***rectanges***, can *freeze* the date selection inside a given ROI. They can be removed with the trash button. All the dates inside the ROI and selected with the others filters will be visible on the map, but only those inside the selections shapes will be calibrated  
 
 <center>
 
@@ -168,7 +168,7 @@ By default only the data within the window extent (ROI) will be selected. But se
 
 </center>
 
-#### retrieve coordinates from the map
+#### retrieve coordinates from the map {#panel.map.select.loc.get}
 
 As said, the default basemap of the app is OSM. It offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the map show the lat/long coordinates of the current point (under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database
 
@@ -180,9 +180,7 @@ As said, the default basemap of the app is OSM. It offers a well documented base
 
 ### select by chronology {#panel.map.select.chr}
 
-* Fig. \@ref(fig:panel-map1), <span style="color:brown"><u>brown</u></span> box, top-right checkboxes: allow to select dating by periods
-
-* Fig. \@ref(fig:panel-map1), <span style="color:orange"><u>orange</u></span> box, bottom-left legend: reactive legend periods is a dynamic list of periods which exist in the selected periods
+* Fig. \@ref(fig:panel-map1), <span style="color:brown"><u>brown</u></span> box, top-right checkboxes: allow to select dating by periods. The <span style="color:orange"><u>orange</u></span> box, bottom-left legend, is reactive and update depending on selected periods
 
 * Fig. \@ref(fig:panel-map1), <span style="color:blue"><u>blue</u></span> box, bottom-left slider: allows to subset a range of accepted dates between a *tpq* and a *taq* (in cal BC)
 
@@ -253,8 +251,9 @@ kable(head(C14data),"html") %>%
 At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. The database **mandatory fields** are:
 
 * **SiteName**: the site name
-* **Longitude**: in decimal degrees (ex: `1.045`)
-* **Latitude**: in decimal degrees (ex: `43.921`)
+* [coordinates (two fields)](#mf.coords)
+  + **Longitude**: in decimal degrees (ex: `1.045`)
+  + **Latitude**: in decimal degrees (ex: `43.921`)
 * **Period**: a value from the [**period.abrev**](#bd.period) spreadsheet
 * [**PhaseCode**](#mf.phasecode): a code for the dating stratigaphical unit and/or structure
 * **C14Age**: a numerical radiocarbon dating in BP
@@ -277,6 +276,10 @@ The others fields (if there's any) only concern the **[EUROEVOL_R app](https://z
 #### mandatory fields
 
 Here we explain more precisely some of the mandatory fields
+
+##### **Longitude** and **Latitude** {mf.coords}
+
+In in decimal degrees (ex: `1.045, 43.921`). Since the modeling is supra-regional, the app does not need to record dates with high accuracy geographical coordinates. At the minimum, this accuracy can be a location inside the departmental/county boundaries ([how to retrieve better coordinates from the map](#panel.map.select.loc.get))
 
 ##### **PhaseCode** {#mf.phasecode}
 
