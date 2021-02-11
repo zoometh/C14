@@ -5,8 +5,8 @@ account: neolithic
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3195333
-bundleId: 4207756
+bundleId: 4209960
 url: https://neolithic.shinyapps.io/NeoNet2/
-when: 1612998049.81863
+when: 1613046254.3261
 asMultiple: FALSE
 asStatic: FALSE
