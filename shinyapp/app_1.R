@@ -129,6 +129,7 @@ if(neonet){
   #                    stringsAsFactors=FALSE) # 
   # df.tot$bib_url[df.tot$bib_url == ''] <- paste0(ggschol.h,"?hl=en&as_sdt=0%2C5&q=",df.tot$SiteName,"+radiocarbon&btnG=")
   # df.tot$bib[df.tot$bib == ''] <- "v. Google Scholar"
+  ## "df_tot.csv" file results from 'push_data.R"
   df.tot <- read.csv("df_tot.csv", sep = "\t")
   # df.tot <- readr::read_csv("df_tot.csv")
   df.tot$tpq <- as.numeric(df.tot$tpq)
@@ -810,10 +811,10 @@ server <- function(input, output, session) {
         # addWMSTiles(nhd_wms_url, layers = "0", group='Topo')
         addProviderTiles(providers$Esri.WorldImagery, group='Topo')
       proxy.sites %>% clearControls() %>% clearShapes() %>% clearMarkers()
-      # proxy.sites %>% clearShapes() %>% clearMarkers()
+      #proxy.sites <- proxy.sites %>% clearShapes() %>% clearMarkers()
       # clustered - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if(input$hover == TRUE){
-        proxy.sites %>% removeMarkerFromCluster(layerId = ~LabCode,
+        proxy.sites <- proxy.sites %>% removeMarkerFromCluster(layerId = ~LabCode,
                                                 clusterId  = "grouped")
         # proxy.sites <- proxy.sites %>% clearControls() %>% clearShapes() %>% clearMarkers() %>%
         proxy.sites <- proxy.sites %>%
@@ -857,10 +858,10 @@ server <- function(input, output, session) {
       }
       # non clustered - - - - - - - - - - - - - - - - - - - - -  - - - - - - - -
       if(input$hover == FALSE){
-        proxy.sites %>% removeMarkerFromCluster(layerId = df.tot$LabCode,
+        proxy.sites <- proxy.sites %>% removeMarkerFromCluster(layerId = df.tot$LabCode,
                                                 # proxy.sites %>% removeMarkerFromCluster(layerId = ~LabCode,
                                                 clusterId  = "grouped")
-        proxy.sites  %>%
+        proxy.sites <- proxy.sites  %>%
           addCircleMarkers(layerId = ~LabCode, # to get the info on df.tot
                            lng = ~Longitude,
                            lat = ~Latitude,
@@ -900,7 +901,7 @@ server <- function(input, output, session) {
             editOptions = editToolbarOptions(edit = FALSE, selectedPathOptions = selectedPathOptions()))
       }
       # for both, cluster or uncluster: legend & map
-      proxy.sites %>%
+      proxy.sites <- proxy.sites %>%
         addLayersControl(
           baseGroups = c('OSM', 'Topo')) %>%
         addLegend("bottomleft",
@@ -911,6 +912,7 @@ server <- function(input, output, session) {
                   title = "Periods",
                   opacity = 1) %>%
         addScaleBar("map", position = "bottomleft")
+      proxy.sites
     }
   })
   observeEvent(input$map_marker_click, { 
