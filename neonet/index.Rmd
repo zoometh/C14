@@ -195,7 +195,13 @@ As said, the default basemap of the app is OSM. It offers a well documented base
 ![](`r panel.calib.idx`){width=20%}
 
 
-The panel **calib** is used for dates on-the-fly calibration with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). Calibrations are done on the whole dataset of dates displayed in the [table of the **map panel**](#panel.map). If the dates are numerous (eg > 100) the computing time could take times.
+The panel **calib** is used for analysis. Calibration of selected dates are done on-the-fly with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). The selected and calibrated dates are those displayed in the [table of the **map panel**](#panel.map). If the dates are numerous (e.g., > 100) the computing time could take times.
+
+<center>
+
+![calibrate dates](img/calib_dates.gif)
+
+</center>
 
 ### c14 group by *filter* {#panel.calib.group}
 
@@ -244,11 +250,11 @@ The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/
 ```{r panel-data, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the radiocarbon dataset"}
 c14data.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14data.tsv'
 C14data <- read.csv(c14data.url, sep = "\t")
-kable(head(C14data),"html") %>%
+kable(head(C14data, 3),"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. The database **mandatory fields** are:
+At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. Currently, special characters (`é`, `à`, etc.) are not accepted. The database **mandatory fields** are:
 
 * **SiteName**: the site name
 * [coordinates (two fields)](#mf.coords)
@@ -264,7 +270,7 @@ At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in or
 * **taq**: the *terminus ante quem* of the radiocarbon dating in cal BC
 * [bibliographical references (two fields)](#mf.bib_all)
   + [**bib**](#mf.bib): a short plain text bibliographical reference
-  + [**bib_url**](#mf.bib_url): a DOI or a BibTex key bibliographical reference
+  + [**bib_url**](#mf.bib_url): a DOI or a BibTeX key bibliographical reference
 
 The **recommended** fields are:
 
@@ -277,7 +283,7 @@ The others fields (if there's any) only concern the **[EUROEVOL_R app](https://z
 
 Here we explain more precisely some of the mandatory fields
 
-##### **Longitude** and **Latitude** {mf.coords}
+##### **Longitude** and **Latitude** {#mf.coords}
 
 In in decimal degrees (ex: `1.045, 43.921`). Since the modeling is supra-regional, the app does not need to record dates with high accuracy geographical coordinates. At the minimum, this accuracy can be a location inside the departmental/county boundaries ([how to retrieve better coordinates from the map](#panel.map.select.loc.get))
 
@@ -300,7 +306,7 @@ Values of this field need to be homogeneized (for example: `C.5` or `layer 5` ->
 
 ##### **LabCode** {#mf.labcode}
 
-The conventional syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*number*', respecting the case letters (upper case and lower case) For example:
+LabCode (i.e., laboratory code) should be unique. Their conventional syntax is '*AbrevLab*-*number*', respecting the case letters (upper case and lower case). For example:
 
 ```{r LabCode, echo=FALSE}
 # knitr::include_url("../docs/material_life.html", height = "400px")
@@ -314,17 +320,19 @@ kable(df.ex.labcode,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
+See also the [list of laboratories](http://radiocarbon.webhost.uits.arizona.edu/node/11). Exceptionally, if a date has no LabCode -- e.g., the 'Sep-H3 mix' from Fontbregoua, 6082 +/- 35 BP -- the convention is to use the PhaseCode (e.g., 'Sep-H3 mix') with an underscore as a prefix (e.g., '_Sep-H3 mix') to get an unique key.
+
 ##### **bib** and **bib_url** {#mf.bib_all}
 
-Every radiocarbon date should be referenced with a bibliographical reference with a plain text in the [**bib**](#mf.bib) field and and a DOI or a BibTex key in the [**bib_url**](#mf.bib_url) field. We favor the earliest mention of the radiocarbon date
+Every radiocarbon date should be referenced with a bibliographical reference with a plain text in the [**bib**](#mf.bib) field and and a DOI or a BibTex key in the [**bib_url**](#mf.bib_url) field. We favor the earliest mention of the radiocarbon date. 
 
 ###### **bib** {#mf.bib}
 
-The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the publication year, for example `Guilaine et al. 1993`, `Binder 2018` or `Manen et Sabatier 2013`
+The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the publication year, for example `Guilaine et al. 1993`, `Binder 2018` or `Manen et Sabatier 2013`. The values of this field can be the same for two different publications (e.g. `Delibrias et al. 1982` refers to two different publications the same year) 
 
 ###### **bib_url** {#mf.bib_url}
 
-Either a DOI (starting with "`10`") or a unique BibTeX key. We favor the DOI as a unique bibliographical reference. For example: 
+Either a DOI (starting with "`10`") or a unique BibTeX key. We favor the DOI as a unique bibliographical reference. The values of this field should be unique for a single publication (e.g. the BibTeX keys `Delibrias82` and `Delibrias82a`). For example: 
 
 ```{r bib_url, echo=FALSE}
 df.bib <- data.frame(tpq = c("-6086","..."),
@@ -414,7 +422,7 @@ Bibliographical references from the GitHub [c14refs.tsv](https://github.com/zoom
 ```{r panel-biblio, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the radiocarbon bibliographical references"}
 c14refs.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14refs.tsv'
 c14refs <- read.csv(c14refs.url, sep = "\t")
-kable(head(c14refs),"html") %>%
+kable(head(c14refs, 3),"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 

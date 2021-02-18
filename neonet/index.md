@@ -128,7 +128,13 @@ As said, the default basemap of the app is OSM. It offers a well documented base
 ![](C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/docs/imgs/panel_calib_idx.png){width=20%}
 
 
-The panel **calib** is used for dates on-the-fly calibration with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). Calibrations are done on the whole dataset of dates displayed in the [table of the **map panel**](#panel.map). If the dates are numerous (eg > 100) the computing time could take times.
+The panel **calib** is used for analysis. Calibration of selected dates are done on-the-fly with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). The selected and calibrated dates are those displayed in the [table of the **map panel**](#panel.map). If the dates are numerous (e.g., > 100) the computing time could take times.
+
+<center>
+
+![calibrate dates](img/calib_dates.gif)
+
+</center>
 
 ### c14 group by *filter* {#panel.calib.group}
 
@@ -182,34 +188,6 @@ The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/
 <tbody>
   <tr>
    <td style="text-align:left;"> France </td>
-   <td style="text-align:right;"> 44.74 </td>
-   <td style="text-align:right;"> 1.83 </td>
-   <td style="text-align:left;"> Roucadour </td>
-   <td style="text-align:left;"> LMEN </td>
-   <td style="text-align:left;"> n/a </td>
-   <td style="text-align:left;"> GSY-36A </td>
-   <td style="text-align:right;"> 5940 </td>
-   <td style="text-align:right;"> 140 </td>
-   <td style="text-align:left;"> CE </td>
-   <td style="text-align:left;"> Ammerman et Cavali-Sforza 1971 </td>
-   <td style="text-align:left;"> Ammerman71 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> France </td>
-   <td style="text-align:right;"> 43.29 </td>
-   <td style="text-align:right;"> 2.40 </td>
-   <td style="text-align:left;"> Gazel </td>
-   <td style="text-align:left;"> LM </td>
-   <td style="text-align:left;"> Porche F6 </td>
-   <td style="text-align:left;"> GrN-6704 </td>
-   <td style="text-align:right;"> 7880 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:left;"> WC </td>
-   <td style="text-align:left;"> Barbazza et al. 1984 </td>
-   <td style="text-align:left;"> Barbaza84 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> France </td>
    <td style="text-align:right;"> 44.52 </td>
    <td style="text-align:right;"> 4.82 </td>
    <td style="text-align:left;"> Espeluche-Lalo </td>
@@ -218,20 +196,6 @@ The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/
    <td style="text-align:left;"> AA-32638 </td>
    <td style="text-align:right;"> 6560 </td>
    <td style="text-align:right;"> 85 </td>
-   <td style="text-align:left;"> WC </td>
-   <td style="text-align:left;"> Beeching et al. 2000 </td>
-   <td style="text-align:left;"> Beeching00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> France </td>
-   <td style="text-align:right;"> 44.52 </td>
-   <td style="text-align:right;"> 4.82 </td>
-   <td style="text-align:left;"> Espeluche-Lalo </td>
-   <td style="text-align:left;"> LM </td>
-   <td style="text-align:left;"> St. 8 </td>
-   <td style="text-align:left;"> AA-32642 </td>
-   <td style="text-align:right;"> 7315 </td>
-   <td style="text-align:right;"> 65 </td>
    <td style="text-align:left;"> WC </td>
    <td style="text-align:left;"> Beeching et al. 2000 </td>
    <td style="text-align:left;"> Beeching00 </td>
@@ -267,7 +231,7 @@ The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/
 </tbody>
 </table>
 
-At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. The database **mandatory fields** are:
+At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. Currently, special characters (`é`, `à`, etc.) are not accepted. The database **mandatory fields** are:
 
 * **SiteName**: the site name
 * [coordinates (two fields)](#mf.coords)
@@ -283,7 +247,7 @@ At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in or
 * **taq**: the *terminus ante quem* of the radiocarbon dating in cal BC
 * [bibliographical references (two fields)](#mf.bib_all)
   + [**bib**](#mf.bib): a short plain text bibliographical reference
-  + [**bib_url**](#mf.bib_url): a DOI or a BibTex key bibliographical reference
+  + [**bib_url**](#mf.bib_url): a DOI or a BibTeX key bibliographical reference
 
 The **recommended** fields are:
 
@@ -296,7 +260,7 @@ The others fields (if there's any) only concern the **[EUROEVOL_R app](https://z
 
 Here we explain more precisely some of the mandatory fields
 
-##### **Longitude** and **Latitude** {mf.coords}
+##### **Longitude** and **Latitude** {#mf.coords}
 
 In in decimal degrees (ex: `1.045, 43.921`). Since the modeling is supra-regional, the app does not need to record dates with high accuracy geographical coordinates. At the minimum, this accuracy can be a location inside the departmental/county boundaries ([how to retrieve better coordinates from the map](#panel.map.select.loc.get))
 
@@ -333,7 +297,7 @@ Values of this field need to be homogeneized (for example: `C.5` or `layer 5` ->
 
 ##### **LabCode** {#mf.labcode}
 
-The conventional syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*number*', respecting the case letters (upper case and lower case) For example:
+LabCode (i.e., laboratory code) should be unique. Their conventional syntax is '*AbrevLab*-*number*', respecting the case letters (upper case and lower case). For example:
 
 <table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
@@ -381,17 +345,19 @@ The conventional syntax for a laboratory code (**LabCode**) is '*AbrevLab*-*numb
 </tbody>
 </table>
 
+See also the [list of laboratories](http://radiocarbon.webhost.uits.arizona.edu/node/11). Exceptionally, if a date has no LabCode -- e.g., the 'Sep-H3 mix' from Fontbregoua, 6082 +/- 35 BP -- the convention is to use the PhaseCode (e.g., 'Sep-H3 mix') with an underscore as a prefix (e.g., '_Sep-H3 mix') to get an unique key.
+
 ##### **bib** and **bib_url** {#mf.bib_all}
 
-Every radiocarbon date should be referenced with a bibliographical reference with a plain text in the [**bib**](#mf.bib) field and and a DOI or a BibTex key in the [**bib_url**](#mf.bib_url) field. We favor the earliest mention of the radiocarbon date
+Every radiocarbon date should be referenced with a bibliographical reference with a plain text in the [**bib**](#mf.bib) field and and a DOI or a BibTex key in the [**bib_url**](#mf.bib_url) field. We favor the earliest mention of the radiocarbon date. 
 
 ###### **bib** {#mf.bib}
 
-The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the publication year, for example `Guilaine et al. 1993`, `Binder 2018` or `Manen et Sabatier 2013`
+The plain text that will be plot for each radiocarbon date under the bibliographical reference section. Basically the name of the author(s) and the publication year, for example `Guilaine et al. 1993`, `Binder 2018` or `Manen et Sabatier 2013`. The values of this field can be the same for two different publications (e.g. `Delibrias et al. 1982` refers to two different publications the same year) 
 
 ###### **bib_url** {#mf.bib_url}
 
-Either a DOI (starting with "`10`") or a unique BibTeX key. We favor the DOI as a unique bibliographical reference. For example: 
+Either a DOI (starting with "`10`") or a unique BibTeX key. We favor the DOI as a unique bibliographical reference. The values of this field should be unique for a single publication (e.g. the BibTeX keys `Delibrias82` and `Delibrias82a`). For example: 
 
 <table class="table" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
@@ -611,29 +577,14 @@ Bibliographical references from the GitHub [c14refs.tsv](https://github.com/zoom
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> Ammerman et Cavali-Sforza 1971 </td>
-   <td style="text-align:left;"> Ammerman71 </td>
-   <td style="text-align:left;"> Ammerman AJ, Cavalli-Sforza LL (1971). “Measuring the rate of spread of early farming in Europe.” _Man_, 674-688. </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Barbazza et al. 1984 </td>
-   <td style="text-align:left;"> Barbaza84 </td>
-   <td style="text-align:left;"> Barbaza M, Guilaine J, Vaquer J (1984). “Fondements chrono-culturels du mésolithique en Languedoc occidental.” _Anthropologie (L')(Paris)_, *88*(3), 345-365. </td>
-  </tr>
-  <tr>
    <td style="text-align:left;"> Beeching et al. 2000 </td>
    <td style="text-align:left;"> Beeching00 </td>
    <td style="text-align:left;"> Beeching A, Brochier J, Cordier F (2000). “La transition Mésolithique-Néolithique entre la plaine du Rhône moyen et ses bordures préalpines.” _Les Paléoalpins e Hommage à Pierre Bintz, Géologie Alpine e Mémoire Hs_, *31*, 201-210. </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> Binder 1987 </td>
-   <td style="text-align:left;"> Binder87 </td>
-   <td style="text-align:left;"> Binder D (1987). _Le Néolithique ancien provençal. Typologie et technologie des outillages lithiques_, volume 24 number 1. Pers\'ee-Portail des revues scientifiques en SHS. </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Binder 1995 </td>
-   <td style="text-align:left;"> Binder95 </td>
-   <td style="text-align:left;"> Binder D (1995). “Éléments pour la chronologie du Néolithique ancien à céramique imprimée dans le Midi.” _Chronologies néolithiques. De_, *6000*, 55-65. </td>
+   <td style="text-align:left;"> Garcia-Puchol et Salazar-Garcia 2017 </td>
+   <td style="text-align:left;"> 10.1007/978-3-319-52939-4 </td>
+   <td style="text-align:left;"> García-Puchol, O., &amp; Salazar-García, D. C. (Eds.). (2017). Times of Neolithic Transition along the Western Mediterranean. Fundamental Issues in Archaeology. doi:10.1007/978-3-319-52939-4 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Binder et al. 2002 </td>
