@@ -24,7 +24,7 @@ library(leaflet.extras)
 library(bibtex)
 
 # setwd("D:/Cultures_9/Neolithique/web")
-# setwd("C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/shinyapp")
+# setwd("C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/shinyapp") # read from local
 source("functions.R")
 
 # data(intcal13)
@@ -248,7 +248,9 @@ for (i in seq(1, nrow(df.tot))){
                 paste0("period: ", df.tot[i,"Period"]," <b>|</b> PhaseCode: <i>",df.tot[i,"PhaseCode"],"</i> <br/>"))
   if(grepl("^http", df.tot[i,"bib_url"])){
     # TODO: open in new window
-    desc <- paste0(desc, paste0("ref: ", "<a href = \"",df.tot[i,"bib_url"],"\">", df.tot[i,"bib"],"</a>"))
+    # desc <- paste0(desc, paste0("ref: ", "<a href = \"",df.tot[i,"bib_url"],"\">", df.tot[i,"bib"],"</a>"))
+    desc <- paste0(desc, 'ref: <a href=',shQuote(paste0(df.tot[i,'bib_url'])),"\ target=\"_blank\"",
+                                ">", df.tot[i,'bib'], "</a>")
     # desc <- paste0(desc, paste0("ref: ", "<a href = \"",df.tot[i,"bib_url"],"\ target=\"_blank\">",df.tot[i,"bib"],"</a>"))
   } else {desc <- paste0(desc, "ref: ", df.tot[i,"bib"])}
   # paste0("ref: ", df.tot[i,"bib"]," -- ",df.tot[i,"bib_url"]),
@@ -293,6 +295,8 @@ if(neonet){
                               '> Niccolo Mazzucco </a>: nicco.mazzucco@gmail.com </li>',
                               '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-2386-8473")),"\ target=\"_blank\"",
                               '> Miriam Cubas Morera </a>: mcubas.morera@gmail.com, </li>',
+                              '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-0830-3570")),"\ target=\"_blank\"",
+                              '> Juan Gibaja </a>: jfgibaja@gmail.com, </li>',
                               '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",
                               '> Thomas Huet </a>: thomashuet7@gmail.com </li>',
                               '</ul>'))
@@ -517,7 +521,6 @@ ui <- navbarPage(tit,
                             fluidRow(
                               # KKK
                               htmlOutput("nb.dat"),
-                              # helpText("Dataset within the region of interest (ROI) and the selected chronology:"),
                               column(12,
                                      div(DTOutput("tbl"), style = "font-size:70%"))
                             )
@@ -743,10 +746,13 @@ server <- function(input, output, session) {
                                   df.tot$Latitude, df.tot$Longitude,
                                   df.tot$tpq, df.tot$taq, df.tot$C14SD,
                                   bounds)
+      # ndat <- nrow(filteredData()@data)
       ndat <- nrow(sel.data)
+      # View(sel.data)
       if(ndat <= nsites.14C.cal){
         ndat <- paste0("<font color= green >",as.character(ndat),"</font>")
       }
+      # nsite <- length(unique(filteredData()@data$SiteName))
       nsite <- length(unique(sel.data$SiteName))
       as.character(c(ndat,nsite))
     }
@@ -797,20 +803,36 @@ server <- function(input, output, session) {
   })
   observe({
     # print(input$sds)
+    legende <- unique(filteredData()@data[c("Period", "colors")])
+    legende_ord <- legende[match(names(lcul_col), legende$Period),] # réordonne sur liste Didier
+    legende_ord <- legende_ord[complete.cases(legende_ord),]
+    # print(legende_ord)
     if (nrow(filteredData()) > 0) {
-      legende <- unique(filteredData()@data[c("Period", "colors")])
-      legende_ord <- legende[match(names(lcul_col), legende$Period),] # réordonne sur liste Didier
-      legende_ord <- legende_ord[complete.cases(legende_ord),]
+      # legende <- unique(filteredData()@data[c("Period", "colors")])
+      # legende_ord <- legende[match(names(lcul_col), legende$Period),] # réordonne sur liste Didier
+      # legende_ord <- legende_ord[complete.cases(legende_ord),]
+      # print(legende_ord)
       df_colors <-  data.frame(color = filteredData()@data$colors,
                                material = filteredData()@data$Material,
                                stringsAsFactors = FALSE)
       nhd_wms_url <- "https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WmsServer"
+      # to get the info on df.tot -> filteredData()
       proxy.sites <- leafletProxy("map", data = filteredData()) %>%
         # setView(lng = -111.846061, lat = 36.115847, zoom = 12) %>%
         addTiles(group = 'OSM') %>%
         # addWMSTiles(nhd_wms_url, layers = "0", group='Topo')
         addProviderTiles(providers$Esri.WorldImagery, group='Topo')
-      proxy.sites %>% clearControls() %>% clearShapes() %>% clearMarkers()
+      proxy.sites %>% clearControls() %>% clearShapes() %>% clearMarkers() %>%
+        addLayersControl(
+          baseGroups = c('OSM', 'Topo')) %>%
+        addLegend("bottomleft",
+                  colors = as.vector(legende_ord$colors),
+                  labels= as.vector(legende_ord$Period),
+                  # pal = pal,
+                  # values = ~Period,
+                  title = "Periods",
+                  opacity = 1) %>%
+        addScaleBar("map", position = "bottomleft")
       #proxy.sites <- proxy.sites %>% clearShapes() %>% clearMarkers()
       # clustered - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       if(input$hover == TRUE){
@@ -818,7 +840,7 @@ server <- function(input, output, session) {
                                                 clusterId  = "grouped")
         # proxy.sites <- proxy.sites %>% clearControls() %>% clearShapes() %>% clearMarkers() %>%
         proxy.sites <- proxy.sites %>%
-          addCircleMarkers(layerId = ~LabCode, # to get the info on df.tot
+          addCircleMarkers(layerId = ~LabCode, 
                            lng = ~Longitude,
                            lat = ~Latitude,
                            weight = 1,
@@ -901,18 +923,18 @@ server <- function(input, output, session) {
             editOptions = editToolbarOptions(edit = FALSE, selectedPathOptions = selectedPathOptions()))
       }
       # for both, cluster or uncluster: legend & map
-      proxy.sites <- proxy.sites %>%
-        addLayersControl(
-          baseGroups = c('OSM', 'Topo')) %>%
-        addLegend("bottomleft",
-                  colors = as.vector(legende_ord$colors),
-                  labels= as.vector(legende_ord$Period),
-                  # pal = pal,
-                  # values = ~Period,
-                  title = "Periods",
-                  opacity = 1) %>%
-        addScaleBar("map", position = "bottomleft")
-      proxy.sites
+      # proxy.sites <- proxy.sites %>%
+      #   addLayersControl(
+      #     baseGroups = c('OSM', 'Topo')) %>%
+      #   addLegend("bottomleft",
+      #             colors = as.vector(legende_ord$colors),
+      #             labels= as.vector(legende_ord$Period),
+      #             # pal = pal,
+      #             # values = ~Period,
+      #             title = "Periods",
+      #             opacity = 1) %>%
+      #   addScaleBar("map", position = "bottomleft")
+      # proxy.sites
     }
   })
   observeEvent(input$map_marker_click, { 
