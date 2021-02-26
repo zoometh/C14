@@ -1,8 +1,8 @@
 ---
 title: | 
-  | **NeoNet app** 
-  | mapping radiocarbon dating online
-author: "Thomas Huet, Niccolo Mazzucco"
+  | **NeoNet app** and **dataset** <br>
+  <span style='font-size: 24px'>Mapping radiocarbon dates from Late Mesolithic/Early Neolithic transition in the Mediterranean</style>
+author: "<span style='font-size: 15px'>Thomas Huet, Niccolo Mazzucco</style>"
 # date: "11/12/2020"
 header-includes:
   - \usepackage{float}
@@ -18,6 +18,12 @@ output:
       collapsed: false
       smooth_scroll: false
 ---
+
+<style>
+.html-widget {
+    margin: auto;
+}
+</style>
 
 ```{r setup, include=FALSE}
 # knitr::opts_chunk$set(echo = FALSE, fig.width = 19, fig.height = 14)
@@ -44,6 +50,9 @@ panel.calib.example <-  paste0(path.img, "neonet_calib_example.png")
 panel.infos.idx <- paste0(path.img, "panel_infos_idx.png")
 panel.biblio.idx <- paste0(path.img, "panel_biblio_idx.png")
 app.neonet.db.c14 <- paste0(path.img, "app_neonet_db_c14.png")
+
+data.c14 <- read.csv("c14data.tsv", sep = "\t")
+tot.nb <- nrow(data.c14)
 # panel.map.coords <- image_read("../docs/imgs/panel_map_coords.png")
 # panel.map.select <- image_read("../docs/imgs/panel_map_select.png")
 # panel.map.shape <- image_read("../docs/imgs/panel_map_shape.png")
@@ -57,57 +66,67 @@ app.neonet.db.c14 <- paste0(path.img, "app_neonet_db_c14.png")
 # ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
 ```
 
-<p style="text-align: center;"> <font size="5">
-[![](`r panel.map`){width=50%}](https://neolithic.shinyapps.io/NeoNet2/)<br>
-the [**NeoNet app**](https://neolithic.shinyapps.io/NeoNet2/)</font>
-</p>  
 
-The NeoNet app is part of the [Time modeling project](https://github.com/zoometh/C14#time-modeling)
+```{r preview, echo=F, fig.align='center', fig.cap="Preview of the current [NeoNet dataset](#bd) (work in progress) using RShiny and Leaflet in R"}
+library(leaflet)
+library(shiny)
+leaflet(data = data.c14, width = "60%", height = "400px") %>%
+  # setView(lng = -111.846061, lat = 36.115847, zoom = 12) %>%
+  addTiles(group = 'OSM') %>%
+  addCircleMarkers(layerId = ~LabCode, 
+                   lng = ~Longitude,
+                   lat = ~Latitude,
+                   weight = 1,
+                   radius = 3,
+                   popup = ~SiteName,
+                   #fillColor = df_colors$color,
+                   #color = "black",
+                   opacity = 0.7,
+                   fillOpacity = 0.7)
+```
+
+
+<!-- The NeoNet app is part of the [Time modeling project](https://github.com/zoometh/C14#time-modeling) -->
 
 
 # **Presentation**
 
-The [NeoNet app](https://neolithic.shinyapps.io/neonet/) allows the selection of radiocarbon dating by location, chronology and material life duration by subsetting a radiocarbon dataset according to: 
+The [**NeoNet app**](https://neolithic.shinyapps.io/NeoNet2/) aims to contribute to the study the pioneering front of the farming live-style (ie Neolithic) by focusing our study on the mobile border between the Last Hunter-Gathers economy and the Early Neolithic (ca. 7000 BC to 4500 BC) in the Central and Western Mediterranean. The interactive web app facilitates the selection of absolute dates (c14 dates) by providing selection tools for:
 
-* a geographical region of interest (ROI) and a selection shape
-* a time span between a *tpq* and a *taq* in cal BC
-* some periods
-* some type of material life duration (short like, long life or others)
-* a maximum accepted standard deviation threshold (SD)
+* spatial
+  + geographical region of interest (ROI)
+  + custom selection shape inside the ROI
+  
+* chronology 
+  + date time span between a *tpq* and a *taq* in cal BC
+  + main periods (Middle Mesolithic, Late Mesolithic, Early Neolithic, ...)
+  
+* date accuracy
+  + some type of material life duration (short like, long life or others)
+  + threshold of the maximum accepted standard deviation (SD)
 
-The chronological span covers the Late Mesolithic and the Early Neolithic. The region of interest is the Central and Western Mediterranean and more precisely the Mediterranean watersheds of this area
+ <!-- and more precisely the Mediterranean watersheds of this area -->
 
-<p style="text-align: center;">
-![](`r ws.roi`){width=35%}
-</p>
+<!-- <p style="text-align: center;"> -->
+<!-- ![](`r ws.roi`){width=35%} -->
+<!-- </p> -->
 
-We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet dataset**](#bd) and our [**Objectives**](#particip)
+The app has been developed in the frame of the [NeoNet work group](https://redneonet.com). We will see [how it works](#app), what is the format [dataset](#bd) and what are our [objectives](#particip)
 
 # **NeoNet app** {#app}
 
 The app is a [RShiny](https://shiny.rstudio.com/) hosted on the [**shinyapps.io**](https://www.shinyapps.io/) server. The app is divided into five (5) panels:
 
-1. [**map** panel](#panel.map): ROI with selection menus
+1. [**map** panel](#panel.map): spatial filtering with selection menus on dates
 2. [**calib** panel](#panel.calib): calibration of the selected dates
 3. [**data** panel](#panel.data): the whole dataset
 4. [**biblio** panel](#panel.biblio): bibliographical references
 5. [**infos** panel](#panel.infos): credits and link to the webpage handbook of the app
 
-To calibrate one or various dates in the [**calib** panel](#panel.calib), a date has to be clicked in the [**map** panel](#panel.map).
-
-<center>
-
-![click on a date to calibrate a selected group of dates](`r panel.map.select`){width=250px}
-
-</center>
-
-This date will be shown **bolded** on the [**calib** panel](#panel.calib) output figure
-
 ## 1. **map** panel {#panel.map}
 ![](`r panel.map.idx`){width=20%}
-  
  
-The panel **map** is a geographical window provided by the [Leaflet](https://rstudio.github.io/leaflet/) package. This panel is used for selection of radiocarbon dates [by location](#panel.map.select.loc), [by chronology](#panel.map.select.chr), [by quality of dates](#panel.map.select.quali).  
+The panel **map** is a geographical window provided by the [Leaflet](https://rstudio.github.io/leaflet/) package. This panel is used for selection of radiocarbon dates [by location](#panel.map.select.loc), [by chronology](#panel.map.select.chr), [by quality of dates](#panel.map.select.quali). Once selected, dates can be [calibrated](#panel.map.calib)
 
 
 ```{r panel-map1,echo=FALSE,message=FALSE,fig.align="center", fig.fullwidth=TRUE, fig.cap="The different menus of the map panel"}
@@ -190,18 +209,30 @@ As said, the default basemap of the app is OSM. It offers a well documented base
   + relatively to the duration of their material (short to long-life material)
   + below a maximum accepted threshold for the standard deviations (SD) for the dates
 
+### calibrate one or various dates {#panel.map.calib}
+
+The dates displayed in the [table of the **map panel**](#panel.map) will be calibrate when one of them has been clicked.
+
+<center>
+
+![click on a date to calibrate a selected group of dates](`r panel.map.select`){width=250px}
+
+</center>
+
 
 ## 2. **calib** panel {#panel.calib}
 ![](`r panel.calib.idx`){width=20%}
 
 
-The panel **calib** is used for analysis. Calibration of selected dates are done on-the-fly with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). The selected and calibrated dates are those displayed in the [table of the **map panel**](#panel.map). If the dates are numerous (e.g., > 100) the computing time could take times.
+The panel **calib** is used for analysis. Calibration of selected dates are done on-the-fly with the R packages [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html) and [rcarbon](https://cran.r-project.org/web/packages/rcarbon/index.html). If the dates are numerous (e.g., > 100) the computing time could take times.
 
 <center>
 
 ![calibrate dates](img/calib_dates.gif)
 
 </center>
+
+This date which have been clicked on the [**map panel**](#panel.map.calib) will be shown **bolded** on the output figure
 
 ### c14 group by *filter* {#panel.calib.group}
 
@@ -266,6 +297,7 @@ At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in or
 * **C14SD**: the standard deviation (SD) of the radiocarbon dating
 * [**LabCode**](#mf.labcode): the unique identifier of the radiocarbon dating
 * **Material**: a value from the [**material.life**](#bd.material) spreadsheet 
+* **MaterialSpecies**: a specification of the field **Material**
 * **tpq**: the *terminus post quem* of the radiocarbon dating in cal BC
 * **taq**: the *terminus ante quem* of the radiocarbon dating in cal BC
 * [bibliographical references (two fields)](#mf.bib_all)
@@ -274,7 +306,6 @@ At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in or
 
 The **recommended** fields are:
 
-* **MaterialSpecies**: a specification of the field **Material**
 * **Culture**: a specification of the field **Period**
 
 The others fields (if there's any) only concern the **[EUROEVOL_R app](https://zoometh.github.io/C14)** 
@@ -433,17 +464,26 @@ In the NeoNet app, these bibliographical references are rendered in APA citation
 
 Infos, credits and link to this webpage (https://zoometh.github.io/C14/neonet)
 
-# **Objectives** {#particip}
+# **Collaborative work** and contacts {#particip}
 
-Today, the **NeoNet app** release is online. At the short-term, and in the frame of [**FAIR** Open Science principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*), our publication plan is:
+To facilitate contributions and a [FAIR](https://www.go-fair.org/fair-principles/) use of the app and dataset, we plan to:
 
-1. publish the **NeoNet dataset** in an Open Data repository (ex: [Zenodo](https://zenodo.org/))
-2. reference the **NeoNet dataset**  in a data paper (ex: [JOAD](https://openarchaeologydata.metajnl.com/))
-3. publish the RShiny **NeoNet app** source code in an Open digital humanities paper (ex: [JOSS](https://joss.theoj.org/))
+1. publish the **dataset** in an Open Data repository to get a DOI (ex: [Zenodo](https://zenodo.org/))
+2. reference the **dataset**  in a data paper with the DOI (ex: [JOAD](https://openarchaeologydata.metajnl.com/))
+  + create a connector with the [c14bazAAR getter function](https://github.com/ropensci/c14bazAAR#contributing)
+3. host the **app** on an institutional web server
+4. publish the **app** source code in an Open digital humanities paper (ex: [JOSS](https://joss.theoj.org/))
+
+To be informed on the project development or to contribute, please contact:
+
+* [NeoNet work group](https://redneonet.com)
+  + Miriam Cubas <mcubas.morera@gmail.com>
+  + Juan Francisco Gibaja <jfgibaja@imf.csic.es>
+  + Millán Mozota Holgueras <millanm@imf.csic.es>
+  + [..complete list..](https://redneonet.com/colaboradores/)
   
-Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean. Beside the dataset and the app publications, we will also:
-
-* publish the archaeological result(s) in scientific paper(s) (*journal to be defined*)
-* present the results and the app in conferences, seminars, etc.
-
-Contact <nicco.mazzucco@gmail.com> for dataset and data integration, and <thomashuet7@gmail.com> for app updates and IT integration
+* data integration
+  + Niccolò Mazzucco <nicco.mazzucco@gmail.com>  
+  
+* IT integration
+  + Thomas Huet <thomashuet7@gmail.com> 
