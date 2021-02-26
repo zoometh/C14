@@ -30,8 +30,8 @@ leaflet() %>%
               fillOpacity = 0,
               smoothFactor = 0.5) %>%
   # all rocks
-  addCircleMarkers(lng=roches.all$x,
-                   lat=roches.all$y,
+  addCircleMarkers(lng=sp.ch.df$x,
+                   lat=sp.ch.df$y,
                    popup=roches.all$lbl,
                    radius = 0.5,
                    opacity = 0.3)

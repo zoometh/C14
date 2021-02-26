@@ -9,18 +9,21 @@ library(Bchron)
 ## - - - - - - - - - - - - - - - - - - - - - - - 
 ## Create Rshiny app data
 
+# setwd("C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/")
 
-c14data.to.github <- F # from .xlsx, create c14data.tsv -> GitHub 
-c14ref.to.github <- F # 
+c14data.to.github <- T # from .xlsx, create c14data.tsv -> GitHub 
+c14ref.to.github <- T # 
 join.c14data.and.c14ref <- T
 
 gh.master <- 'https://raw.github.com/zoometh/C14/master/' # github 'C14' folder
+gt.master <- "C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/"
 #gh.master <- paste0(getwd(),"/") # working folder
 out.folder <- "D:/Cultures_9/Neolithique/web/" # app folder
 ggschol.h <- "https://scholar.google.com/scholar"
 path.data <- "C:/Users/supernova/Dropbox/My PC (supernova-pc)/Desktop/NeoNet/"
 # fich <- "14C_DATES_v3_France_8.xlsx"
-fich <- "14C_DATES_v3_France_11.xlsx"
+# fich <- "14C_DATES_v3_France_11.xlsx" # prb with special characters
+fich <- "14C_DATES_v3_France_12_spec_caract.xlsx" # without special characters
 df <- openxlsx::read.xlsx(paste0(path.data, fich), skipEmptyRows=TRUE)
 
 if(c14data.to.github){
@@ -68,7 +71,7 @@ if(c14ref.to.github){
             map_chr(., pluck, 1)
         },
         error = function(e){
-          print("err")
+          print("error -> 'MISSING REF'")
           uniq.refs[i, "long.ref"] <- "MISSING REF"
         },
         warning=function(cond) {
@@ -89,11 +92,13 @@ if(c14ref.to.github){
 
 if(join.c14data.and.c14ref){
   # load .tsv from GitHub
-  c14data.url <- paste0(gh.master, 'neonet/c14data.tsv')
+  c14data.url <- paste0(gt.master, 'neonet/c14data.tsv') # write to local folder
+  # c14data.url <- paste0(gh.master, 'neonet/c14data.tsv') # write to GH folder
   c14data <- read.csv(c14data.url, sep = "\t")
-  c14ref.url <- paste0(gh.master, 'neonet/c14refs.tsv')
+  # c14ref.url <- paste0(gh.master, 'neonet/c14refs.tsv') # write to GH folder
+  c14ref.url <- paste0(gt.master, 'neonet/c14refs.tsv') # write to local folder
   c14ref <- read.csv(c14ref.url, sep = "\t")
-  # merge on key
+  # merge on unique keys
   df.tot <- merge(c14data, c14ref, by.x="bib_url", by.y="key.or.doi", all.x = T)
   # renames before run app ()
   colnames(df.tot)[which(names(df.tot) == "long.ref")] <- "bib"
@@ -128,7 +133,9 @@ if(join.c14data.and.c14ref){
     df.tot[i,"taq"] <- -(max(ages1$Date1$ageGrid)-1950) 
   }
   # save in the Shiny app folder (git folder)
-  getwd()
+  # getwd()
+  # write.csv(df.tot, paste0(getwd(),"/shinyapp/df_tot.csv"), fileEncoding = "UTF-8", sep="\t", row.names=FALSE)
   write.table(df.tot, paste0(getwd(),"/shinyapp/df_tot.csv"), sep="\t", row.names=FALSE)
+  # write.table(df.tot, paste0(getwd(),"/shinyapp/df_tot.csv"), fileEncoding = "UTF-8", sep="\t", row.names=FALSE)
 }
 

@@ -1,3 +1,5 @@
+# functions used by the Shiny app
+
 findLocations <- function(shape, location_coordinates, location_id_colname){
   # function for finding the locations inside the shapes we draw
   # from a github package

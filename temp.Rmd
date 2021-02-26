@@ -42,28 +42,9 @@ Shiny and Leaflet allow, for example, to select data filtered on a year threshol
 the year of the battle of Agincourt: 1415
 
 ```{r echo = TRUE, warning=FALSE}
-library(shiny)
-library(leaflet)
-library(dplyr)
-
-ui <- fluidPage(
-   sidebarPanel(numericInput("dend.thrs", "Filter data younger than:", 1415),
-                downloadButton('downloadData', 'Download data')),
-   mainPanel(leafletOutput("map", height=700))
-)
-server <- function(input, output) {
-   output$map <- renderLeaflet({
-      leaflet() %>% setView(lng = -71.0589, lat = 42.3601, zoom = 12) %>% addTiles()
-   })
-   output$downloadData <- downloadHandler(
-      filename = function() { 
-         paste("dendro_before_year_", as.character(input$dend.thrs), ".csv", sep="")
-      },
-      content = function(file) {
-         write.csv(dendro.dec, file)
-      })
-}
-shinyApp(ui, server, options = list(height = 700))
+n_occur <- data.frame(table(df.tot$LabCode))
+n_occur <- n_occur[n_occur$Freq > 1,]
+n_occur
 ```
 
 See were is my text...HERE !

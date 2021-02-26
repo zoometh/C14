@@ -81,7 +81,7 @@ The chronological span covers the Late Mesolithic and the Early Neolithic. The r
 ![](`r ws.roi`){width=35%}
 </p>
 
-We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet database**](#bd) and our [**Objectives**](#particip)
+We will see how to use the [**NeoNet app**](#app), what is the [**NeoNet dataset**](#bd) and our [**Objectives**](#particip)
 
 # **NeoNet app** {#app}
 
@@ -170,7 +170,7 @@ Fig. \@ref(fig:panel-map1), <span style="color:black"><u>black</u></span> box, t
 
 #### retrieve coordinates from the map {#panel.map.select.loc.get}
 
-As said, the default basemap of the app is OSM. It offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the map show the lat/long coordinates of the current point (under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet database
+As said, the default basemap of the app is OSM. It offers a well documented basemap where archaeological sites are sometimes already located, like the Ligurian site of [Grotta della Pollera](https://www.openstreetmap.org/#map=19/44.20058/8.31466). Clicking on the map show the lat/long coordinates of the current point (under the tpq/tap slider). These coordinates can then be copied and used to modify the NeoNet dataset
 
 <center>
 
@@ -245,7 +245,7 @@ The plot area (Fig. \@ref(fig:panel-calib), <span style="color:orange"><u>orange
 ## 3. **data** panel {#panel.data}
 ![](`r panel.data.idx`){width=20%}
 
-The complete database from the GitHub  [c14data.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14data.tsv) file (a dataframe with tab-separated values). The first rows are:
+The complete dataset from the GitHub  [c14data.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14data.tsv) file (a dataframe with tab-separated values). The first rows are:
 
 ```{r panel-data, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the radiocarbon dataset"}
 c14data.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14data.tsv'
@@ -254,7 +254,7 @@ kable(head(C14data, 3),"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. Currently, special characters (`é`, `à`, etc.) are not accepted. The database **mandatory fields** are:
+At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. Currently, special characters (`é`, `à`, etc.) are not accepted. The dataset **mandatory fields** are:
 
 * **SiteName**: the site name
 * [coordinates (two fields)](#mf.coords)
@@ -412,7 +412,7 @@ kable(head(c14period),"html") %>%
 ```
 
 
-In the NeoNet app, this database is rendered with the ([DT package](https://cran.r-project.org/web/packages/DT/index.html)) allowing sorting and filtering tools
+In the NeoNet app, this dataset is rendered with the ([DT package](https://cran.r-project.org/web/packages/DT/index.html)) allowing sorting and filtering tools
 
 ## 4. **biblio** panel {#panel.biblio}
 ![](`r panel.biblio.idx`){width=20%}
@@ -437,13 +437,13 @@ Infos, credits and link to this webpage (https://zoometh.github.io/C14/neonet)
 
 Today, the **NeoNet app** release is online. At the short-term, and in the frame of [**FAIR** Open Science principles](https://www.go-fair.org/fair-principles/) (*Findable*, *Accessible*, *Interoperable* & *Reusable*), our publication plan is:
 
-1. publish the **NeoNet database** in a Open Data repository (ex: [Zenodo](https://zenodo.org/))
-2. reference the **NeoNet database**  in a data paper (ex: [JOAD](https://openarchaeologydata.metajnl.com/))
-3. publish the RShiny **NeoNet app** source code in a Open digital humanities paper (ex: [JOSS](https://joss.theoj.org/))
+1. publish the **NeoNet dataset** in an Open Data repository (ex: [Zenodo](https://zenodo.org/))
+2. reference the **NeoNet dataset**  in a data paper (ex: [JOAD](https://openarchaeologydata.metajnl.com/))
+3. publish the RShiny **NeoNet app** source code in an Open digital humanities paper (ex: [JOSS](https://joss.theoj.org/))
   
-Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean. Beside the database and the app publications, we will also:
+Thanks to the facilities offer by the app, and in the frame of the **[NeoNet project](https://redneonet.com)**, conducted by [Juan Gibaja](https://orcid.org/0000-0002-0830-3570) and [Miriam Cubas](https://orcid.org/0000-0002-2386-8473), we expect to conduct collaborative spatio-temporal analysis for the origin, the spread and the consolidation of the farming way-of-life in Mediterranean. Beside the dataset and the app publications, we will also:
 
 * publish the archaeological result(s) in scientific paper(s) (*journal to be defined*)
 * present the results and the app in conferences, seminars, etc.
 
-Contact <nicco.mazzucco@gmail.com> for database and data integration, and <thomashuet7@gmail.com> for app updates and IT integration
+Contact <nicco.mazzucco@gmail.com> for dataset and data integration, and <thomashuet7@gmail.com> for app updates and IT integration
