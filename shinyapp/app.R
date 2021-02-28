@@ -89,8 +89,8 @@ gcalib.bin <- 100 # the chrono granul
 
 nsites.14C.cal <- 1000 # max of sites calibrated at the same time, panel calib
 
-c14bibtex.url <- 'references_france.bib'
-# c14bibtex.url <- '../neonet/references_france.bib'
+# c14bibtex.url <- 'references_france.bib'
+c14bibtex.url <- '../neonet/references_france.bib'
 # c14bibtex.url <- 'shinyapp/references_france.bib'
 bib <- read.bib(c14bibtex.url)
 bib <- sort(bib) # sort

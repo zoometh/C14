@@ -66,8 +66,15 @@ tot.nb <- nrow(data.c14)
 # ratio.panel.calib <- image_info(panel.calib)$height/image_info(panel.calib)$width
 ```
 
+```{css, echo = FALSE}
+caption {
+      color: grey;
+      # font-weight: bold;
+      # font-size:small; # not working (15px, large)
+    }
+```
 
-```{r preview, echo=F, fig.align='center', fig.cap="Preview of the current [NeoNet dataset](#bd) (work in progress) using RShiny and Leaflet in R"}
+```{r preview, echo=F, fig.align='center', fig.cap="Preview of the current [NeoNet dataset](#panel.data) (work in progress) using RShiny and Leaflet in R"}
 library(leaflet)
 library(shiny)
 leaflet(data = data.c14, width = "60%", height = "400px") %>%
@@ -276,13 +283,14 @@ The plot area (Fig. \@ref(fig:panel-calib), <span style="color:orange"><u>orange
 ## 3. **data** panel {#panel.data}
 ![](`r panel.data.idx`){width=20%}
 
-The complete dataset from the GitHub  [c14data.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14data.tsv) file (a dataframe with tab-separated values). The first rows are:
+The complete dataset from the GitHub  [c14data.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14data.tsv) file (a dataframe with tab-separated values). Today, the dataset counts <span style="color: grey;">`r tot.nb`</span> dates:
 
-```{r panel-data, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the radiocarbon dataset"}
+```{r panel-data, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE}
 c14data.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14data.tsv'
 C14data <- read.csv(c14data.url, sep = "\t")
-kable(head(C14data, 3),"html") %>%
-  kable_styling(full_width = FALSE, position = "center", font_size=12)
+kable(C14data[sample(nrow(C14data), 4), ],"html",
+      caption = "Dates sample") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size=11)
 ```
 
 At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. Currently, special characters (`é`, `à`, etc.) are not accepted. The dataset **mandatory fields** are:
@@ -316,7 +324,7 @@ Here we explain more precisely some of the mandatory fields
 
 ##### **Longitude** and **Latitude** {#mf.coords}
 
-In in decimal degrees (ex: `1.045, 43.921`). Since the modeling is supra-regional, the app does not need to record dates with high accuracy geographical coordinates. At the minimum, this accuracy can be a location inside the departmental/county boundaries ([how to retrieve better coordinates from the map](#panel.map.select.loc.get))
+In in decimal degrees and a precision of four (4) decimal digits (ex: `1.0453, 43.9211`). Since the modeling is supra-regional, the app does not need to record dates with high accuracy geographical coordinates. At the minimum, this accuracy can be a location inside the departmental/county boundaries ([how to retrieve better coordinates from the map](#panel.map.select.loc.get))
 
 ##### **PhaseCode** {#mf.phasecode}
 
@@ -424,7 +432,7 @@ This thesaurus is used both by the NeoNet app and the EUROEVOL_R app. Specifical
 ```{r material.life.neonet, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the material life duration equivalences"}
 c14mater.neonet <- data.frame(material.type=c("CE", "F", "H", "OR", "SE", "SH", "WC"),
                                  description=c("Cerealia", "Fauna", "Human", "Organic",
-                                               "Seed", "??", "Wood charchoal"),
+                                               "Seed", "Shell", "Wood charchoal"),
                               stringsAsFactors = F)
 kable(c14mater.neonet,"html") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
@@ -448,12 +456,13 @@ In the NeoNet app, this dataset is rendered with the ([DT package](https://cran.
 ## 4. **biblio** panel {#panel.biblio}
 ![](`r panel.biblio.idx`){width=20%}
 
-Bibliographical references from the GitHub [c14refs.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14refs.tsv) file. If only exist a BibTeX key, and no DOI, this file results of the join between the *bib_url* field of the C14 spreadsheet and the *references.bib*. If the DOI exists, the full bibliographical reference is  file The first rows are:
+Bibliographical references from the GitHub [c14refs.tsv](https://github.com/zoometh/C14/blob/main/neonet/c14refs.tsv) file. If only exist a BibTeX key, and no DOI, this file results of the join between the *bib_url* field of the C14 spreadsheet and the *references.bib*. If the DOI exists, the full bibliographical reference is  file:
 
-```{r panel-biblio, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE, fig.cap="First rows of the radiocarbon bibliographical references"}
+```{r panel-biblio, echo=FALSE, message=FALSE, fig.align="center", fig.fullwidth=TRUE}
 c14refs.url <- 'https://raw.github.com/zoometh/C14/master/neonet/c14refs.tsv'
 c14refs <- read.csv(c14refs.url, sep = "\t")
-kable(head(c14refs, 3),"html") %>%
+kable(c14refs[sample(nrow(c14refs), 4), ],"html",
+      caption = "Bibliographical references sample") %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
