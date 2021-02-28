@@ -146,15 +146,16 @@ if(neonet){
     # # df.tot <- df.tot[(df.tot$Latitude < 46 | df.tot$Country == 'Italy') & df.tot$Longitude > 2,]
     # # df.tot <- df.tot[df.tot$SiteName == "Mas de Vignoles X" | df.tot$SiteName == "Les Usclades",] # rm NA
     # # df.tot <- df.tot[!is.na(df.tot$RedNeo),] # rm NA
-  } else {
-    # select.date <- (df.tot$tpq > -7500 & df.tot$taq < -4500)# to Early Neo
-    select.roi <- (df.tot$Country != 'Spain')# no Spain
-    select.italy <- (df.tot$Latitude < 46 | df.tot$Country == 'Italy')# to geo1
-    select.france <- (df.tot$Longitude > .7)# no W France
-    df.tot <- df.tot[(select.roi & select.italy & select.france), ]
-    # df.tot <- df.tot[(select.date & select.roi & select.italy & select.france), ]
-    
-  }
+  } 
+  # else {
+  #   # select.date <- (df.tot$tpq > -7500 & df.tot$taq < -4500)# to Early Neo
+  #   select.roi <- (df.tot$Country != 'Spain')# no Spain
+  #   select.italy <- (df.tot$Latitude < 46 | df.tot$Country == 'Italy')# to geo1
+  #   select.france <- (df.tot$Longitude > .7)# no W France
+  #   df.tot <- df.tot[(select.roi & select.italy & select.france), ]
+  #   # df.tot <- df.tot[(select.date & select.roi & select.italy & select.france), ]
+  #   
+  # }
   df.tot <- df.tot[!(is.na(df.tot$Latitude)) & !(is.na(df.tot$Longitude)),] # rm NA
   df.tot <- df.tot[df.tot$Latitude != 'NA' & df.tot$Longitude != 'NA',] # rm NA
   out.png.name <- 'neonet.png'

@@ -1,6 +1,4 @@
 "Country"	"Latitude"	"Longitude"	"SiteName"	"Period"	"PhaseCode"	"LabCode"	"C14BP"	"C14SD"	"Material"	"MaterialSpecies"	"bib"	"bib_url"
-"France"	46.7333	0.533333	"Les Usclades"	"LM"	"C4A"	"Gif-8436"	6780	80	"WC"	"Wood charcoal (unidentified)"	"Shennan et Steele 2000"	"Shennan00"
-"France"	46.7333	0.533333	"Les Usclades"	"LM"	"C4B"	"Gif-8745"	7290	60	"WC"	"Wood charcoal (unidentified)"	"Shennan et Steele 2000"	"Shennan00"
 "France"	45.7833	3.08333	"Pontcharaud"	"EN"	"C1"	"Ly-7625"	7095	50	"F"	"Bone (unidentified)"	"Shennan et Steele 2000"	"Shennan00"
 "France"	45.78	4.8	"Boul.Periph. Nord de Lyon"	"EN"	NA	"OxA-19858"	6062	33	"n/a"	"n/a"	NA	NA
 "France"	45.6833	5.35	"Alfort"	"EN"	"n/a"	"Ly-386"	6000	60	"F"	"Bone (unidentified)"	"Pinhasi et al."	"10.1371/journal.pbio.0030410"
