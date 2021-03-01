@@ -5,9 +5,9 @@ account: neolithic
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3620864
-bundleId: 4242265
+bundleId: 4286773
 url: https://neolithic.shinyapps.io/NeoNet2/
-when: 1613676565.39655
+when: 1614623220.91184
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: (archives)/210217/app.R
+ignoredFiles: euroevol_R.png|(archives)/references_france.bib|(archives)/shiny_1.Rmd|(archives)/210217/app.R

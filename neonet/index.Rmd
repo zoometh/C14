@@ -2,7 +2,7 @@
 title: | 
   | **NeoNet app** and **dataset** <br>
   <span style='font-size: 24px'>Mapping radiocarbon dates from Late Mesolithic/Early Neolithic transition in the Mediterranean</style>
-author: "<span style='font-size: 15px'>Thomas Huet, Niccolo Mazzucco</style>"
+author: "<span style='font-size: 15px'>Thomas Huet, Niccolo Mazzucco, Miriam Cubas, Juan Francisco Gibaja, F. Xavier Oms</style>"
 # date: "11/12/2020"
 header-includes:
   - \usepackage{float}
@@ -56,7 +56,7 @@ tot.nb <- nrow(data.c14)
 # panel.map.coords <- image_read("../docs/imgs/panel_map_coords.png")
 # panel.map.select <- image_read("../docs/imgs/panel_map_select.png")
 # panel.map.shape <- image_read("../docs/imgs/panel_map_shape.png")
-# https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png
+# https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.pngCalls: local ... tryCatch -> tryCatchList -> tryCatchOne -> <Anonymous>
 # ratio.panel.map.coords <- image_info(panel.map.coords)$height/image_info(panel.map.coords)$width
 # # panel.map <- image_read("https://raw.githubusercontent.com/zoometh/C14/main/docs/imgs/panels_map.png")
 # ratio.panel.map <- image_info(panel.map)$height/image_info(panel.map)$width
@@ -386,7 +386,7 @@ kable(df.bib,"html",escape = F) %>%
   kable_styling(full_width = FALSE, position = "center", font_size=12)
 ```
 
-When the DOI is lacking, the bibliographical reference should be include into the BibTex document [references.bib](https://raw.githubusercontent.com/zoometh/C14/master/neonet/references_france.bib) with the name of the first author and the two last digits of the year:
+When the DOI is lacking, the bibliographical reference should be include into the BibTex document [references.bib](https://raw.githubusercontent.com/zoometh/C14/master/shinyapp/references_france.bib) with the name of the first author and the two last digits of the year:
 
 ```{r test_label, wrapper=TRUE, eval=FALSE, echo=TRUE}
 @book{Guilaine93,
@@ -493,6 +493,10 @@ To be informed on the project development or to contribute, please contact:
   
 * data integration
   + Niccolò Mazzucco <nicco.mazzucco@gmail.com>  
+  + Miriam Cubas <mcubas.morera@gmail.com>
+  + Juan Francisco Gibaja <jfgibaja@imf.csic.es>
+  + F. Xavier Oms <oms@ub.edu>
+  + Thomas Huet <thomashuet7@gmail.com> 
   
 * IT integration
   + Thomas Huet <thomashuet7@gmail.com> 
