@@ -1,6 +1,28 @@
 # Time modeling
 
 A dating is the positioning of an ***event*** or ***duration*** on a timeline correlatively to the positioning of another event or duration. A dating makes it possible to say *this happened before*, or *this happened after*, or *this happened during*. Important difficulties can come from the uncertainty of the dating (*date* ± *delta*) and the need of class interval for comparison (First Republic, Empire, etc.). To manage this uncertainty, statistics are required (randomization, confidence intervals, bayesian modeling, etc.)   
+
+Archaeological relative datings (e.g. stratigraphical relations,
+chrono-stylistic) or absolute datings (e.g. ^14^C) will permit to
+respond to the question: 'When ?'. Along with geography, time is the
+second dimension of historical processes. For example, agriculture and
+breeding appear in South-Eastern Europe ca. 6800 BC, animal traction
+complex appears and spread on continental Europe between 3600 and 2500
+BC, etc. Statistics of gene-culture coevolution will be conducted taking
+count of the chronological resolution of the datings (AMS dating on
+carporemains *vs* old excavations stratigraphy). During the analysis,
+time will be considered as a real dimension for the characterization of
+social groups and social changes -- and not only as the support of
+spatial and statistical analyses. Hypotheses (e.g. neutral changes,
+population continuity), methods (e.g. fit to the Poisson law, Allen's
+interval algebra) will be set up to measure the differences between
+social groups or social changes. Within others R applications, `ts`,
+will permit to manage time series. On maps, diffusion processes and
+delays will be displayed with isochrone lines interpolating point
+pattern (e.g. ^14^C of earliest proofs of breeding to study farming
+diffusion). Temporal dynamism of gene-culture coevolution will be also
+displayed with the `leaflet` R package. Time dimension enters also in
+the agent-based modeling (ABM).
   
 ## Notions and operators
 
