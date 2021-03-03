@@ -48,21 +48,23 @@ Difficulties of absolute dating interpretation depends on the accuracy of the da
 For example, a radiocarbon date coming from a Late Mesolithic/Early Neolithic cave can cover a span of ~ 100 years and *only* reflecting the replacement of a cultural entity (Last hunters-gatherers) by another (Early farmers). At the opposite, a tree ring post coming from an Bronze Age stilt house can be dated to the year -- sometimes to the season -- and reflect the sub-sub-phase of a larger event (the house building).
 
 #### Radiocarbon and dendrochronological data integration and visualization
+> [webpage](https://neolithic.shinyapps.io/AbsoluteDating/)
 
-Radiocarbon (<sup>14</sup>C) and dendrochronological dates are one of the most sharable world-wide data. Their integration in online database, their management, and their modeling represent a classic playground in computing archaeology. R programming offers different tools to manage these data, we present a [short interactive review](https://neolithic.shinyapps.io/AbsoluteDating/) of R based computer solutions
+Radiocarbon (<sup>14</sup>C) and dendrochronological dates are one of the most sharable world-wide data. Their integration in online database, their management, and their modeling represent a classic playground in computing archaeology
 
 #### **NeoNet** Neolithisation of the central and western Mediterranean
+> [app](https://neolithic.shinyapps.io/NeoNet2/)
+> [webpage](https://zoometh.github.io/C14/neonet)
 
-We started to develop a RShiny app for interactive selection, mapping and calibration for the Mesolithic/Neolithic transition in Central and Western Mediterranean, the [NeoNet app](https://neolithic.shinyapps.io/NeoNet2/)
+We started to develop a RShiny app for interactive selection, mapping and calibration for the Mesolithic/Neolithic transition in Central and Western Mediterranean, the NeoNet app
 
 <p align="center">
   <img alt="img-name" src="docs/imgs/panel_map.png" width="600">
   <br>
     <em>The NeoNet app</em>
 </p>
-
   
-The [NeoNet webpage](https://zoometh.github.io/C14/neonet) explains how to use this app. The canvas of this RShiny app allows to use another database: the [Euroevol database](http://discovery.ucl.ac.uk/1469811/), and to create the [EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)  
+The canvas of this RShiny app allows to use another database: the [Euroevol database](http://discovery.ucl.ac.uk/1469811/), and to create the [EUROEVOL_R app](https://neolithic.shinyapps.io/Euroevol_R/)  
 
 ### Relative dating
 
