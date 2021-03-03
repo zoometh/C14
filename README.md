@@ -56,7 +56,7 @@ Radiocarbon (<sup>14</sup>C) and dendrochronological dates are one of the most s
 > [app](https://neolithic.shinyapps.io/NeoNet2/)
 > [webpage](https://zoometh.github.io/C14/neonet)
 
-We started to develop a RShiny app for interactive selection, mapping and calibration for the Mesolithic/Neolithic transition in Central and Western Mediterranean, the NeoNet app
+We developed a RShiny app for interactive selection, mapping and calibration for the Mesolithic/Neolithic transition in Central and Western Mediterranean
 
 <p align="center">
   <img alt="img-name" src="docs/imgs/panel_map.png" width="600">
