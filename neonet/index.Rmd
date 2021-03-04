@@ -5,7 +5,7 @@ title: |
 author: "<span style='font-size: 15px'>Thomas Huet, Niccolo Mazzucco, Miriam Cubas, Juan Francisco Gibaja, F. Xavier Oms</style>"
 # date: "11/12/2020"
 header-includes:
-  - \usepackage{float}
+  - \usepackage{float}u
   - \floatplacement{figure}{H}  #make every figure with capti
 # output: html_document
 output: 
@@ -98,7 +98,7 @@ leaflet(data = data.c14, width = "60%", height = "400px") %>%
 
 # **Presentation**
 
-The [**NeoNet app**](https://neolithic.shinyapps.io/NeoNet2/) aims to contribute to the study the pioneering front of the farming live-style (ie Neolithic) by focusing our study on the mobile border between the Last Hunter-Gathers economy and the Early Neolithic (ca. 7000 BC to 4500 BC) in the Central and Western Mediterranean. The interactive web app facilitates the selection of absolute dates (c14 dates) by providing selection tools for:
+The [**NeoNet app**](https://neolithic.shinyapps.io/NeoNet2/) aims to contribute to the study the pioneering front of the farming live-style (ie Neolithic) by focusing our study on the mobile border between the Last Hunter-Gathers economy and the Early Neolithic (ca. 7000 BC to 3500 BC) in the Central and Western Mediterranean. The interactive web app facilitates the selection of absolute dates (c14 dates) by providing selection tools for:
 
 * spatial
   + geographical region of interest (ROI)
@@ -296,9 +296,9 @@ kable(C14data[sample(nrow(C14data), 4), ],"html",
 At first, these data are recorded in a Excel spreadsheet (c14 spreadsheet) in order to facilitate their editing (filter, sorting, fill). Then a R function read this spreadsheet, calculate the *tpq* and *taq* (in BC) of each unCal BP (with [Bchron](https://cran.r-project.org/web/packages/Bchron/index.html)),  and convert it into a .tsv file. As data came from various publications, an homogenization the different values (material, cultures, bibliographical references, etc.) must be done. Currently, special characters (`é`, `à`, etc.) are not accepted. The dataset **mandatory fields** are:
 
 * **SiteName**: the site name
-* [coordinates (two fields)](#mf.coords)
-  + **Longitude**: in decimal degrees (ex: `1.045`)
-  + **Latitude**: in decimal degrees (ex: `43.921`)
+* [coordinates (two fields)](#mf.coords)  
+  + **Longitude**: in decimal degrees (ex: `1.0451`)
+  + **Latitude**: in decimal degrees (ex: `43.9213`)
 * **Period**: a value from the [**period.abrev**](#bd.period) spreadsheet
 * [**PhaseCode**](#mf.phasecode): a code for the dating stratigaphical unit and/or structure
 * **C14Age**: a numerical radiocarbon dating in BP
