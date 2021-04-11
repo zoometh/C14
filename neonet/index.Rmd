@@ -98,7 +98,7 @@ leaflet(data = data.c14, width = "60%", height = "400px") %>%
 
 # **Presentation**
 
-The [**NeoNet app**](https://neolithic.shinyapps.io/NeoNet2/) aims to contribute to the study the pioneering front of the farming live-style (ie Neolithic) by focusing our study on the mobile border between the Last Hunter-Gathers economy and the Early Neolithic (ca. 7000 BC to 3500 BC) in the Central and Western Mediterranean. The interactive web app facilitates the selection of absolute dates (c14 dates) by providing selection tools for:
+The [**NeoNet app**](https://neolithic.shinyapps.io/NeoNet2/) aims to contribute to the study the pioneering front of the farming live-style (i.e., Neolithic) by focusing our study on the mobile border between the Last Hunter-Gathers economy and the Early Neolithic (ca. 7000 BC to 3500 BC) in the Central and Western Mediterranean. The interactive web app facilitates the selection of absolute dates (c14 dates) by providing selection tools for:
 
 * spatial
   + geographical region of interest (ROI)
