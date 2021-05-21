@@ -89,9 +89,10 @@ gcalib.bin <- 100 # the chrono granul
 
 nsites.14C.cal <- 1000 # max of sites calibrated at the same time, panel calib
 
-# c14bibtex.url <- 'references_france.bib'
-c14bibtex.url <- '../neonet/references_france.bib'
+# c14bibtex.url <- '../neonet/references_france.bib'
 # c14bibtex.url <- 'shinyapp/references_france.bib'
+# c14bibtex.url <- 'references_france.bib'
+c14bibtex.url <- 'references_OK.bib'
 bib <- read.bib(c14bibtex.url)
 bib <- sort(bib) # sort
 bibrefs.md <- capture.output(print(bib)) # Markdown layout
@@ -105,6 +106,7 @@ bibrefs.html <- markdown(bibrefs.md) # to HTML layout
 mat.life.url <- 'c14_material_life.tsv'
 # mat.life.url <- 'shinyapp/c14_material_life.tsv'
 # mat.life.url <- paste0(dirname(getwd()), '/neonet/c14_material_life.tsv')
+# getwd()
 material.life.duration <- read.csv(mat.life.url, sep = "\t")
 # material.life.duration <- as.data.frame(gsheet2tbl(paste0(xl.url,"#gid=1800523177"))) # 14C_1, the second one
 # material.life.duration <- as.data.frame(gsheet2tbl(paste0(xl.url,"#gid=1417727139"))) # 14C_3, the second one
@@ -130,7 +132,8 @@ if(neonet){
   # df.tot$bib_url[df.tot$bib_url == ''] <- paste0(ggschol.h,"?hl=en&as_sdt=0%2C5&q=",df.tot$SiteName,"+radiocarbon&btnG=")
   # df.tot$bib[df.tot$bib == ''] <- "v. Google Scholar"
   ## "df_tot.csv" file results from 'push_data.R"
-  df.tot <- read.csv("df_tot.csv", sep = "\t")
+  # print(getwd())
+  df.tot <- read.csv("c14_dataset.tsv", sep = "\t")
   # df.tot <- readr::read_csv("df_tot.csv")
   df.tot$tpq <- as.numeric(df.tot$tpq)
   df.tot$taq <- as.numeric(df.tot$taq)
@@ -169,7 +172,7 @@ if(euroevol){
   # not run
   # setwd("D:/Cultures_9/Neolithique/web") # not run
   # load("df_tot.R")
-  load("euroevol_14C.R")
+  load("C:/Users/supernova/Dropbox/My PC (supernova-pc)/Documents/C14/euroevol/euroevol_14C.R")
   Encoding(df.tot$SiteName) <- "UTF-8"
   # TODO: get BIB from the net
   df.tot$bib_url <- paste0(ggschol.h,"?hl=en&as_sdt=0%2C5&q=",df.tot$SiteName,"+radiocarbon&btnG=")
@@ -212,7 +215,7 @@ df.tot$taq <- as.numeric(df.tot$taq)
 mat.type.life <- c("short life","long life","others")
 df.tot$mat.life <- ifelse(df.tot$Material %in%  short.life, "short life",
                           ifelse(df.tot$Material %in%  long.life,"long life","others"))
-hotcols <- c("SiteName","Period", "PhaseCode", # "Culture",
+hotcols <- c("Country", "SiteName","Period", "PhaseCode", # "Culture",
              "Longitude","Latitude",
              "tpq","taq",
              "LabCode", "C14Age","C14SD","Material","mat.life",
@@ -244,7 +247,7 @@ for (i in seq(1, nrow(df.tot))){
   # i <- 1
   desc <- paste(sep = "<br/>",
                 paste0("<b>",df.tot[i,"SiteName"],"</b> / ",df.tot[i,"Material"]," (",df.tot[i,"mat.life"],")"),
-                paste0("dating: ",df.tot[i,"C14Age"]," +/- ",df.tot[i,"C14SD"]," BP [",df.tot[i,"LabCode"],"]"),
+                paste0("date: ",df.tot[i,"C14Age"]," +/- ",df.tot[i,"C14SD"]," BP [",df.tot[i,"LabCode"],"]"),
                 paste0("tpq/taq: ",df.tot[i,"tpq"]," to ",df.tot[i,"taq"]," cal BC"),
                 paste0("period: ", df.tot[i,"Period"]," <b>|</b> PhaseCode: <i>",df.tot[i,"PhaseCode"],"</i> <br/>"))
   if(grepl("^http", df.tot[i,"bib_url"])){
@@ -298,6 +301,8 @@ if(neonet){
                               '> Miriam Cubas Morera </a>: mcubas.morera@gmail.com, </li>',
                               '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-0830-3570")),"\ target=\"_blank\"",
                               '> Juan Gibaja </a>: jfgibaja@gmail.com, </li>',
+                              '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-1642-548X")),"\ target=\"_blank\"",
+                              '> F. Xavier Oms</a>: oms@ub.edu, </li>',
                               '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",
                               '> Thomas Huet </a>: thomashuet7@gmail.com </li>',
                               '</ul>'))
@@ -313,12 +318,12 @@ if(euroevol){
   app.page <- HTML(paste0('<a href=',shQuote(paste0("https://zoometh.github.io/C14/euroevol/")),"\ target=\"_blank\"",'><b> EUROEVOL_R app </b>website</a>'))
   b64 <- base64enc::dataURI(file="euroevol_R.png", mime="image/png") # load image
 }
-app.credits <- HTML(paste0(' <b> Rshiny developments: </b> ',
+app.credits <- HTML(paste0(' <b> IT developments: </b> ',
                            '<ul>',
                            '<li> <a href=',shQuote(paste0("https://orcid.org/0000-0002-1112-6122")),"\ target=\"_blank\"",
                            '> Thomas Huet </a> </li>',
                            '</ul>'))
-all.credits <- paste0(data.credits,"<br>",app.credits,"<br><br>","... visit the ", app.page)
+all.credits <- paste0(data.credits,"<br>",app.credits,"<br><br>","      ... visit the ", app.page)
 # # logo
 # if(neonet){
 #   b64 <- base64enc::dataURI(file="neonet.png", mime="image/png") # load image
@@ -419,7 +424,7 @@ my.fun <- function() {
   res
 }
 max.accepted.sd <- "<span style='color: purple;'>max acceped sd</span>"
-
+# View(head(df.tot))
 ############################################### ui #################################################
 
 ui <- navbarPage(tit,
@@ -606,10 +611,14 @@ ui <- navbarPage(tit,
 
 server <- function(input, output, session) {
   output$presentation <- renderUI({
-    HTML(paste0("move the <b> tpq/taq slider </b> to selected sites within ‘standard’ cal BC duration ",
-                "(R <a href='https://rdrr.io/cran/Bchron/man/BchronCalibrate.html'>BchronCalibrate</a> and ",
-                " <a ref='https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html'>calibrate</a> functions,",
-                "'Intcal13' or 'Intcal20' calibration curve) <br/>",
+    HTML(paste0("move the <b> window map </b>  to select dates by location |", 
+                " move the <b> tpq/taq slider </b> to selected sites within ‘standard’ cal BC duration ",
+                "(calibration with the <a href='https://rdrr.io/cran/Bchron/man/BchronCalibrate.html'>BchronCalibrate</a> ", 
+                # "and ", " <a ref='https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html'>calibrate</a>", 
+                "function and the ","'Intcal13' ", 
+                # "or 'Intcal20'", 
+                "calibration curve) <br/>",
+                " draw <b> polygon or rectangle </b> to subset dates by a smaller area than the ROI |",
                 " check/uncheck <b> material buttons </b> to show/hide sites by type of life duration material |",
                 " check/uncheck <b> periods buttons </b> to show/hide sites by Periods |",
                 " <b> click </b> on sites to get informations | <b> click </b> on the map to get long/lat coordinates <br/>"))
@@ -632,7 +641,7 @@ server <- function(input, output, session) {
       editable=FALSE,
       options = list(
         scrollX = TRUE,
-        pageLength = 50
+        pageLength = 100
       )
     )
   })
@@ -794,7 +803,7 @@ server <- function(input, output, session) {
   # les coordonnées cliquées
   output$out <- renderText({
     if(!is.null(input$hover_coordinates)) {
-      paste0(round(input$hover_coordinates[1],6),",",round(input$hover_coordinates[2],6))
+      paste0(round(input$hover_coordinates[1],4),",",round(input$hover_coordinates[2],4))
     }
   })
   output$nb.dat <- renderUI({

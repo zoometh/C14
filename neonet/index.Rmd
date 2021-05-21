@@ -74,7 +74,7 @@ caption {
     }
 ```
 
-```{r preview, echo=F, fig.align='center', fig.cap="Preview of the current [NeoNet dataset](#panel.data) (work in progress) using RShiny and Leaflet in R"}
+```{r preview, echo=F, warning= F, fig.align='center', fig.cap="Preview of the current [NeoNet dataset](#panel.data) (work in progress) using RShiny and Leaflet in R"}
 library(leaflet)
 library(shiny)
 leaflet(data = data.c14, width = "60%", height = "400px") %>%
